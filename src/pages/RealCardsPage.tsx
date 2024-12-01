@@ -1,14 +1,15 @@
-import { Grid2, Typography } from "@mui/material";
+import { Autocomplete, Grid2, TextField, Typography } from "@mui/material";
 import { PageContainer } from "../common/PageContainer";
 import { useRealCard } from "../scryfall/use-real-card";
-import { useCatalog } from "../scryfall/use-catalog";
-import { useSymbol } from "../scryfall/use-symbol";
+import { CardDisplay } from "../display/card/CardDisplay";
+import { useState } from "react";
+import { useAutocomplete } from "../scryfall/use-autocomplete";
 
 export function RealCardsPage() {
-  const card = useRealCard("Charging Badger");
-  const catalog = useCatalog("artifact");
-  const sym1 = useSymbol("{0}");
-  const sym2 = useSymbol("{T}");
+  const [name, setName] = useState("Charging Badger");
+  const [search, setSearch] = useState("");
+  const { results, isFetching } = useAutocomplete(search);
+  const card = useRealCard(name);
 
   return (
     <PageContainer>
@@ -17,13 +18,25 @@ export function RealCardsPage() {
           RealCardsPage
         </Typography>
       </Grid2>
+    
+      <Autocomplete
+        value={search}
+        disablePortal
+        options={results || []}
+        sx={{ width: 300 }}
+        loading={isFetching}
+        filterOptions={(x) => x}
+        onChange={(_, value) => value && setName(value)}
+        renderInput={(params) =>
+          <TextField
+            {...params}
+            label="Search"
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        }
+      />
 
-      {card?.name}
-      {catalog?.[0]}
-
-      <img src={card?.image} />
-      <img src={sym1} />
-      <img src={sym2} />
+      {card && <CardDisplay card={card} />}
     </PageContainer>
   );
 }

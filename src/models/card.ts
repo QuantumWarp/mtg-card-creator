@@ -1,18 +1,23 @@
-import { ManaCost } from "./mana-cost";
 import { Color } from "./color";
 
 export interface Card {
-  name: string;
-  set: string;
-  setIcon: string;
-  rarity: string;
+  real?: boolean;
 
-  manaCost: ManaCost;
+  name: string;
+  rarity: string;
+  collectorNumber: string;
+
+  set: {
+    name: string;
+    code: string;
+    iconUri: string;
+    cardCount: number;
+  };
+
+  manaCost: string;
   colors: Color[];
 
-  supertypes: string[];
-  types: string[];
-  subtypes: string[];
+  typeline: string;
 
   power?: string | number;
   toughness?: string | number;
@@ -20,7 +25,7 @@ export interface Card {
   text: string[];
   flavourText: string;
 
-  image: string;
+  artUri: string;
   artist: string;
 
   cardFaces: Omit<Card, "cardFaces">[];

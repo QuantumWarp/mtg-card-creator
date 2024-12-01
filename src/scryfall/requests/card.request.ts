@@ -8,6 +8,7 @@ export interface ScryfallCard {
   setId: string;
   setName: string;
   rarity: string;
+  collectorNumber: string;
 
   manaCost: string;
   colors: string[];
@@ -27,7 +28,7 @@ export interface ScryfallCard {
 }
 
 export const cardRequest = async (name: string): Promise<ScryfallCard> => {
-  const url = scryfallUrl + `/cards/named?exact=${name}`;
+  const url = scryfallUrl + `/cards/named?exact=${encodeURIComponent(name)}`;
 
   const json = await scryfallRequest(url);
 
@@ -38,11 +39,12 @@ export const cardRequest = async (name: string): Promise<ScryfallCard> => {
     setId: json.set_id,
     setName: json.set_name,
     rarity: json.rarity,
+    collectorNumber: json.collector_number,
 
     manaCost: json.mana_cost,
     colors: json.colors,
   
-    typeline: json.typeline,
+    typeline: json.type_line,
   
     power: json.power,
     toughness: json.toughness,

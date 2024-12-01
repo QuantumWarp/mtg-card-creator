@@ -3,6 +3,7 @@ import { Card } from "../models/card";
 import { ScryfallSet, setRequest } from "./requests/set.request";
 import { localStorageCache } from "./caching/local-storage.cache";
 import { useEffect, useState } from "react";
+import { Color } from "../models/color";
 
 export function useRealCard(name: string) {
   const [card, setCard] = useState<Card>();
@@ -27,18 +28,23 @@ const fetchRealCard = async (
 const createCard = (
   scryfallCard: ScryfallCard,
   scryfallSet: ScryfallSet
-) => ({
+): Card => ({
+    real: true,
     name: scryfallCard.name,
-    set: scryfallCard.setName,
-    setIcon: scryfallSet.iconSvgUri,
     rarity: scryfallCard.rarity,
+    collectorNumber: scryfallCard.collectorNumber,
+
+    set: {
+      name: scryfallCard.setName,
+      code: scryfallSet.code,
+      iconUri: scryfallSet.iconSvgUri,
+      cardCount: scryfallSet.cardCount,
+    },
   
-    manaCost: [],
-    colors: [],
+    manaCost: scryfallCard.manaCost,
+    colors: scryfallCard.colors as Color[],
   
-    supertypes: [],
-    types: [],
-    subtypes: [],
+    typeline: scryfallCard.typeline,
   
     power: scryfallCard.power,
     toughness: scryfallCard.toughness,
@@ -46,7 +52,7 @@ const createCard = (
     text: [scryfallCard.oracleText],
     flavourText: scryfallCard.flavourText,
   
-    image: scryfallCard.artUri,
+    artUri: scryfallCard.artUri,
     artist: scryfallCard.artist,
   
     cardFaces: []
