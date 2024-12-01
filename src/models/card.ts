@@ -3,6 +3,7 @@ import { Color } from "./color";
 export interface Card {
   real?: boolean;
 
+  id: string;
   name: string;
   rarity: string;
   collectorNumber: string;

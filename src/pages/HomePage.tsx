@@ -1,9 +1,12 @@
-import { Button, Grid2, Typography } from "@mui/material";
+import { Box, Button, Grid2, Typography } from "@mui/material";
 import { PageContainer } from "../common/PageContainer";
 import { useNavigate } from "react-router-dom";
+import { useMemo } from "react";
+import { getCards } from "../storage/card.storage";
 
 export function HomePage() {
   const navigate = useNavigate();
+  const cards = useMemo(() => getCards(), []);
 
   return (
     <PageContainer>
@@ -27,18 +30,17 @@ export function HomePage() {
       <Button
         variant="contained"
         sx={{ width: 100 }}
-        onClick={() => navigate({ pathname: "set" })}
-      >
-        Set
-      </Button>
-
-      <Button
-        variant="contained"
-        sx={{ width: 100 }}
         onClick={() => navigate({ pathname: "real-cards" })}
       >
         Real
       </Button>
+
+      {cards.map((x) => (
+        <Box key={x.id}>
+          {x.name}
+          <Button onClick={() => navigate({ pathname: `edit/${x.id}` })}>Edit</Button>
+        </Box>
+      ))}
     </PageContainer>
   );
 }

@@ -2,7 +2,7 @@ import { createHashRouter } from "react-router-dom";
 import { HomePage } from "./pages/HomePage";
 import { EditCardPage } from "./pages/EditCardPage";
 import { RealCardsPage } from "./pages/RealCardsPage";
-import { SetPage } from "./pages/SetPage";
+import { defaultCard, getCard } from "./storage/card.storage";
 
 export const router = createHashRouter([
   {
@@ -11,13 +11,12 @@ export const router = createHashRouter([
   },
   {
     path: "/edit/:cardId?",
-    loader: () => ({ card: undefined }),
+    loader: ({ params }) => {
+      const { cardId } = params;
+      const card = cardId ? getCard(cardId) : defaultCard();
+      return { card };
+    },
     element: <EditCardPage />,
-  },
-  {
-    path: "/set",
-    loader: () => ({ card: undefined }),
-    element: <SetPage />,
   },
   {
     path: "/real-cards",
