@@ -9,14 +9,14 @@ export interface Card {
   collectorNumber: string;
 
   set: {
-    name: string;
+    name?: string;
+    iconUri?: string;
     code: string;
-    iconUri: string;
     cardCount: number;
   };
 
   manaCost: string;
-  colors: Color[];
+  colors?: Color[];
 
   typeline: string;
 
@@ -24,10 +24,10 @@ export interface Card {
   toughness?: string | number;
 
   text: string;
-  flavourText: string;
+  flavorText?: string;
 
   artUri: string;
   artist: string;
 
-  cardFaces: Omit<Card, "cardFaces">[];
+  cardFaces?: Card[];
 }

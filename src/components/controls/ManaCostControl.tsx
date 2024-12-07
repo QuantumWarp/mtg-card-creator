@@ -19,7 +19,7 @@ export function ManaCostControl({
     if (encoded === "{1}") {
       const containsNumber = /{\d+}/.test(value);
       if (containsNumber) return value.replace(/{(\d+)}/g, (_, num) => `{${Number(num) + 1}}`);
-      else return value + "{1}";
+      else return "{1}" + value;
     } else {
       return encoded + value;
     }

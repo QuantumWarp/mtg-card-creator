@@ -18,17 +18,39 @@ export const palettes = {
   [Color.Green]: { dark: "#1e905c", mid: "#c6fff0", light: "#edffff" },
 };
 
-export const getPalettes = (card: Card) => {
-  const { colors, typeline } = card;
+const deriveColors = (card: Card, isLand: boolean) => {
+  const colors = [];
+  if (isLand) {
+    if (card.text.includes("{W}") || card.text.includes("Plains")) colors.push(Color.White);
+    if (card.text.includes("{B}") || card.text.includes("Swamp")) colors.push(Color.Black);
+    if (card.text.includes("{U}") || card.text.includes("Island")) colors.push(Color.Blue);
+    if (card.text.includes("{R}") || card.text.includes("Mountain")) colors.push(Color.Red);
+    if (card.text.includes("{G}") || card.text.includes("Forest")) colors.push(Color.Green);
+    if (card.text.includes("add one mana of any color")) return Object.values(Color);
+  } else {
+    if (card.manaCost.includes("W")) colors.push(Color.White);
+    if (card.manaCost.includes("B")) colors.push(Color.Black);
+    if (card.manaCost.includes("U")) colors.push(Color.Blue);
+    if (card.manaCost.includes("R")) colors.push(Color.Red);
+    if (card.manaCost.includes("G")) colors.push(Color.Green);
+  }
+  return colors;
+};
 
-  const isLand = typeline.includes("land");
-  let expectedColors = colors; // isLand ? colorIdentity : color;
+export const getPalettes = (card: Card) => {
+  const { typeline } = card;
+  const isLand = typeline.toLowerCase().includes("land");
+
+  const colors = isLand ? deriveColors(card, isLand) : (card.colors || deriveColors(card, isLand));
+
+
+  let expectedColors = colors;
 
   const manaCostOrder = Object.values(Color);
   expectedColors = expectedColors
     .sort((a, b) => manaCostOrder.indexOf(a) - manaCostOrder.indexOf(b))
 
-  switch (expectedColors.length) {
+    switch (expectedColors.length) {
     case 0: return [isLand ? palettes.Multicolor : palettes.Colorless];
     case 1: return [palettes[expectedColors[0]]];
     case 2: return [palettes[expectedColors[0]], palettes[expectedColors[1]], palettes.Multicolor];

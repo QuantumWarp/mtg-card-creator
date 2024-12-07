@@ -19,7 +19,7 @@ export interface ScryfallCard {
   toughness: string;
 
   oracleText: string;
-  flavourText: string;
+  flavorText: string;
 
   artUri: string;
   artist: string;
@@ -50,7 +50,7 @@ export const cardRequest = async (name: string): Promise<ScryfallCard> => {
     toughness: json.toughness,
   
     oracleText: json.oracle_text,
-    flavourText: json.flavour_text,
+    flavorText: json.flavor_text,
   
     artUri: json.image_uris.art_crop,
     artist: json.artist,

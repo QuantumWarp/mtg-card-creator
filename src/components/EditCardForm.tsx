@@ -1,6 +1,6 @@
 import { Button, Grid2, TextField } from "@mui/material";
 import { Card } from "../models/card";
-import { readAndCompressImage } from "../common/image";
+import { readAndCompressImageFile } from "../common/image";
 import { ManaCostControl } from "./controls/ManaCostControl";
 import { OracleTextControl } from "./controls/OracleTextControl";
 import { TypelineControl } from "./controls/TypelineControl";
@@ -48,10 +48,11 @@ export function EditCardForm({ card, onChange }: EditCardFormProps) {
           label="Flavour Text"
           fullWidth
           multiline
-          value={card.flavourText}
-          onChange={(e) => onChange({  ...card, flavourText: e.target.value })}
+          value={card.flavorText}
+          onChange={(e) => onChange({  ...card, flavorText: e.target.value })}
         />
       </Grid2>
+
       <Grid2 size={3}>
         <TextField
           label="Font Scaling"
@@ -72,12 +73,8 @@ export function EditCardForm({ card, onChange }: EditCardFormProps) {
             onChange={async (event) => {
               const selectedFile = event.target.files?.[0];
               if (!selectedFile) return;
-              const compressedBlob = await readAndCompressImage(selectedFile);
-              const reader = new FileReader();
-              reader.readAsDataURL(compressedBlob);
-              reader.onload = () => {
-                onChange({ ...card, artUri: reader.result as string });
-              };
+              const artUri = await readAndCompressImageFile(selectedFile);
+              onChange({ ...card, artUri });
             }}
           />
         </Button>

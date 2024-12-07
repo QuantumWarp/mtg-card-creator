@@ -1,12 +1,11 @@
 import { Box, Button, Grid2, Typography } from "@mui/material";
 import { PageContainer } from "../common/PageContainer";
-import { useNavigate } from "react-router-dom";
-import { useMemo } from "react";
-import { getCards } from "../storage/card.storage";
+import { useLoaderData, useNavigate } from "react-router-dom";
+import { Card } from "../models/card";
 
 export function HomePage() {
   const navigate = useNavigate();
-  const cards = useMemo(() => getCards(), []);
+  const { cards } = useLoaderData() as { cards: Card[] };
 
   return (
     <PageContainer>

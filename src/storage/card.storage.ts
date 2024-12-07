@@ -4,7 +4,8 @@ import { Card } from "../models/card";
 export const getCards = (): Card[] => {
   const keys = Object.keys(localStorage);
   const cardIds = keys.filter((x) => x.startsWith("card-")).map((x) => x.replace("card-", ""));
-  const cards = cardIds.map((x) => getCard(x))
+  const cards = cardIds.map((x) => getCard(x));
+
   return cards.sort((a, b) => a.name.localeCompare(b.name));
 }
 
@@ -45,7 +46,7 @@ export const defaultCard = (): Card => {
     toughness: undefined,
 
     text: "",
-    flavourText: "",
+    flavorText: "",
 
     artUri: "",
     artist: "",

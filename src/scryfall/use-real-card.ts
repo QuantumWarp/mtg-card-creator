@@ -50,8 +50,8 @@ const createCard = (
     power: scryfallCard.power,
     toughness: scryfallCard.toughness,
   
-    text: [scryfallCard.oracleText],
-    flavourText: scryfallCard.flavourText,
+    text: scryfallCard.oracleText,
+    flavorText: scryfallCard.flavorText,
   
     artUri: scryfallCard.artUri,
     artist: scryfallCard.artist,
