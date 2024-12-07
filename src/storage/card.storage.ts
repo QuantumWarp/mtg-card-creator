@@ -44,7 +44,7 @@ export const defaultCard = (): Card => {
     power: undefined,
     toughness: undefined,
 
-    text: [],
+    text: "",
     flavourText: "",
 
     artUri: "",

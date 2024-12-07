@@ -30,6 +30,7 @@ const createCard = (
   scryfallSet: ScryfallSet
 ): Card => ({
     real: true,
+    id: scryfallCard.id,
     name: scryfallCard.name,
     rarity: scryfallCard.rarity,
     collectorNumber: scryfallCard.collectorNumber,

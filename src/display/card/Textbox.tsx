@@ -27,7 +27,7 @@ export function Textbox({ card }: { card: Card }) {
         whiteSpace: "pre-line"
       }}
     >
-      <TextParser text={text.join(" ")} />
+      <TextParser text={text} />
     </Box>
   );
 }

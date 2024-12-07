@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { Symbol } from "./Symbol";
+import { CardSymbol } from "./CardSymbol";
 
 export function ManaCost({ manaCost }: { manaCost: string }) {
   if (!manaCost) return;
@@ -10,10 +10,10 @@ export function ManaCost({ manaCost }: { manaCost: string }) {
     <Box>
       {split.map((x, index) => {
         if (x.length === 0) return undefined;
-        if (x.length > 1 || x === ".") return <span key={x}>{x}</span>;
+        if (x.length > 10 || x === ".") return <span key={x}>{x}</span>;
         return (
           <Box display="inline-block" key={index + x}>
-            <Symbol encoded={`{${x}}`} />
+            <CardSymbol encoded={`{${x}}`} />
           </Box>
         );
       })}

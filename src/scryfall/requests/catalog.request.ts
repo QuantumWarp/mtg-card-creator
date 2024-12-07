@@ -1,22 +1,20 @@
-import { localStorageCache } from "../caching/local-storage.cache";
 import { scryfallRequest } from "../helpers/scryfall.request";
 import { scryfallUrl } from "../helpers/url";
 
-export type CatalogTypes =
-  "artifact" |
-  "battle" |
-  "card" |
-  "creature" |
-  "enchantment" |
-  "land" |
-  "spell" |
-  "supertype";
+export enum CatalogType {
+  Card = "card",
+  Supertypes = "supertypes",
+  Artifact = "artifact",
+  Battle = "battle",
+  Enchantment = "enchantment",
+  Land = "land",
+  Spell = "spell",
+  Creature = "creature",
+}
 
-export const catalogRequest = async (catalog: CatalogTypes): Promise<string[]> => {
-  const url = scryfallUrl + `/catalog/${catalog}-types`;
-
-  return localStorageCache(`${catalog}-types`, async () => {
-    const json = await scryfallRequest(url);
-    return json.data;
-  });
+export const catalogRequest = async (catalog: CatalogType): Promise<string[]> => {
+  const urlEnd = catalog.endsWith("types") ? catalog : `${catalog}-types`;
+  const url = scryfallUrl + `/catalog/${urlEnd}`;
+  const json = await scryfallRequest(url);
+  return json.data;
 }

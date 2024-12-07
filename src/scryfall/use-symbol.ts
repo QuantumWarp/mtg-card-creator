@@ -1,23 +1,20 @@
-import { useEffect, useRef, useState } from "react";
-import { symbologyRequest } from "./requests/symbology.request";
+import { useEffect, useState } from "react";
 import { getFromMemoryCache, memoryCache } from "./caching/memory.cache";
+import { useSymbology } from "./use-symbology";
+import { Symbology } from "./requests/symbology.request";
 
 export function useSymbol(encoded: string) {
   const key = `symbol-${encoded}`;
-  const [data, setData] = useState(getFromMemoryCache(key));
-
-  const prevName = useRef<string>();
+  const symbology = useSymbology();
+  const [data, setData] = useState<Symbology | undefined>(getFromMemoryCache(key));
 
   useEffect(() => {
-    if (prevName.current === encoded) return;
-    prevName.current = encoded;
-
+    if (!symbology) return;
     memoryCache(key, async () => {
-      const symbology = await symbologyRequest();
-      const symbol = symbology.find((x) => x.symbol === encoded);
-      return symbol?.svgUri;
+      console.log(encoded)
+      return symbology.find((x) => x.symbol === encoded);
     }).then((x) => setData(x));
-  }, [encoded, key]);
+  }, [encoded, key, symbology]);
 
   return data;
 }

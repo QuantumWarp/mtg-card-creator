@@ -23,7 +23,7 @@ export interface Card {
   power?: string | number;
   toughness?: string | number;
 
-  text: string[];
+  text: string;
   flavourText: string;
 
   artUri: string;
