@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 import { Nameplate } from './Nameplate';
 import { Art } from './Art';
 import { Textbox } from './Textbox';
@@ -9,7 +9,7 @@ import { TexturedBackground } from './TexturedBackground';
 import { sizing } from '../style.helper';
 import { Card } from '../../models/card';
 import { getGradient, getPalettes } from '../palette';
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 type CardDisplayProps = {
   width?: string;
@@ -20,15 +20,23 @@ export function CardDisplay({
   width, card,
 }: CardDisplayProps) {
   const cardRef = useRef<HTMLElement>();
+  const theme = useTheme();
   const [fontSize, setFontSize] = useState(24);
   const [color1, color2] = getPalettes(card);
   const background = getGradient(color1.dark, color2?.dark);
 
-  useLayoutEffect(() => {
-    if (cardRef.current) {
-      const widthPx = cardRef.current.offsetWidth;
-      setFontSize(widthPx * 0.075);
-    }
+  useEffect(() => {
+    const updateFontSize = () => {
+      if (cardRef.current) {
+        const widthPx = cardRef.current.offsetWidth;
+        setFontSize(widthPx * 0.075);
+      }
+    };
+
+    updateFontSize();
+
+    window.addEventListener('resize', updateFontSize);
+    return () => window.removeEventListener('resize', updateFontSize);
   }, [cardRef])
 
   return (
@@ -36,6 +44,7 @@ export function CardDisplay({
       ref={cardRef}
       sx={{
         position: "relative",
+        boxShadow: theme.palette.mode === "dark" ? "none" : 5,
         backgroundColor: "black",
         fontFamily: "Matrix, Garamond, serif",
         borderRadius: ".6em",
