@@ -2,6 +2,7 @@ import { Box, Button, Grid2, Typography } from "@mui/material";
 import { PageContainer } from "../common/PageContainer";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { Card } from "../models/card";
+import { CardDisplay } from "../display/card/CardDisplay";
 
 export function HomePage() {
   const navigate = useNavigate();
@@ -36,7 +37,8 @@ export function HomePage() {
 
       {cards.map((x) => (
         <Box key={x.id}>
-          {x.name}
+          <CardDisplay card={x} />
+          <CardDisplay card={x} width="300px" />
           <Button onClick={() => navigate({ pathname: `edit/${x.id}` })}>Edit</Button>
         </Box>
       ))}

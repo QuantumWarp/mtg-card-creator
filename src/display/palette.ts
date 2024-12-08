@@ -41,8 +41,8 @@ export const getPalettes = (card: Card) => {
   const { typeline } = card;
   const isLand = typeline.toLowerCase().includes("land");
 
-  const colors = isLand ? deriveColors(card, isLand) : (card.colors || deriveColors(card, isLand));
-
+  let colors = card.colors;
+  colors = (isLand || !colors) ? deriveColors(card, isLand) : colors;
 
   let expectedColors = colors;
 

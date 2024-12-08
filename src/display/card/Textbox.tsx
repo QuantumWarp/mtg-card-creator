@@ -12,18 +12,17 @@ export function Textbox({ card }: { card: Card }) {
     <Box
       sx={{
         background: background,
-        p: 1,
+        p: "1.8%",
         flex: 28,
         boxSizing: "border-box",
-        border: "1px solid black",
+        border: "0.05em solid black",
         display: "flex",
         lineHeight: 1,
         flexDirection: "column",
-        justifyContent: "center",
         alignItems: "flex-start",
         textAlign: "start",
-        fontSize: "24px",
-        boxShadow: "inset 1px 1px 4px 3px rgba(0,0,0,0.3)",
+        fontSize: "68%",
+        boxShadow: "inset 0.04em 0.04em 0.16em 0.12em rgba(0,0,0,0.3)",
         overflow: "auto",
         whiteSpace: "pre-line"
       }}
@@ -36,15 +35,15 @@ export function Textbox({ card }: { card: Card }) {
         <Box>
           <Box
             sx={{
-              height: '2px', // Adjust thickness
+              height: '0.1em',
               background: 'linear-gradient(to right, transparent, #A9A9A9 50%, transparent)',
-              borderRadius: '100%', // Add roundness to taper effect
+              borderRadius: '100%',
               width: '100%',
-              my: 1
+              my: "0.4em"
             }}
           />
 
-          <Box my={0.5} fontSize="22px">
+          <Box my="0.2em" fontSize="90%">
             <em>
               <TextParser text={flavorText} />
             </em>

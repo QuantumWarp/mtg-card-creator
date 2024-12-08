@@ -8,7 +8,7 @@ export function Art({ card }: { card: Card }) {
         flex: 38,
         height: 0,
         boxSizing: "border-box",
-        border: "2px solid black",
+        border: "0.06em solid black",
         display: "flex",
         justifyContent: "stretch",
         alignItems: "stretch"

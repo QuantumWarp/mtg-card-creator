@@ -16,7 +16,7 @@ export function Nameplate({ card }: { card: Card }) {
       sx={{
         position: "relative",
         height: "8%",
-        fontSize: "24px",
+        fontSize: "64%",
         fontWeight: "bold"
       }}
     >
@@ -26,7 +26,7 @@ export function Nameplate({ card }: { card: Card }) {
           background: background,
           p: "1%",
           boxSizing: "border-box",
-          boxShadow: "-3px 0 2px rgba(0, 0, 0, 0.4)",
+          boxShadow: "-0.10em 0 0.08em rgba(0, 0, 0, 0.4)",
           ...sizing(106, 100, -3),
           ...roundedBorder(15, 30),
         }}
@@ -36,11 +36,11 @@ export function Nameplate({ card }: { card: Card }) {
             backgroundColor: color.mid,
             p: "0.4% 2.4% 1% 2.4%",
             boxSizing: "border-box",
-            border: "1px solid black",
+            border: "0.05em solid black",
             ...sizing(100, 100),
             ...roundedBorder(10, 20),
             ...center({ justifyContent: "space-between" }),
-            boxShadow: "inset  3px -3px 3px rgba(0, 0, 0, 0.5), inset -3px 3px 3px rgba(255, 255, 255, 0.5)"
+            boxShadow: "inset 0.12em -0.12em 0.12em rgba(0, 0, 0, 0.5), inset -0.12em 0.12em 0.12em rgba(255, 255, 255, 0.5)"
           }}
         >
           <Box>{name}</Box>

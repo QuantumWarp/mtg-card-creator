@@ -17,13 +17,13 @@ export function BottomInfo({ card }: { card: Card }) {
       sx={{
         position: "absolute",
         bottom: "2.5%",
-        px: 4,
+        px: "6.4%",
         boxSizing: "border-box",
         display: "flex",
         justifyContent: "space-between",
         width: "100%",
         color: 'white',
-        fontSize: "12px"
+        fontSize: "32%"
       }}
     >
       <Box
@@ -37,7 +37,7 @@ export function BottomInfo({ card }: { card: Card }) {
         <Box>{setCode} - {artist}</Box>
       </Box>
 
-      <Box mt={card.power !== undefined ? 1.8 : 0}>
+      <Box mt={card.power !== undefined ? "2.8%" : 0}>
         {card.real ? "© Wizards of the Coast" : "Custom Card"}
       </Box>
     </Box>

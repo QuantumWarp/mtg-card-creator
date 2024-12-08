@@ -14,10 +14,10 @@ export function PowerToughness({ card }: { card: Card }) {
         height: "6.5%",
         display: "flex",
         width: "18%",
-        fontSize: "24px",
+        fontSize: "64%",
         fontWeight: "bold",
-        bottom: "-12px",
-        right: "-14px"
+        bottom: "-2%",
+        right: "-3.2%"
       }}
     >
       <Box
@@ -28,7 +28,7 @@ export function PowerToughness({ card }: { card: Card }) {
           ...center(),
           ...sizing(100, 100, -5),
           ...roundedBorder(10, 20),
-          boxShadow: "inset 3px -3px 3px rgba(0, 0, 0, 0.6), inset -3px 3px 3px rgba(255, 255, 255, 0.5)"
+          boxShadow: "inset 0.12em -0.12em 0.12em rgba(0, 0, 0, 0.6), inset -0.12em 0.12em 0.12em rgba(255, 255, 255, 0.5)"
         }}
       >
         <Box
@@ -40,7 +40,7 @@ export function PowerToughness({ card }: { card: Card }) {
             ...center(),
             ...sizing(90, 85, -5),
             ...roundedBorder(10, 20),
-            boxShadow: "inset 3px -3px 3px rgba(255, 255, 255, 0.3), inset -3px 3px 3px rgba(0, 0, 0, 0.5)"
+            boxShadow: "inset 0.12em -0.12em 0.12em rgba(255, 255, 255, 0.3), inset -0.12em 0.12em 0.12em rgba(0, 0, 0, 0.5)"
           }}
         >
           {card.power}/{card.toughness}

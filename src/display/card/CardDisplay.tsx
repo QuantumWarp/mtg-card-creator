@@ -9,20 +9,39 @@ import { TexturedBackground } from './TexturedBackground';
 import { sizing } from '../style.helper';
 import { Card } from '../../models/card';
 import { getGradient, getPalettes } from '../palette';
+import { useLayoutEffect, useRef, useState } from 'react';
 
-export function CardDisplay({ card }: { card: Card }) {
+type CardDisplayProps = {
+  width?: string;
+  card: Card;
+}
+
+export function CardDisplay({
+  width, card,
+}: CardDisplayProps) {
+  const cardRef = useRef<HTMLElement>();
+  const [fontSize, setFontSize] = useState(24);
   const [color1, color2] = getPalettes(card);
   const background = getGradient(color1.dark, color2?.dark);
 
+  useLayoutEffect(() => {
+    if (cardRef.current) {
+      const widthPx = cardRef.current.offsetWidth;
+      setFontSize(widthPx * 0.075);
+    }
+  }, [cardRef])
+
   return (
     <Box
+      ref={cardRef}
       sx={{
         position: "relative",
         backgroundColor: "black",
         fontFamily: "Matrix, Garamond, serif",
-        borderRadius: 4,
-        width: 500,
-        height: 700,
+        borderRadius: ".6em",
+        width: width || "min(100%, 500px)",
+        aspectRatio: 0.715,
+        fontSize: `${fontSize}px`,
         color: "black"
       }}
     >
@@ -37,7 +56,7 @@ export function CardDisplay({ card }: { card: Card }) {
           boxSizing: "border-box",
           display: "flex",
           flexDirection: "column",
-          boxShadow: "-5px 4px 2px rgba(0, 0, 0, 0.5)",
+          boxShadow: "-0.14em 0.11em 0.05em rgba(0, 0, 0, 0.5)",
           ...sizing(88, 88, 6, 4),
         }}
       >

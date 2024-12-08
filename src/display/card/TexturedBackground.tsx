@@ -15,7 +15,7 @@ export function TexturedBackground({ card }: { card: Card }) {
       sx={{
         position: "absolute",
         backgroundColor: base,
-        borderRadius: "8px 8px 80px 80px",
+        borderRadius: "1.4% 1.4% 15% 15%",
         ...sizing(93, 88, 3.5, 2.5),
       }}
     />

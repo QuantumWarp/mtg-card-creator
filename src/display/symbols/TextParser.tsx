@@ -17,7 +17,7 @@ export function TextParser({ text }: TextParserProps) {
         if (!/^\{.*?\}$/.test(x)) return <span key={x}>{x}</span>;
         return (
           <Box display="inline-block" key={index + x}>
-            <CardSymbol encoded={x} size={19} noShadow />
+            <CardSymbol encoded={x} size="0.8em" noShadow />
           </Box>
         );
       })}

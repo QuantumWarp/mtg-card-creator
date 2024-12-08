@@ -23,7 +23,7 @@ export function Typeplate({ card }: { card: Card }) {
       sx={{
         position: "relative",
         height: "8%",
-        fontSize: "21px",
+        fontSize: "56%",
         fontWeight: "bold"
       }}
     >
@@ -33,8 +33,8 @@ export function Typeplate({ card }: { card: Card }) {
           background: background,
           p: "0.8%",
           boxSizing: "border-box",
-          boxShadow: "-3px 0 2px rgba(0, 0, 0, 0.4)",
-          clipPath: "inset(0px -5px 0px -5px)",
+          boxShadow: "-0.12em 0 0.08em rgba(0, 0, 0, 0.4)",
+          clipPath: "inset(0px -0.2em 0px -0.2em)",
           ...sizing(106, 100, -3),
           ...roundedBorder(15, 30),
         }}
@@ -43,22 +43,32 @@ export function Typeplate({ card }: { card: Card }) {
           sx={{
             backgroundColor: color.mid,
             p: "0.4% 2.4% 1% 2.4%",
-            border: "1px solid black",
+            border: "0.02em solid black",
             boxSizing: "border-box",
             ...sizing(100, 100),
             ...roundedBorder(10, 20),
             ...center({ justifyContent: "space-between" }),
-            boxShadow: "inset 3px -3px 3px rgba(0, 0, 0, 0.5), inset -3px 3px 3px rgba(255, 255, 255, 0.5)"
+            boxShadow: "inset 0.12em -0.12em 0.12em rgba(0, 0, 0, 0.5), inset -0.12em 0.12em 0.12em rgba(255, 255, 255, 0.5)"
           }}
         >
           <Box>{typeline}</Box>
 
-          <Box mt={1}>
+          <Box display="flex" alignItems="center" justifyContent="center" position="relative">
             <img
-              style={{ filter: rarityMap[rarity] }}
-              src={iconUri}
-              width={28}
-              height={28} 
+              src={iconUri || "./custom-set.svg"}
+              style={{ position: "absolute", width: "1.56em", height: "1.55em" }}
+            />
+            <img
+              src={iconUri || "./custom-set.svg"}
+              style={{ position: "absolute", width: "1.44em", height: "1.45em" }}
+            />
+            <img
+              src={iconUri || "./custom-set.svg"}
+              style={{
+                filter: rarityMap[rarity],
+                width: "1.5em",
+                height: "1.5em"
+              }}
             />
           </Box>
         </Box>
