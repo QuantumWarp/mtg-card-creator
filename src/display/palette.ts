@@ -49,8 +49,8 @@ export const getPalettes = (card: Card) => {
   const manaCostOrder = Object.values(Color);
   expectedColors = expectedColors
     .sort((a, b) => manaCostOrder.indexOf(a) - manaCostOrder.indexOf(b))
-
-    switch (expectedColors.length) {
+  console.log(card.colors)
+  switch (expectedColors.length) {
     case 0: return [isLand ? palettes.Multicolor : palettes.Colorless];
     case 1: return [palettes[expectedColors[0]]];
     case 2: return [palettes[expectedColors[0]], palettes[expectedColors[1]], palettes.Multicolor];

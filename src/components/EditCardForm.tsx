@@ -1,9 +1,11 @@
-import { Button, Grid2, TextField } from "@mui/material";
+import { Button, FormControl, Grid2, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { Card } from "../models/card";
-import { readAndCompressImageFile } from "../common/image";
+import { readAndCompressImageFile } from "../storage/image";
 import { ManaCostControl } from "./controls/ManaCostControl";
 import { OracleTextControl } from "./controls/OracleTextControl";
 import { TypelineControl } from "./controls/TypelineControl";
+import { Rarity } from "../models/rarity";
+import Case from "case";
 
 type EditCardFormProps = {
   card: Card;
@@ -13,7 +15,7 @@ type EditCardFormProps = {
 export function EditCardForm({ card, onChange }: EditCardFormProps) {
   return (
     <Grid2 container spacing={2} alignItems="center">
-      <Grid2 size={6}>
+      <Grid2 size={{ xs: 12, sm: 8 }}>
         <TextField
           label="Name"
           fullWidth
@@ -29,11 +31,28 @@ export function EditCardForm({ card, onChange }: EditCardFormProps) {
         />
       </Grid2>
 
-      <Grid2 size={12}>
+      <Grid2 size={9}>
         <TypelineControl
           value={card.typeline}
           onChange={(typeline) => onChange({  ...card, typeline })}
         />
+      </Grid2>
+
+      <Grid2 size={3}>
+        <FormControl fullWidth>
+          <InputLabel>Rarity</InputLabel>
+          <Select
+            label="Rarity"
+            value={card.rarity}
+            onChange={(e) => onChange({  ...card, rarity: e.target.value as Rarity })}
+          >
+            {Object.values(Rarity).map((x) => (
+              <MenuItem key={x} value={x}>
+                {Case.title(x)}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
       </Grid2>
 
       <Grid2 size={12}>
@@ -55,16 +74,15 @@ export function EditCardForm({ card, onChange }: EditCardFormProps) {
 
       <Grid2 size={3}>
         <TextField
-          label="Font Scaling"
-          type="number"
+          label="Text Scaling"
           fullWidth
-          value={card.set.cardCount}
-          onChange={(e) => onChange({  ...card, set: { ...card.set, cardCount: Number(e.target.value) } })}
+          value={card.textScaling === undefined ? "1" : card.textScaling}
+          onChange={(e) => onChange({  ...card, textScaling: e.target.value })}
         />
       </Grid2>
 
       <Grid2 size={4} display="flex" justifyContent="center">
-        <Button component="label" sx={{ p: 1.5, flex: 1 }}>
+        <Button component="label" sx={{ p: 1.5, flex: 1 }} variant="outlined">
           Choose Image
           <input
             style={{ display: "none" }}

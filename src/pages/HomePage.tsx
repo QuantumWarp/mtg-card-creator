@@ -1,5 +1,5 @@
 import { Button, ButtonBase, Grid2, Typography } from "@mui/material";
-import { PageContainer } from "../common/PageContainer";
+import { PageContainer } from "../components/PageContainer";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { Card } from "../models/card";
 import { CardDisplay } from "../display/card/CardDisplay";

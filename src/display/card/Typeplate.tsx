@@ -2,12 +2,13 @@ import { Box } from "@mui/material";
 import { center, roundedBorder, sizing } from "../style.helper";
 import { Card } from "../../models/card";
 import { getGradient, getPalettes } from "../palette";
+import { Rarity } from "../../models/rarity";
 
 export function Typeplate({ card }: { card: Card }) {
   const { typeline, set, rarity } = card;
   const { iconUri } = set;
 
-  const rarityMap: Record<string, string> = {
+  const rarityMap: Record<Rarity, string> = {
     common: "",
     uncommon: "invert(0.5) sepia(1) saturate(1) hue-rotate(175deg)",
     rare: "invert(0.5) sepia(1) saturate(5) hue-rotate(18deg)",

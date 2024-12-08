@@ -1,5 +1,6 @@
 import { v4 as uuid } from "uuid";
 import { Card } from "../models/card";
+import { Rarity } from "../models/rarity";
 
 export const getCards = (): Card[] => {
   const keys = Object.keys(localStorage);
@@ -27,7 +28,7 @@ export const defaultCard = (): Card => {
   return {
     id: uuid(),
     name: "",
-    rarity: "",
+    rarity: Rarity.Common,
     collectorNumber: "",
 
     set: {
@@ -38,7 +39,7 @@ export const defaultCard = (): Card => {
     },
 
     manaCost: "",
-    colors: [],
+    colors: undefined,
 
     typeline: "",
 
@@ -47,6 +48,7 @@ export const defaultCard = (): Card => {
 
     text: "",
     flavorText: "",
+    textScaling: 1,
 
     artUri: "",
     artist: "",

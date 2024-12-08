@@ -1,18 +1,24 @@
-import { createTheme, CssBaseline, ThemeProvider, useMediaQuery } from '@mui/material';
+import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import { RouterProvider } from 'react-router-dom';
 import { router } from './router';
 
 export function App() {
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const theme = createTheme({
-    palette: {
-      mode: 'light',
-      background: {
-        default: '#f0f0f0',
-      },
-    },
     colorSchemes: {
-      dark: prefersDarkMode
+      light: {
+        palette: {
+          background: {
+            default: '#f0f0f0',
+          },
+        },
+      },
+      dark: {
+        palette: {
+          background: {
+            default: '#1b1b1b',
+          },
+        },
+      },
     },
   });
 

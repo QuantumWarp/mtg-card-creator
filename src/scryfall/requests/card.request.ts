@@ -1,3 +1,4 @@
+import { Rarity } from "../../models/rarity";
 import { scryfallRequest } from "../helpers/scryfall.request";
 import { scryfallUrl } from "../helpers/url";
 
@@ -7,7 +8,7 @@ export interface ScryfallCard {
   name: string;
   setId: string;
   setName: string;
-  rarity: string;
+  rarity: Rarity;
   collectorNumber: string;
 
   manaCost: string;

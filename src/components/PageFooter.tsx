@@ -1,12 +1,19 @@
 import { DarkMode, HelpOutline, LightMode } from "@mui/icons-material";
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Link, Tooltip, Typography, useColorScheme } from "@mui/material";
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Link, Tooltip, Typography, useColorScheme, useMediaQuery } from "@mui/material";
 import { useState } from "react";
 
 export function PageFooter() {
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const { mode, setMode, systemMode } = useColorScheme();
   const color = mode === "system" ? systemMode : mode;
   const year = new Date().getFullYear();
   const [openAbout, setOpenAbout] = useState(false);
+
+  const updateMode = () => {
+    const nextColor = color !== 'dark' ? 'dark' : 'light';
+    const nextMode = (prefersDarkMode && nextColor === "dark") ? "system" : nextColor;
+    setMode(nextMode);
+  };
 
   return (
     <Box p={2} display="flex" justifyContent="center" flexDirection="column">
@@ -18,7 +25,7 @@ export function PageFooter() {
         </Tooltip>
 
         <Tooltip title={color !== 'dark' ? "Dark mode" : "Light mode"} placement="top">
-          <IconButton onClick={() => setMode(color !== 'dark' ? 'dark' : 'light')}>
+          <IconButton onClick={updateMode}>
             {color === 'dark' && <LightMode />}
             {color !== 'dark' && <DarkMode />}
           </IconButton>

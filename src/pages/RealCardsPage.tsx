@@ -1,5 +1,5 @@
 import { Autocomplete, Grid2, TextField, Typography } from "@mui/material";
-import { PageContainer } from "../common/PageContainer";
+import { PageContainer } from "../components/PageContainer";
 import { useRealCard } from "../scryfall/use-real-card";
 import { CardDisplay } from "../display/card/CardDisplay";
 import { useState } from "react";

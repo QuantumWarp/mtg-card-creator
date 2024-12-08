@@ -1,11 +1,12 @@
 import { Color } from "./color";
+import { Rarity } from "./rarity";
 
 export interface Card {
   real?: boolean;
 
   id: string;
   name: string;
-  rarity: string;
+  rarity: Rarity;
   collectorNumber: string;
 
   set: {
@@ -25,6 +26,7 @@ export interface Card {
 
   text: string;
   flavorText?: string;
+  textScaling?: string | number;
 
   artUri: string;
   artist: string;

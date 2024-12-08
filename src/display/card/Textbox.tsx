@@ -21,7 +21,7 @@ export function Textbox({ card }: { card: Card }) {
         flexDirection: "column",
         alignItems: "flex-start",
         textAlign: "start",
-        fontSize: "68%",
+        fontSize: (68 * (Number(card.textScaling) || 1)) + "%",
         boxShadow: "inset 0.04em 0.04em 0.16em 0.12em rgba(0,0,0,0.3)",
         overflow: "auto",
         whiteSpace: "pre-line"

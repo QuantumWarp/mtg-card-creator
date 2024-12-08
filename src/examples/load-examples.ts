@@ -1,4 +1,4 @@
-import { compressImage } from "../common/image";
+import { compressImage } from "../storage/image";
 import { crystallize } from "./crystallize";
 import { oceansEdge } from "./oceans-edge";
 import { packCaller } from "./pack-caller";

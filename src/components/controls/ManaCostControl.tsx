@@ -32,13 +32,13 @@ export function ManaCostControl({
 
   const symbolButton = (encoded: string) => (
     <ButtonBase sx={{ p: 0.4 }} onClick={() => changeMana(encoded)}>
-      <CardSymbol encoded={encoded} size={30} noShadow />
+      <CardSymbol encoded={encoded} size="30px" noShadow />
     </ButtonBase>
   );
 
   return (
     <Grid2 container spacing={2}>
-      <Grid2 size={6}>
+      <Grid2 size={{ xs: 12, sm: 6 }}>
         <TextField
           label="Mana Cost"
           fullWidth
@@ -47,7 +47,7 @@ export function ManaCostControl({
         />
       </Grid2>
       
-      <Grid2 size={6} display="flex">
+      <Grid2 size={{ xs: 12, sm: 6 }} display="flex" justifyContent="center">
         {symbolButton("{W}")}
         {symbolButton("{U}")}
         {symbolButton("{B}")}
