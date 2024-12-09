@@ -1,15 +1,17 @@
 import { Button, ButtonBase, Grid2, TextField } from "@mui/material";
 import { CardSymbol } from "../../display/symbols/CardSymbol";
 import { SymbolSelector } from "./SymbolSelector";
-import { useState } from "react";
+import { MutableRefObject, useState } from "react";
 
 
 type ManaCostControlProps = {
+  inputRef?: MutableRefObject<HTMLInputElement | undefined>;
   value: string;
   onChange: (value: string) => void;
 }
 
 export function ManaCostControl({
+  inputRef,
   value,
   onChange
 }: ManaCostControlProps) {
@@ -31,7 +33,7 @@ export function ManaCostControl({
   }
 
   const symbolButton = (encoded: string) => (
-    <ButtonBase sx={{ p: 0.4 }} onClick={() => changeMana(encoded)}>
+    <ButtonBase sx={{ p: 0.4 }} onClick={() => changeMana(encoded)} tabIndex={-1}>
       <CardSymbol encoded={encoded} size="30px" noShadow />
     </ButtonBase>
   );
@@ -40,6 +42,7 @@ export function ManaCostControl({
     <Grid2 container spacing={2}>
       <Grid2 size={{ xs: 12, sm: 6 }}>
         <TextField
+          inputRef={inputRef}
           label="Mana Cost"
           fullWidth
           value={value}
@@ -55,7 +58,7 @@ export function ManaCostControl({
         {symbolButton("{G}")}
         {symbolButton("{1}")}
 
-        <Button onClick={(e) => setAnchorEl(e.currentTarget)}>
+        <Button onClick={(e) => setAnchorEl(e.currentTarget)} tabIndex={-1}>
           More
         </Button>
 

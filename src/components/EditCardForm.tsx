@@ -16,9 +16,31 @@ type EditCardFormProps = {
 
 export function EditCardForm({ card, focusKey, onChange }: EditCardFormProps) {
   const nameRef = useRef<HTMLInputElement>();
+  const manaCostRef = useRef<HTMLInputElement>();
+  const typelineRef = useRef<HTMLInputElement>();
+  const rarityRef = useRef<HTMLSelectElement>();
+  const textRef = useRef<HTMLInputElement>();
+  const flavorRef = useRef<HTMLInputElement>();
+  const powerRef = useRef<HTMLInputElement>();
+  const toughnessRef = useRef<HTMLInputElement>();
+  const imageRef = useRef<HTMLLabelElement>(null);
+  const artistRef = useRef<HTMLInputElement>();
+  const collectorNumberRef = useRef<HTMLInputElement>();
+  const setCodeRef = useRef<HTMLInputElement>();
 
   useEffect(() => {
-    if (focusKey === "name") nameRef.current?.select();
+    if (focusKey === "name") nameRef.current?.focus();
+    if (focusKey === "manaCost") manaCostRef.current?.select();
+    if (focusKey === "typeline") typelineRef.current?.focus();
+    if (focusKey === "rarity") rarityRef.current?.focus();
+    if (focusKey === "text") textRef.current?.focus();
+    if (focusKey === "flavorText") flavorRef.current?.focus();
+    if (focusKey === "power") powerRef.current?.select();
+    if (focusKey === "toughness") toughnessRef.current?.select();
+    if (focusKey === "artUri") imageRef.current?.click();
+    if (focusKey === "artist") artistRef.current?.focus();
+    if (focusKey === "collectorNumber") collectorNumberRef.current?.select();
+    if (focusKey === "set") setCodeRef.current?.select();
   }, [focusKey]);
   
   return (
@@ -36,6 +58,7 @@ export function EditCardForm({ card, focusKey, onChange }: EditCardFormProps) {
 
       <Grid2 size={12}>
         <ManaCostControl
+          inputRef={manaCostRef}
           value={card.manaCost}
           onChange={(manaCost) => onChange({  ...card, manaCost })}
         />
@@ -43,6 +66,7 @@ export function EditCardForm({ card, focusKey, onChange }: EditCardFormProps) {
 
       <Grid2 size={9}>
         <TypelineControl
+          inputRef={typelineRef}
           value={card.typeline}
           onChange={(typeline) => onChange({  ...card, typeline })}
         />
@@ -52,6 +76,7 @@ export function EditCardForm({ card, focusKey, onChange }: EditCardFormProps) {
         <FormControl fullWidth>
           <InputLabel>Rarity</InputLabel>
           <Select
+            inputRef={rarityRef}
             label="Rarity"
             value={card.rarity}
             onChange={(e) => onChange({  ...card, rarity: e.target.value as Rarity })}
@@ -67,13 +92,15 @@ export function EditCardForm({ card, focusKey, onChange }: EditCardFormProps) {
 
       <Grid2 size={12}>
         <OracleTextControl
+          inputRef={textRef}
           value={card.text}
           onChange={(text) => onChange({  ...card, text })}
         />
       </Grid2>
 
-      <Grid2 size={9}>
+      <Grid2 size={12}>
         <TextField
+          inputRef={flavorRef}
           label="Flavour Text"
           fullWidth
           multiline
@@ -82,7 +109,7 @@ export function EditCardForm({ card, focusKey, onChange }: EditCardFormProps) {
         />
       </Grid2>
 
-      <Grid2 size={3}>
+      <Grid2 size={4}>
         <TextField
           label="Text Scaling"
           fullWidth
@@ -90,9 +117,29 @@ export function EditCardForm({ card, focusKey, onChange }: EditCardFormProps) {
           onChange={(e) => onChange({  ...card, textScaling: e.target.value })}
         />
       </Grid2>
+      
+      <Grid2 size={4}>
+        <TextField
+          inputRef={powerRef}
+          label="Power"
+          fullWidth
+          value={card.power || ""}
+          onChange={(e) => onChange({  ...card, power: e.target.value ? e.target.value : undefined })}
+        />
+      </Grid2>
+      
+      <Grid2 size={4}>
+        <TextField
+          inputRef={toughnessRef}
+          label="Toughness"
+          fullWidth
+          value={card.toughness || ""}
+          onChange={(e) => onChange({  ...card, toughness: e.target.value ? e.target.value : undefined })}
+        />
+      </Grid2>
 
       <Grid2 size={4} display="flex" justifyContent="center">
-        <Button component="label" sx={{ p: 1.5, flex: 1 }} variant="outlined">
+        <Button component="label" sx={{ p: 1.5, flex: 1 }} variant="outlined" ref={imageRef}>
           Choose Image
           <input
             style={{ display: "none" }}
@@ -110,6 +157,7 @@ export function EditCardForm({ card, focusKey, onChange }: EditCardFormProps) {
       
       <Grid2 size={8}>
         <TextField
+          inputRef={artistRef}
           label="Artist"
           fullWidth
           value={card.artist}
@@ -119,6 +167,7 @@ export function EditCardForm({ card, focusKey, onChange }: EditCardFormProps) {
 
       <Grid2 size={4}>
         <TextField
+          inputRef={collectorNumberRef}
           label="Collector Number"
           fullWidth
           value={card.collectorNumber}
@@ -138,6 +187,7 @@ export function EditCardForm({ card, focusKey, onChange }: EditCardFormProps) {
 
       <Grid2 size={4}>
         <TextField
+          inputRef={setCodeRef}
           label="Set Code"
           fullWidth
           value={card.set.code}

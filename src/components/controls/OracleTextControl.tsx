@@ -1,13 +1,15 @@
 import { Button, InputAdornment, TextField } from "@mui/material";
 import { SymbolSelector } from "./SymbolSelector";
-import { useState } from "react";
+import { MutableRefObject, useState } from "react";
 
 type OracleTextControlProps = {
+  inputRef?: MutableRefObject<HTMLInputElement | undefined>;
   value: string;
   onChange: (value: string) => void;
 }
 
 export function OracleTextControl({
+  inputRef,
   value,
   onChange
 }: OracleTextControlProps) {
@@ -15,6 +17,7 @@ export function OracleTextControl({
 
   return (
     <TextField
+      inputRef={inputRef}
       label="Text"
       fullWidth
       multiline
@@ -25,7 +28,7 @@ export function OracleTextControl({
         input: {
           endAdornment: (
             <InputAdornment position="end">
-              <Button onClick={(e) => setAnchorEl(e.currentTarget)} sx={{height: 120 }}>
+              <Button onClick={(e) => setAnchorEl(e.currentTarget)} sx={{height: 120 }} tabIndex={-1}>
                 Icons
               </Button>
               <SymbolSelector
