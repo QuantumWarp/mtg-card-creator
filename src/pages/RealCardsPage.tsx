@@ -54,6 +54,7 @@ export function RealCardsPage() {
 
           <Button onClick={() => setName("Charging Badger")}>Charging Badger</Button>
           <Button onClick={() => setName("Lightning Bolt")}>Lightning Bolt</Button>
+          <Button onClick={() => setName("Mana Drain")}>Mana Drain</Button>
           <Button onClick={() => setName("Narset, Enlightened Exile")}>Narset, Enlightened Exile</Button>
           <Button onClick={() => setName("Windswept Heath")}>Windswept Heath</Button>
           <Button onClick={() => setName("Island")}>Island</Button>
@@ -62,7 +63,12 @@ export function RealCardsPage() {
             Unformatted Examples
           </Typography>
 
-          <Button onClick={() => setName("Jace, Memory Adept")}>Jace, Memory Adept</Button>
+          <Button onClick={() => setName("Jace, Memory Adept")}>Planeswalker - Jace, Memory Adept</Button>
+          <Button onClick={() => setName("Search for Azcanta")}>Flip - Search for Azcanta</Button>
+          <Button onClick={() => setName("Phyrexian Scriptures")}>Saga - Phyrexian Scriptures</Button>
+          <Button onClick={() => setName("Invasion of Ixalan")}>Battle - Invasion of Ixalan</Button>
+          <Button onClick={() => setName("Lovestruck Beast")}>Adventure - Lovestruck Beast</Button>
+          <Button onClick={() => setName("Destined // Lead")}>Split - Destined // Lead</Button>
         </Grid2>
 
         <Grid2 size={{ xs: 12, lg: 6 }} display="flex" justifyContent={{ xs: "center", lg: "flex-end" }}>

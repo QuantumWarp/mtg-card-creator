@@ -1,9 +1,8 @@
 import { Card } from "../models/card";
-import { v4 as uuid } from "uuid";
 import { Rarity } from "../models/rarity";
 
 export const packCaller: Card = {
-  id: uuid(),
+  id: "example-2",
   name: "Pack Caller",
   manaCost: "{1}{G}{W}",
   typeline: "Creature — Wolf",

@@ -1,9 +1,8 @@
 import { Card } from "../models/card";
-import { v4 as uuid } from "uuid";
 import { Rarity } from "../models/rarity";
 
 export const oceansEdge: Card = {
-  id: uuid(),
+  id: "example-3",
   name: "Ocean's Edge",
   manaCost: "",
   typeline: "Land",

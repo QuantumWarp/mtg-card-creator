@@ -6,7 +6,7 @@ export function useSymbology() {
   const [data, setData] = useState<Symbology[]>();
 
   useEffect(() => {
-    localStorageCache("symbology", async () => {
+    localStorageCache("scryfall-symbology", async () => {
       return await symbologyRequest();
     }).then((x) => setData(x));
   }, []);

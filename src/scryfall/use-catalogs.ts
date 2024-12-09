@@ -14,7 +14,7 @@ export function useCatalogs(catalogs: CatalogType[] = allCatalogs) {
   useEffect(() => {
     setData({});
     for (const catalog of catalogs) {
-      localStorageCache(`catalog-${catalog}`, async () => {
+      localStorageCache(`scryfall-catalog-${catalog}`, async () => {
         return await catalogRequest(catalog);
       }).then((x) => setData((prev) => ({ ...prev, [catalog]: x })));
     }

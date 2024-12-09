@@ -4,7 +4,7 @@ import { useSymbology } from "./use-symbology";
 import { Symbology } from "./requests/symbology.request";
 
 export function useSymbol(encoded: string) {
-  const key = `symbol-${encoded}`;
+  const key = `scryfall-symbol-${encoded}`;
   const symbology = useSymbology();
   const [data, setData] = useState<Symbology | undefined>(getFromMemoryCache(key));
 

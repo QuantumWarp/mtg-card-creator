@@ -1,4 +1,4 @@
-export const readAndCompressImageFile = (file: File, maxWidth = 800, maxHeight = 800, quality = 0.8): Promise<string> => {
+export const readAndCompressImageFile = (file: File, maxWidth = 500, maxHeight = 300, quality = 1): Promise<string> => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -12,7 +12,7 @@ export const readAndCompressImageFile = (file: File, maxWidth = 800, maxHeight =
   });
 };
 
-export const compressImage = (src: string, maxWidth = 800, maxHeight = 800, quality = 0.8): Promise<string> => {
+export const compressImage = (src: string, maxWidth = 500, maxHeight = 300, quality = 1): Promise<string> => {
   return new Promise((resolve, reject) => {
     const img = new Image();
     img.src = src;

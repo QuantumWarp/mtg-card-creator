@@ -2,20 +2,15 @@ import { createHashRouter } from "react-router-dom";
 import { HomePage } from "./pages/HomePage";
 import { EditCardPage } from "./pages/EditCardPage";
 import { RealCardsPage } from "./pages/RealCardsPage";
-import { defaultCard, getCard, getCards, saveCard } from "./storage/card.storage";
-import { loadExamples } from "./examples/load-examples";
+import { defaultCard, getCard, getCards } from "./storage/card.storage";
+import { loadExamplesIfRequired } from "./examples/load-examples";
 
 export const router = createHashRouter([
   {
     path: "/",
     loader: async () => {
       let cards = getCards();
-      if (cards.length === 0) {
-        cards = await loadExamples();
-        for (const card of cards) {
-          saveCard(card);
-        }
-      }
+      cards = await loadExamplesIfRequired(cards);
       return { cards };
     },
     element: <HomePage />,

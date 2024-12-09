@@ -1,9 +1,8 @@
 import { Card } from "../models/card";
-import { v4 as uuid } from "uuid";
 import { Rarity } from "../models/rarity";
 
 export const crystallize: Card = {
-  id: uuid(),
+  id: "example-1",
   name: "Crystallize",
   manaCost: "{3}{U}{U}",
   typeline: "Instant",

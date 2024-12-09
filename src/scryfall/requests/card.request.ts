@@ -42,7 +42,7 @@ export const cardRequest = async (name: string): Promise<ScryfallCard> => {
     rarity: json.rarity,
     collectorNumber: json.collector_number,
 
-    manaCost: json.mana_cost,
+    manaCost: json.mana_cost || "",
     colors: json.colors,
   
     typeline: json.type_line,
@@ -50,10 +50,10 @@ export const cardRequest = async (name: string): Promise<ScryfallCard> => {
     power: json.power,
     toughness: json.toughness,
   
-    oracleText: json.oracle_text,
-    flavorText: json.flavor_text,
+    oracleText: json.oracle_text || "",
+    flavorText: json.flavor_text || "",
   
-    artUri: json.image_uris.art_crop,
+    artUri: json.image_uris?.art_crop,
     artist: json.artist,
   };
 }

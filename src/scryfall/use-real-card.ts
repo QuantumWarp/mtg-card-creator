@@ -18,7 +18,7 @@ export function useRealCard(name: string) {
 const fetchRealCard = async (
   name: string
 ): Promise<Card> => {
-  return localStorageCache(`real-card-${name}`, async () => {
+  return localStorageCache(`scryfall-card-${name}`, async () => {
     const scryfallCard = await cardRequest(name);
     const scryfallSet = await setRequest(scryfallCard.setId);
     return createCard(scryfallCard, scryfallSet);
