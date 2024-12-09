@@ -98,15 +98,18 @@ export function PageFooter() {
       </Box>
 
       <Dialog open={openAbout}>
-        <DialogTitle>About the eBook Library</DialogTitle>
+        <DialogTitle>About</DialogTitle>
 
         <DialogContent>
           <Typography mb={2}>
-            Todo
+            MTG Card Creator is unofficial Fan Content permitted under the Fan Content Policy.
+            Not approved/endorsed by Wizards.
+            Portions of the materials used are property of Wizards of the Coast.
+            ©Wizards of the Coast LLC.
           </Typography>
           <Typography>
-            To see more technical information about this app check the README.md of
-            the <Link href="https://github.com/QuantumWarp/ebook-library">Github repo</Link>.
+            To see more technical information about this app check out
+            the <Link href="https://github.com/QuantumWarp/mtg-card-creator">Github repo</Link>.
           </Typography>
         </DialogContent>
 

@@ -23,8 +23,6 @@ export function EditCardPage() {
     navigate("/");
   };
 
-
-
   return (
     <PageContainer>
       <Box display="flex" alignItems="center" justifyContent="space-between" mb={8}>

@@ -21,7 +21,7 @@ const fetchInSemaphore = async (url: string) => {
   try {
     await semaphore.acquire();
 
-    console.log("fetching", url);
+    console.debug("fetching", url);
     const result = await fetch(url);
     const json = await result.json();
   

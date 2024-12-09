@@ -23,7 +23,7 @@ export function SymbolSelector({
 
   const symbolButton = (encoded: string) => (
     <ButtonBase key={encoded} sx={{ p: 0.4 }} onClick={() => { onSelect(encoded); onClose(); }}>
-      <CardSymbol encoded={encoded} size={30} noShadow />
+      <CardSymbol encoded={encoded} size="30px" noShadow />
     </ButtonBase>
   );
 

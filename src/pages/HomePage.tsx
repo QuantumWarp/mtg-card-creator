@@ -15,9 +15,9 @@ export function HomePage() {
           MTG Card Creator
         </Typography>
         <Typography textAlign="center" maxWidth={800}>
-        Initially designed for creating cards using only CSS,
-        this tool lets you design custom MTG cards or browse real cards in the same layout.
-        Remember to credit any artwork used in your custom creations.
+          Initially designed for creating cards using only CSS,
+          this unofficial tool lets you design custom MTG cards or browse real cards in the same layout.
+          Remember to credit any artwork used in your custom creations.
         </Typography>
       </Grid2>
 

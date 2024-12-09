@@ -1,4 +1,4 @@
-import { Autocomplete, Box, Button, Grid2, TextField, Typography } from "@mui/material";
+import { Autocomplete, Box, Button, CircularProgress, Grid2, TextField, Typography } from "@mui/material";
 import { PageContainer } from "../components/PageContainer";
 import { useRealCard } from "../scryfall/use-real-card";
 import { CardDisplay } from "../display/card/CardDisplay";
@@ -11,11 +11,11 @@ export function RealCardsPage() {
   const [name, setName] = useState("Charging Badger");
   const [search, setSearch] = useState("");
   const { results, isFetching } = useAutocomplete(search);
-  const card = useRealCard(name);
+  const { card, loading, error } = useRealCard(name);
 
   return (
     <PageContainer>
-      <Box display="flex" alignItems="center" justifyContent="space-between" mb={8}>
+      <Box display="flex" alignItems="center" justifyContent="space-between" >
         <Typography variant="h3">
           Real Card Search
         </Typography>
@@ -27,7 +27,10 @@ export function RealCardsPage() {
           >Back</Button>
         </Grid2>
       </Box>
-
+      
+      <Typography my={4}>
+        All symbols, artwork and characters resulting from these searches are copyrighted by Wizards of the Coast.
+      </Typography>
 
       <Grid2 container spacing={{ xs: 4, lg: 0 }} width="100%">
         <Grid2 size={6} display="flex" flexDirection="column">
@@ -48,7 +51,7 @@ export function RealCardsPage() {
             }
           />
 
-          <Typography variant="h6" mt={4} mb={1}>
+          <Typography variant="h6" mt={4} mb={2} textAlign="center">
             Working Examples
           </Typography>
 
@@ -56,10 +59,12 @@ export function RealCardsPage() {
           <Button onClick={() => setName("Lightning Bolt")}>Lightning Bolt</Button>
           <Button onClick={() => setName("Mana Drain")}>Mana Drain</Button>
           <Button onClick={() => setName("Narset, Enlightened Exile")}>Narset, Enlightened Exile</Button>
+          <Button onClick={() => setName("Solemn Simulacrum")}>Solemn Simulacrum</Button>
+          <Button onClick={() => setName("Lazav, Dimir Mastermind")}>Lazav, Dimir Mastermind</Button>
           <Button onClick={() => setName("Windswept Heath")}>Windswept Heath</Button>
           <Button onClick={() => setName("Island")}>Island</Button>
 
-          <Typography variant="h6" mt={4} mb={1}>
+          <Typography variant="h6" mt={4} mb={2} textAlign="center">
             Unformatted Examples
           </Typography>
 
@@ -73,6 +78,16 @@ export function RealCardsPage() {
 
         <Grid2 size={{ xs: 12, lg: 6 }} display="flex" justifyContent={{ xs: "center", lg: "flex-end" }}>
           {card && <CardDisplay card={card} />}
+          {loading && (
+            <Box width="100%" height={500} display="flex" alignItems="center" justifyContent="center">
+              <CircularProgress />
+            </Box>
+          )}
+          {error && (
+            <Box width="100%" height={500} display="flex" alignItems="center" justifyContent="center">
+              Error loading card
+            </Box>
+          )}
         </Grid2>
       </Grid2>
     </PageContainer>

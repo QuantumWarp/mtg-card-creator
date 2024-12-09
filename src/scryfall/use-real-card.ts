@@ -7,12 +7,22 @@ import { Color } from "../models/color";
 
 export function useRealCard(name: string) {
   const [card, setCard] = useState<Card>();
+  const [error, setError] = useState<Error>();
 
   useEffect(() => {
-    fetchRealCard(name).then((x) => setCard(x));
+    setCard(undefined);
+    setError(undefined);
+
+    fetchRealCard(name)
+      .then((x) => setCard(x))
+      .catch((x) => setError(x));
   }, [name]);
 
-  return card;
+  return {
+    card,
+    loading: Boolean(name) && !card && !error,
+    error,
+  };
 }
 
 const fetchRealCard = async (
