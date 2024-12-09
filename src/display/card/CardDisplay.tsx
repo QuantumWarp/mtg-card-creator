@@ -14,16 +14,18 @@ import { useEffect, useRef, useState } from 'react';
 type CardDisplayProps = {
   width?: string;
   card: Card;
+  onClick?: (part?: keyof Card) => void;
 }
 
 export function CardDisplay({
-  width, card,
+  width, card, onClick
 }: CardDisplayProps) {
   const cardRef = useRef<HTMLElement>();
   const theme = useTheme();
   const [fontSize, setFontSize] = useState(24);
   const [color1, color2] = getPalettes(card);
   const background = getGradient(color1.dark, color2?.dark);
+  const showPowerToughness = card.power !== undefined || card.toughness !== undefined || card.typeline.toLowerCase().includes("creature");
 
   useEffect(() => {
     const updateFontSize = () => {
@@ -51,8 +53,11 @@ export function CardDisplay({
         width: width || "min(100%, 500px)",
         aspectRatio: 0.715,
         fontSize: `${fontSize}px`,
-        color: "black"
+        color: "black",
+        cursor: onClick ? "pointer" : "default",
+        userSelect: onClick ? "none" : "auto"
       }}
+      onClick={() => onClick?.()}
     >
       <TexturedBackground card={card} />
 
@@ -69,17 +74,17 @@ export function CardDisplay({
           ...sizing(88, 88, 6, 4),
         }}
       >
-        <Nameplate card={card} />
-        <Art card={card} />
-        <Typeplate card={card} />
-        <Textbox card={card} />
+        <Nameplate card={card} onClick={onClick} />
+        <Art card={card} onClick={onClick} />
+        <Typeplate card={card} onClick={onClick} />
+        <Textbox card={card} onClick={onClick} />
 
-        {card.power !== undefined && (
-          <PowerToughness card={card} />
+        {showPowerToughness && (
+          <PowerToughness card={card} onClick={onClick} />
         )}
       </Box>
 
-      <BottomInfo card={card} />
+      <BottomInfo card={card} onClick={onClick} />
     </Box>
   );
 }

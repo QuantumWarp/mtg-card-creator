@@ -3,7 +3,12 @@ import { center, roundedBorder, sizing } from "../style.helper";
 import { Card } from "../../models/card";
 import { getPalettes } from "../palette";
 
-export function PowerToughness({ card }: { card: Card }) {
+type PowerToughnessProps = {
+  card: Card;
+  onClick?: (part: keyof Card) => void;
+}
+
+export function PowerToughness({ card, onClick }: PowerToughnessProps) {
   const [color1, color2, multicolor] = getPalettes(card);
   const color = color2 ? multicolor : color1;
 
@@ -18,6 +23,11 @@ export function PowerToughness({ card }: { card: Card }) {
         fontWeight: "bold",
         bottom: "-2%",
         right: "-3.2%"
+      }}
+      onClick={(e) => {
+        if (!onClick) return;
+        onClick("power");
+        e.stopPropagation();
       }}
     >
       <Box
@@ -43,7 +53,15 @@ export function PowerToughness({ card }: { card: Card }) {
             boxShadow: "inset 0.12em -0.12em 0.12em rgba(255, 255, 255, 0.3), inset -0.12em 0.12em 0.12em rgba(0, 0, 0, 0.5)"
           }}
         >
-          {card.power}/{card.toughness}
+          <span>{card.power || "?"}</span>
+          /
+          <span
+            onClick={(e) => {
+              if (!onClick) return;
+              onClick("toughness");
+              e.stopPropagation();
+            }}
+          >{card.toughness || "?"}</span>
         </Box>
       </Box>
     </Box>

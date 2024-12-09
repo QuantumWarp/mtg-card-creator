@@ -4,7 +4,12 @@ import { Card } from "../../models/card";
 import { getGradient, getPalettes } from "../palette";
 import { Rarity } from "../../models/rarity";
 
-export function Typeplate({ card }: { card: Card }) {
+type TypeplateProps = {
+  card: Card;
+  onClick?: (part: keyof Card) => void;
+}
+
+export function Typeplate({ card, onClick }: TypeplateProps) {
   const { typeline, set, rarity } = card;
   const { iconUri } = set;
 
@@ -26,6 +31,11 @@ export function Typeplate({ card }: { card: Card }) {
         height: "8%",
         fontSize: "56%",
         fontWeight: "bold"
+      }}
+      onClick={(e) => {
+        if (!onClick) return;
+        onClick("typeline");
+        e.stopPropagation();
       }}
     >
       <Box
@@ -54,7 +64,17 @@ export function Typeplate({ card }: { card: Card }) {
         >
           <Box>{typeline}</Box>
 
-          <Box display="flex" alignItems="center" justifyContent="center" position="relative">
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            position="relative"
+            onClick={(e) => {
+              if (!onClick) return;
+              onClick("rarity");
+              e.stopPropagation();
+            }}
+          >
             <img
               src={iconUri || "./custom-set.svg"}
               style={{ position: "absolute", width: "1.56em", height: "1.55em" }}

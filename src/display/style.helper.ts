@@ -27,4 +27,3 @@ export const center = (override: {
     justifyContent: override.justifyContent || "center",
   }
 };
-

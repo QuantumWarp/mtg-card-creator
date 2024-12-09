@@ -1,7 +1,12 @@
 import { Box } from "@mui/material";
 import { Card } from "../../models/card";
 
-export function Art({ card }: { card: Card }) {
+type ArtProps = {
+  card: Card;
+  onClick?: (part: keyof Card) => void;
+}
+
+export function Art({ card, onClick }: ArtProps) {
   return (
     <Box
       sx={{
@@ -13,8 +18,18 @@ export function Art({ card }: { card: Card }) {
         justifyContent: "stretch",
         alignItems: "stretch"
       }}
+      onClick={(e) => {
+        if (!onClick) return;
+        onClick("artUri");
+        e.stopPropagation();
+      }}
     >
-      <img src={card.artUri} style={{ objectFit: "cover", width: "100%", height: "100%" }} />
+      {card.artUri && (
+        <img
+          src={card.artUri}
+          style={{ objectFit: "cover", width: "100%", height: "100%" }}
+        />
+      )}
     </Box>
   );
 }

@@ -11,7 +11,6 @@ export function useSymbol(encoded: string) {
   useEffect(() => {
     if (!symbology) return;
     memoryCache(key, async () => {
-      console.log(encoded)
       return symbology.find((x) => x.symbol === encoded);
     }).then((x) => setData(x));
   }, [encoded, key, symbology]);

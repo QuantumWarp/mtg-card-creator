@@ -3,7 +3,12 @@ import { Card } from "../../models/card";
 import { getGradient, getPalettes } from "../palette";
 import { TextParser } from "../symbols/TextParser";
 
-export function Textbox({ card }: { card: Card }) {
+type TextboxProps = {
+  card: Card;
+  onClick?: (part: keyof Card) => void;
+}
+
+export function Textbox({ card, onClick }: TextboxProps) {
   const { text, flavorText } = card;
   const [color1, color2] = getPalettes(card);
   const background = getGradient(color1.light, color2?.light);
@@ -26,6 +31,11 @@ export function Textbox({ card }: { card: Card }) {
         overflow: "auto",
         whiteSpace: "pre-line"
       }}
+      onClick={(e) => {
+        if (!onClick) return;
+        onClick("text");
+        e.stopPropagation();
+      }}
     >
       <Box flex={1} display="flex" alignItems="center">
         <TextParser text={text} />
@@ -43,7 +53,15 @@ export function Textbox({ card }: { card: Card }) {
             }}
           />
 
-          <Box my="0.2em" fontSize="90%">
+          <Box
+            my="0.2em"
+            fontSize="90%" 
+            onClick={(e) => {
+              if (!onClick) return;
+              onClick("flavorText");
+              e.stopPropagation();
+            }}
+          >
             <em>
               <TextParser text={flavorText} />
             </em>

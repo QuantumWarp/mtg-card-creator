@@ -43,7 +43,6 @@ export function HomePage() {
         {cards.map((x) => (
           <Grid2 key={x.id} size={{ xs: 12, md: 4, lg: 3, xl: 12 / 5 }}>
             <ButtonBase
-              onClick={() => navigate({ pathname: `edit/${x.id}` })}
               sx={{
                 width: "100%",
                 transition: "transform 0.2s ease",
@@ -52,7 +51,7 @@ export function HomePage() {
                 }
               }}
             >
-              <CardDisplay card={x} />
+              <CardDisplay card={x} onClick={() => navigate({ pathname: `edit/${x.id}` })} />
             </ButtonBase>
           </Grid2>
         ))}

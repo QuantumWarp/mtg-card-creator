@@ -10,7 +10,6 @@ export function ManaCost({ manaCost }: { manaCost: string }) {
     <Box>
       {split.map((x, index) => {
         if (x.length === 0) return undefined;
-        console.log(x)
         if (!/^\{.*?\}$/.test(x)) return <span key={x}>{x}</span>;
         return (
           <Box display="inline-block" key={index + x}>

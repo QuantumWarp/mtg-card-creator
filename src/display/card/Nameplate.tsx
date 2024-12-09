@@ -4,7 +4,12 @@ import { Card } from "../../models/card";
 import { getGradient, getPalettes } from "../palette";
 import { ManaCost } from "../symbols/ManaCost";
 
-export function Nameplate({ card }: { card: Card }) {
+type NameplateProps = {
+  card: Card;
+  onClick?: (part: keyof Card) => void;
+}
+
+export function Nameplate({ card, onClick }: NameplateProps) {
   const { name, manaCost } = card;
   
   const [color1, color2, multicolor] = getPalettes(card);
@@ -18,6 +23,11 @@ export function Nameplate({ card }: { card: Card }) {
         height: "8%",
         fontSize: "64%",
         fontWeight: "bold"
+      }}
+      onClick={(e) => {
+        if (!onClick) return;
+        onClick("name");
+        e.stopPropagation();
       }}
     >
       <Box
@@ -44,7 +54,18 @@ export function Nameplate({ card }: { card: Card }) {
           }}
         >
           <Box>{name}</Box>
-          <ManaCost manaCost={manaCost} />
+          <Box
+            minWidth="15%"
+            display="flex"
+            justifyContent="flex-end"
+            onClick={(e) => {
+              if (!onClick) return;
+              onClick("manaCost");
+              e.stopPropagation();
+            }}
+          >
+            <ManaCost manaCost={manaCost} />
+          </Box>
         </Box>
       </Box>
     </Box>

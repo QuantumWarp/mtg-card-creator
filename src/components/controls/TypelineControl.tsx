@@ -31,7 +31,6 @@ export function TypelineControl({
 
   const appendOption = (option?: TypelineOption) => {
     if (!option) return;
-    console.log(value)
     let newValue = value.replace(/\b\s*[^\s]+$/, "");
     newValue += (!newValue || newValue.endsWith(" ")) ? "" : " ";
 

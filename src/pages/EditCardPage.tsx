@@ -12,6 +12,7 @@ export function EditCardPage() {
   const navigate = useNavigate();
   const { card: initialCard } = useLoaderData() as { card: Card };
   const [card, setCard] = useState(initialCard);
+  const [focusKey, setFocusKey] = useState<keyof Card>();
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [cancelOpen, setCancelOpen] = useState(false);
 
@@ -22,9 +23,11 @@ export function EditCardPage() {
     navigate("/");
   };
 
+
+
   return (
     <PageContainer>
-      <Box display="flex" alignItems="center" justifyContent="space-between" mb={5}>
+      <Box display="flex" alignItems="center" justifyContent="space-between" mb={8}>
         <Typography variant="h3">
           Edit Card
         </Typography>
@@ -72,12 +75,16 @@ export function EditCardPage() {
       </Box>
 
       <Grid2 container spacing={{ xs: 4, lg: 0 }} width="100%">
-        <Grid2 size={{ xs: 12, lg: 6 }} display="flex" alignItems="center">
-          <EditCardForm card={card} onChange={setCard} /> 
+        <Grid2 size={{ xs: 12, lg: 6 }}>
+          <EditCardForm
+            card={card}
+            onChange={setCard}
+            focusKey={focusKey}
+          /> 
         </Grid2>
 
         <Grid2 size={{ xs: 12, lg: 6 }} display="flex" justifyContent={{ xs: "center", lg: "flex-end" }}>
-          <CardDisplay card={card} />
+          <CardDisplay card={card} onClick={setFocusKey} />
         </Grid2>
       </Grid2>
     </PageContainer>

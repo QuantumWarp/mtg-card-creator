@@ -6,17 +6,27 @@ import { OracleTextControl } from "./controls/OracleTextControl";
 import { TypelineControl } from "./controls/TypelineControl";
 import { Rarity } from "../models/rarity";
 import Case from "case";
+import { useEffect, useRef } from "react";
 
 type EditCardFormProps = {
   card: Card;
+  focusKey?: keyof Card;
   onChange: (card: Card) => void;
 }
 
-export function EditCardForm({ card, onChange }: EditCardFormProps) {
+export function EditCardForm({ card, focusKey, onChange }: EditCardFormProps) {
+  const nameRef = useRef<HTMLInputElement>();
+
+  useEffect(() => {
+    if (focusKey === "name") nameRef.current?.select();
+  }, [focusKey]);
+  
   return (
     <Grid2 container spacing={2} alignItems="center">
       <Grid2 size={{ xs: 12, sm: 8 }}>
         <TextField
+          inputRef={nameRef}
+          autoFocus
           label="Name"
           fullWidth
           value={card.name}
