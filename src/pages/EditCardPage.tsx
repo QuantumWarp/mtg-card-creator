@@ -1,7 +1,7 @@
 import { Box, Button, Grid2, Typography } from "@mui/material";
 import { PageContainer } from "../components/PageContainer";
 import { EditCardForm } from "../components/EditCardForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { deleteCard, saveCard } from "../storage/card.storage";
 import { CardDisplay } from "../display/card/CardDisplay";
@@ -22,6 +22,11 @@ export function EditCardPage() {
     saveCard(card);
     navigate("/");
   };
+
+  useEffect(() => {
+    if (!focusKey) return;
+    setFocusKey(undefined);
+  }, [focusKey])
 
   return (
     <PageContainer>

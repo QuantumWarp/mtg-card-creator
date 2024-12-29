@@ -10,7 +10,7 @@ export function backup() {
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
   link.href = url;
-  link.download = `mtg-creator-backup-${new Date().getTime()}.json`;
+  link.download = `mtg-card-creator-backup-${new Date().getTime()}.json`;
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);

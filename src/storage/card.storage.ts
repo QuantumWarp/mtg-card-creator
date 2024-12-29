@@ -2,26 +2,28 @@ import { v4 as uuid } from "uuid";
 import { Card } from "../models/card";
 import { Rarity } from "../models/rarity";
 
+const cardPrefix = "mtg-card-creator-card-";
+
 export const getCards = (): Card[] => {
   const keys = Object.keys(localStorage);
-  const cardIds = keys.filter((x) => x.startsWith("card-")).map((x) => x.replace("card-", ""));
+  const cardIds = keys.filter((x) => x.startsWith(cardPrefix)).map((x) => x.replace(cardPrefix, ""));
   const cards = cardIds.map((x) => getCard(x));
 
   return cards.sort((a, b) => a.name.localeCompare(b.name));
 }
 
 export const getCard = (id: string): Card => {
-  const result = localStorage.getItem(`card-${id}`);
+  const result = localStorage.getItem(`${cardPrefix}${id}`);
   if (!result) throw new Error("Card not found");
   return JSON.parse(result!);
 }
 
 export const saveCard = (card: Card): void => {
-  localStorage.setItem(`card-${card.id}`, JSON.stringify(card));
+  localStorage.setItem(`${cardPrefix}${card.id}`, JSON.stringify(card));
 }
 
 export const deleteCard = (card: Card): void => {
-  localStorage.removeItem(`card-${card.id}`);
+  localStorage.removeItem(`${cardPrefix}${card.id}`);
 }
 
 export const defaultCard = (): Card => {

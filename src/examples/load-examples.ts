@@ -5,9 +5,11 @@ import { crystallize } from "./crystallize";
 import { oceansEdge } from "./oceans-edge";
 import { packCaller } from "./pack-caller";
 
+const loadedKey = "mtg-card-creator-loaded";
+
 export const loadExamplesIfRequired = async (existing: Card[]) => {
-  const loaded = localStorage.getItem("loaded");
-  localStorage.setItem("loaded", "true");
+  const loaded = localStorage.getItem(loadedKey);
+  localStorage.setItem(loadedKey, "true");
 
   if (loaded) return existing;
   if (existing.length > 0) return existing;
