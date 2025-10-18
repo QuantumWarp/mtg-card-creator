@@ -1,0 +1,15 @@
+- Ordering Trigger
+- Asking for Responses
+- Next end step triggers
+- Layers, Phases
+- Trample and deathtouch
+- When is the first point in a turn that you can act
+- Damage marked on target until end of turn
+- Priority when playing land
+- Tokens dying enter graveyard
+- Without paying mana cost, countered, no mana rhystic
+- Scion of the Ur Dragon, intermediate copy
+- Abilities all resolving one after the other for 1 card
+- Ability being countered by losing all targets. Not being countered if only losing one
+- Ability triggering in the middle of an effect
+- Not dying due to state based actions
