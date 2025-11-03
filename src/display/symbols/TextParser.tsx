@@ -24,7 +24,7 @@ export function TextParser({ text: fullText }: TextParserProps) {
     const parts = text.split(/(\{.*?\})/g).filter(x => !!x);
     const italic = text.startsWith("(") || text.endsWith("—");
     return (
-      <Box component="span" fontStyle={italic ? "italic" : "inherit"}>
+      <Box key={text} component="span" fontStyle={italic ? "italic" : "inherit"}>
         {parts.map((part, partIndex) => renderPart(part, partIndex))}
       </Box>
     );
@@ -32,7 +32,7 @@ export function TextParser({ text: fullText }: TextParserProps) {
 
   function renderPart(text: string, index: number) {
     if (!/^\{.*?\}$/.test(text)) return (
-      <span key={text} style={{ marginTop: index === 0 ? 0 : "0.5em" }}>
+      <span key={index + text} style={{ marginTop: index === 0 ? 0 : "0.5em" }}>
         {text}
       </span>
     );
