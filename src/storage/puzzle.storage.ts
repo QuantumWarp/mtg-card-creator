@@ -6,10 +6,10 @@ export const getCompletedPuzzles = (): string[] => {
   return result ? JSON.parse(result) : [];
 }
 
-export const markPuzzleCompleted = (puzzleTitle: string) => {
+export const markPuzzleCompleted = (puzzleId: string) => {
   const completedPuzzles = getCompletedPuzzles();
-  if (!completedPuzzles.includes(puzzleTitle)) {
-    completedPuzzles.push(puzzleTitle);
+  if (!completedPuzzles.includes(puzzleId)) {
+    completedPuzzles.push(puzzleId);
     localStorage.setItem(puzzlePrefix, JSON.stringify(completedPuzzles));
   }
 }

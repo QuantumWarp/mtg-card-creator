@@ -1,8 +1,8 @@
 import { Puzzle } from "./core/puzzle";
 
 const puzzle: Puzzle = {
+    id: "priority-playing-lands",
     complexity: 2,
-    title: "Priority Playing Lands",
     categories: [
         "Priority"
     ],

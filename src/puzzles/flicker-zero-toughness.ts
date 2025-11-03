@@ -1,8 +1,8 @@
 import { Puzzle } from "./core/puzzle";
 
 const puzzle: Puzzle = {
+    id: "flicker-zero-toughness",
     complexity: 3,
-    title: "Flicker Zero Toughness",
     categories: [
         "Flicker",
         "State-Based Actions"

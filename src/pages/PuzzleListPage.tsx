@@ -38,7 +38,7 @@ export function PuzzleListPage() {
               <CardActionArea onClick={() => navigate(`/puzzles/${index}`)}>
                 <Box sx={{ p: 2 }} display="flex" alignItems="center">
                   <Box>
-                    {completedPuzzles.includes(puzzle.title)
+                    {completedPuzzles.includes(puzzle.id)
                       ? <Check sx={{ mr: 2, color: "green" }} />
                       : <Visibility sx={{ mr: 2, color: "gray" }} />}
                   </Box>

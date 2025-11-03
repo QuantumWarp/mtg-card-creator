@@ -1,6 +1,6 @@
 export interface Puzzle {
   complexity: number;
-  title: string;
+  id: string;
   categories: string[];
   setup: string[];
   question: string;

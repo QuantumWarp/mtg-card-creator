@@ -1,8 +1,8 @@
 import { Puzzle } from "./core/puzzle";
 
 const puzzle: Puzzle = {
+    id: "life-total-cant-change",
     complexity: 3,
-    title: "Life Total Can't Change",
     categories: [
         "Dealing Damage",
         "Life Total"

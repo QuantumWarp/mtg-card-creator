@@ -25,7 +25,7 @@ function PuzzlePage() {
   const puzzle = puzzleList[puzzleIndex];
 
   const completedPuzzles = getCompletedPuzzles();
-  const [completed, setCompleted] = useState(completedPuzzles.includes(puzzle.title));
+  const [completed, setCompleted] = useState(completedPuzzles.includes(puzzle.id));
 
   const cards = getPuzzleCards(puzzle, showAnswer);
 
@@ -84,7 +84,7 @@ function PuzzlePage() {
                 variant="contained"
                 onClick={() => {
                   setShowAnswer(true);
-                  markPuzzleCompleted(puzzle.title);
+                  markPuzzleCompleted(puzzle.id);
                   setCompleted(true);
                 }}
               >

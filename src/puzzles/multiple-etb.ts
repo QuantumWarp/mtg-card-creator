@@ -1,8 +1,8 @@
 import { Puzzle } from "./core/puzzle";
 
 const puzzle: Puzzle = {
+    id: "multiple-etb",
     complexity: 1,
-    title: "Multiple ETB Triggers",
     categories: [
         "Triggers",
         "Enters"

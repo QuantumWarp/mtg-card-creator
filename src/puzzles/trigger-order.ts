@@ -1,8 +1,8 @@
 import { Puzzle } from "./core/puzzle";
 
 const puzzle: Puzzle = {
+    id: "trigger-order",
     complexity: 3,
-    title: "Trigger Order",
     categories: [
         "Triggers",
         "Priority"
