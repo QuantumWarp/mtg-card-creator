@@ -14,11 +14,12 @@ import { useEffect, useRef, useState } from 'react';
 type CardDisplayProps = {
   width?: string;
   card: Card;
+  hideFlavorText?: boolean;
   onClick?: (part?: keyof Card) => void;
 }
 
 export function CardDisplay({
-  width, card, onClick
+  width, card, hideFlavorText, onClick
 }: CardDisplayProps) {
   const cardRef = useRef<HTMLElement>();
   const theme = useTheme();
@@ -77,7 +78,7 @@ export function CardDisplay({
         <Nameplate card={card} onClick={onClick} />
         <Art card={card} onClick={onClick} />
         <Typeplate card={card} onClick={onClick} />
-        <Textbox card={card} onClick={onClick} />
+        <Textbox card={card} hideFlavorText={hideFlavorText} onClick={onClick} />
 
         {showPowerToughness && (
           <PowerToughness card={card} onClick={onClick} />

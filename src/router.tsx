@@ -1,9 +1,11 @@
 import { createHashRouter } from "react-router-dom";
 import { HomePage } from "./pages/HomePage";
 import { EditCardPage } from "./pages/EditCardPage";
+import { PuzzleListPage } from "./pages/PuzzleListPage";
 import { RealCardsPage } from "./pages/RealCardsPage";
 import { defaultCard, getCard, getCards } from "./storage/card.storage";
 import { loadExamplesIfRequired } from "./examples/load-examples";
+import { KeyedPuzzlePage } from "./pages/PuzzlePage";
 
 export const router = createHashRouter([
   {
@@ -29,4 +31,12 @@ export const router = createHashRouter([
     loader: () => ({ card: undefined }),
     element: <RealCardsPage />,
   },
+  {
+    path: "/puzzle-list",
+    element: <PuzzleListPage />,
+  },
+  {
+    path: "/puzzles/:puzzleIndex?",
+    element: <KeyedPuzzlePage />,
+  }
 ]);

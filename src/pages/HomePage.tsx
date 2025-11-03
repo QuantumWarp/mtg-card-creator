@@ -12,12 +12,13 @@ export function HomePage() {
     <PageContainer maxWidth={1800}>
       <Grid2 container display="flex" flexDirection="column" alignItems="center" spacing={8}>
         <Typography variant="h2">
-          MTG Card Creator
+          MTG Puzzles & Card Creator 
         </Typography>
         <Typography textAlign="center" maxWidth={800}>
           Initially designed for creating cards using only CSS,
           this unofficial tool lets you design custom MTG cards or browse real cards in the same layout.
-          Remember to credit any artwork used in your custom creations.
+          Remember to credit any artwork used in your custom creations. The puzzle section
+          was added later as a fun way to learn about various Magic: The Gathering rules and interactions!
         </Typography>
       </Grid2>
 
@@ -25,9 +26,17 @@ export function HomePage() {
         <Button
           variant="contained"
           sx={{ width: 135 }}
+          onClick={() => navigate({ pathname: "puzzle-list" })}
+        >
+          Puzzles
+        </Button>
+
+        <Button
+          variant="contained"
+          sx={{ width: 135 }}
           onClick={() => navigate({ pathname: "edit" })}
         >
-          Create New
+          Create Card
         </Button>
 
         <Button

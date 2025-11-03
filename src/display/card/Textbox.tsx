@@ -5,10 +5,11 @@ import { TextParser } from "../symbols/TextParser";
 
 type TextboxProps = {
   card: Card;
+  hideFlavorText?: boolean;
   onClick?: (part: keyof Card) => void;
 }
 
-export function Textbox({ card, onClick }: TextboxProps) {
+export function Textbox({ card, hideFlavorText, onClick }: TextboxProps) {
   const { text, flavorText } = card;
   const [color1, color2] = getPalettes(card);
   const background = getGradient(color1.light, color2?.light);
@@ -41,7 +42,7 @@ export function Textbox({ card, onClick }: TextboxProps) {
         <TextParser text={text} />
       </Box>
 
-      {flavorText && (
+      {flavorText && !hideFlavorText && (
         <Box>
           <Box
             sx={{
