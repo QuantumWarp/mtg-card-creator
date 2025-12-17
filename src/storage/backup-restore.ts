@@ -2,6 +2,12 @@ import { NavigateFunction } from "react-router-dom";
 import { Card } from "../models/card";
 import { deleteCard, getCards, saveCard } from "./card.storage";
 
+export function canBackup() {
+  const cards = getCards();
+  const nonExamples = cards.filter((x) => !x.id.startsWith("example-"));
+  return nonExamples.length !== 0;
+}
+
 export function backup() {
   const cards = getCards();
   const filteredCards = cards.filter((x) => !x.id.startsWith("example"));

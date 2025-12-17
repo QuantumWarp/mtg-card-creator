@@ -1,7 +1,7 @@
 import { DarkMode, HelpOutline, LightMode, CancelPresentation, Download, Upload } from "@mui/icons-material";
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Link, Tooltip, Typography, useColorScheme, useMediaQuery } from "@mui/material";
 import { useMemo, useState } from "react";
-import { backup, restore } from "../storage/backup-restore";
+import { backup, canBackup, restore } from "../storage/backup-restore";
 import { useNavigate } from "react-router-dom";
 import { ConfirmationDialog } from "./ConfirmationDialog";
 
@@ -14,12 +14,7 @@ export function PageFooter() {
   const [openAbout, setOpenAbout] = useState(false);
   const [openClearCache, setOpenClearCache] = useState(false);
 
-  const isRestore = useMemo(() => {
-    const keys = Object.keys(localStorage);
-    const cardKeys = keys.filter((x) => x.startsWith("card-"));
-    const nonExamples = cardKeys.filter((x) => !x.startsWith("card-example"));
-    return nonExamples.length === 0;
-  }, []);
+  const isRestore = useMemo(() => !canBackup(), []);
 
   const updateMode = () => {
     const nextColor = color !== 'dark' ? 'dark' : 'light';
