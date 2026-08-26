@@ -1,5 +1,5 @@
 import { Button, ButtonBase, Grid2, TextField } from "@mui/material";
-import { CardSymbol } from "../../display/symbols/CardSymbol";
+import { CardSymbol } from "../../display/helpers/symbols/CardSymbol";
 import { SymbolSelector } from "./SymbolSelector";
 import { MutableRefObject, useState } from "react";
 

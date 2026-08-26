@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
-import { sizing } from "../style.helper";
-import { getPalettes, palettes } from "../palette";
+import { sizing } from "../helpers/styles";
+import { getPalettes, palettes } from "../helpers/palette";
 import { Card } from "../../models/card";
 
 export function TexturedBackground({ card }: { card: Card }) {
@@ -8,12 +8,13 @@ export function TexturedBackground({ card }: { card: Card }) {
   const [color1, color2, multicolor] = getPalettes(card);
   const color = color2 ? multicolor : color1;
   
-  const isLegendary = typeline.includes("Legendary");
+  const legendaryHeader = typeline.includes("Legendary")
+    && !typeline.includes("Planeswalker");
   const isLand = typeline.includes("Land");
   const isArtifact = typeline.includes("Artifact");
 
   const base = isLand ? "#a0876f" : (isArtifact ? palettes.Colorless.mid : color.mid);
-  const offset = isLegendary ? 2 : 0;
+  const offset = legendaryHeader ? 2 : 0;
 
   return (
     <Box

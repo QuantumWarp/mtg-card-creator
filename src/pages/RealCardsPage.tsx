@@ -1,7 +1,7 @@
 import { Autocomplete, Box, Button, CircularProgress, Grid2, TextField, Typography } from "@mui/material";
 import { PageContainer } from "../components/PageContainer";
 import { useRealCard } from "../scryfall/use-real-card";
-import { CardDisplay } from "../display/card/CardDisplay";
+import { CardDisplay } from "../display/CardDisplay";
 import { useState } from "react";
 import { useAutocomplete } from "../scryfall/use-autocomplete";
 import { useNavigate } from "react-router-dom";

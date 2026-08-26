@@ -4,7 +4,7 @@ import { EditCardForm } from "../components/EditCardForm";
 import { useEffect, useState } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { deleteCard, saveCard } from "../storage/card.storage";
-import { CardDisplay } from "../display/card/CardDisplay";
+import { CardDisplay } from "../display/CardDisplay";
 import { Card } from "../models/card";
 import { ConfirmationDialog } from "../components/ConfirmationDialog";
 

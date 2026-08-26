@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
-import { center, roundedBorder, sizing } from "../style.helper";
+import { center, roundedBorder, sizing } from "../helpers/styles";
 import { Card } from "../../models/card";
-import { getGradient, getPalettes } from "../palette";
+import { getGradient, getPalettes } from "../helpers/palette";
 import { Rarity } from "../../models/rarity";
 
 type TypeplateProps = {

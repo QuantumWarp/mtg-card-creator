@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { useSymbol } from "../../scryfall/use-symbol";
+import { useSymbol } from "../../../scryfall/use-symbol";
 
 type CardSymbolProps = {
   encoded: string;

@@ -1,6 +1,6 @@
 
-import { Card } from "../models/card";
-import { Color } from "../models/color";
+import { Card } from "../../models/card";
+import { Color } from "../../models/color";
 
 export interface Palette {
   light: string;

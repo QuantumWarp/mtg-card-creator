@@ -3,7 +3,7 @@ import { PageContainer } from "../components/PageContainer";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import { puzzleList } from "../puzzles/core/puzzle-list";
-import { CardDisplay } from "../display/card/CardDisplay";
+import { CardDisplay } from "../display/CardDisplay";
 import { useRealCard } from "../scryfall/use-real-card";
 import { getPuzzleCards, renderPuzzleLine } from "../puzzles/core/puzzle.helper";
 import { getCompletedPuzzles, markPuzzleCompleted } from "../storage/puzzle.storage";

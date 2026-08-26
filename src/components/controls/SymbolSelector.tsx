@@ -1,6 +1,6 @@
 import { Box, ButtonBase, Popover } from "@mui/material";
 import { useSymbology } from "../../scryfall/use-symbology";
-import { CardSymbol } from "../../display/symbols/CardSymbol";
+import { CardSymbol } from "../../display/helpers/symbols/CardSymbol";
 
 type SymbolSelector = {
   manaOnly?: boolean;

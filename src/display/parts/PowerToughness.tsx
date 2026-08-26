@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
-import { center, roundedBorder, sizing } from "../style.helper";
+import { center, roundedBorder, sizing } from "../helpers/styles";
 import { Card } from "../../models/card";
-import { getPalettes } from "../palette";
+import { getPalettes } from "../helpers/palette";
 
 type PowerToughnessProps = {
   card: Card;

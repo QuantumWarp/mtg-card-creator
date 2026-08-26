@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import { CardSymbol } from "./CardSymbol";
+import { LoyaltyCost } from "../../specifics/LoyaltyCost";
 
 type TextParserProps = {
   text?: string;
@@ -21,7 +22,7 @@ export function TextParser({ text: fullText }: TextParserProps) {
   }
 
   function renderSegment(text: string) {
-    const parts = text.split(/(\{.*?\})/g).filter(x => !!x);
+    const parts = text.split(/([+−]?\d+:)|(\{.*?\})/g).filter(x => !!x);
     const italic = text.startsWith("(") || text.endsWith("—");
     return (
       <Box key={text} component="span" fontStyle={italic ? "italic" : "inherit"}>
@@ -31,16 +32,22 @@ export function TextParser({ text: fullText }: TextParserProps) {
   }
 
   function renderPart(text: string, index: number) {
-    if (!/^\{.*?\}$/.test(text)) return (
-      <span key={index + text} style={{ marginTop: index === 0 ? 0 : "0.5em" }}>
-        {text}
-      </span>
-    );
-
-    return (
+    if (/^\{.*?\}$/.test(text)) return (
       <Box display="inline-block" key={index + text} marginTop={-1}>
         <CardSymbol encoded={text} size="0.8em" noShadow />
       </Box>
+    );
+
+    if (/^[+−]?\d+:$/.test(text)) return (
+      <Box display="inline-block" key={index + text} marginTop={-1}>
+        <LoyaltyCost cost={text.replace(":", "")} />:
+      </Box>
+    );
+
+    return (
+      <span key={index + text} style={{ marginTop: index === 0 ? 0 : "0.5em" }}>
+        {text}
+      </span>
     );
   }
 

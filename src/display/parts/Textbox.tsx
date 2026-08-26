@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import { Card } from "../../models/card";
-import { getGradient, getPalettes } from "../palette";
-import { TextParser } from "../symbols/TextParser";
+import { getGradient, getPalettes } from "../helpers/palette";
+import { TextParser } from "../helpers/symbols/TextParser";
 
 type TextboxProps = {
   card: Card;

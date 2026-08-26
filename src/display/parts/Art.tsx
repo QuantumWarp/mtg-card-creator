@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import { Card } from "../../models/card";
+import { roundedBorder } from "../helpers/styles";
 
 type ArtProps = {
   card: Card;
@@ -7,6 +8,9 @@ type ArtProps = {
 }
 
 export function Art({ card, onClick }: ArtProps) {
+  const { typeline } = card;
+  const isPlaneswalker = typeline.includes("Planeswalker")
+
   return (
     <Box
       sx={{
@@ -16,7 +20,9 @@ export function Art({ card, onClick }: ArtProps) {
         border: "0.06em solid black",
         display: "flex",
         justifyContent: "stretch",
-        alignItems: "stretch"
+        alignItems: "stretch",
+        overflow: "hidden",
+        ...(isPlaneswalker && roundedBorder(10, 130)),
       }}
       onClick={(e) => {
         if (!onClick) return;
