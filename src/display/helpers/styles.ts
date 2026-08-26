@@ -27,3 +27,9 @@ export const center = (override: {
     justifyContent: override.justifyContent || "center",
   }
 };
+
+export const leftShadow = () => {
+  return {
+    boxShadow: "-0.14em 0 0.05em rgba(0, 0, 0, 0.4)",
+  }
+};

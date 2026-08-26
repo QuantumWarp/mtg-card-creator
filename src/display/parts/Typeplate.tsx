@@ -3,6 +3,7 @@ import { center, roundedBorder, sizing } from "../helpers/styles";
 import { Card } from "../../models/card";
 import { getGradient, getPalettes } from "../helpers/palette";
 import { Rarity } from "../../models/rarity";
+import { clickHandler } from "../helpers/general";
 
 type TypeplateProps = {
   card: Card;
@@ -27,26 +28,20 @@ export function Typeplate({ card, onClick }: TypeplateProps) {
   return (
     <Box
       sx={{
-        position: "relative",
-        height: "8%",
         fontSize: "56%",
-        fontWeight: "bold"
+        fontWeight: "bold",
+        ...sizing(92, 7.5),
       }}
-      onClick={(e) => {
-        if (!onClick) return;
-        onClick("typeline");
-        e.stopPropagation();
-      }}
+      onClick={(e) => clickHandler(e, onClick, "typeline")}
     >
       <Box
         sx={{
-          position: "absolute",
           background: background,
           p: "0.8%",
           boxSizing: "border-box",
-          boxShadow: "-0.12em 0 0.08em rgba(0, 0, 0, 0.4)",
+          boxShadow: "-0.14em 0 0.05em rgba(0, 0, 0, 0.4)",
           clipPath: "inset(0px -0.2em 0px -0.2em)",
-          ...sizing(106, 100, -3),
+          ...sizing(100, 100),
           ...roundedBorder(15, 30),
         }}
       >

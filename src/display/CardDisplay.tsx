@@ -29,21 +29,18 @@ export function CardDisplay({
 
     window.addEventListener('resize', updateFontSize);
     return () => window.removeEventListener('resize', updateFontSize);
-  }, [cardRef])
+  }, [cardRef]);
+
+  // const { typeline } = card;
+  // const isSaga = typeline.includes("Saga");
 
   return (
     <Box
       ref={cardRef}
       sx={{
-        position: "relative",
         boxShadow: theme.palette.mode === "dark" ? "none" : 5,
-        backgroundColor: "black",
-        fontFamily: "Matrix, Garamond, serif",
-        borderRadius: ".6em",
         width: width || "min(100%, 500px)",
-        aspectRatio: 0.715,
         fontSize: `${fontSize}px`,
-        color: "black",
         cursor: onClick ? "pointer" : "default",
         userSelect: onClick ? "none" : "auto"
       }}

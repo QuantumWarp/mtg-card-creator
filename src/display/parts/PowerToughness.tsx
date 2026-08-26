@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import { center, roundedBorder, sizing } from "../helpers/styles";
 import { Card } from "../../models/card";
 import { getPalettes } from "../helpers/palette";
+import { clickHandler } from "../helpers/general";
 
 type PowerToughnessProps = {
   card: Card;
@@ -9,6 +10,11 @@ type PowerToughnessProps = {
 }
 
 export function PowerToughness({ card, onClick }: PowerToughnessProps) {
+  const showPowerToughness = card.power !== undefined
+    || card.toughness !== undefined
+    || card.typeline.toLowerCase().includes("creature");
+  if (!showPowerToughness) return null;
+
   const [color1, color2, multicolor] = getPalettes(card);
   const color = color2 ? multicolor : color1;
 
@@ -21,14 +27,10 @@ export function PowerToughness({ card, onClick }: PowerToughnessProps) {
         width: "18%",
         fontSize: "64%",
         fontWeight: "bold",
-        bottom: "-2%",
-        right: "-3.2%"
+        bottom: "5%",
+        right: "3.5%"
       }}
-      onClick={(e) => {
-        if (!onClick) return;
-        onClick("power");
-        e.stopPropagation();
-      }}
+      onClick={(e) => clickHandler(e, onClick, "power")}
     >
       <Box
         sx={{
@@ -55,13 +57,9 @@ export function PowerToughness({ card, onClick }: PowerToughnessProps) {
         >
           <span>{card.power || "?"}</span>
           /
-          <span
-            onClick={(e) => {
-              if (!onClick) return;
-              onClick("toughness");
-              e.stopPropagation();
-            }}
-          >{card.toughness || "?"}</span>
+          <span onClick={(e) => clickHandler(e, onClick, "toughness")}>
+            {card.toughness || "?"}
+          </span>
         </Box>
       </Box>
     </Box>

@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
-import { sizing } from "../helpers/styles";
-import { getPalettes, palettes } from "../helpers/palette";
-import { Card } from "../../models/card";
+import { sizing } from "../../helpers/styles";
+import { getPalettes, palettes } from "../../helpers/palette";
+import { Card } from "../../../models/card";
 
 export function TexturedBackground({ card }: { card: Card }) {
   const { typeline } = card;

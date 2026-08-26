@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { CardSymbol } from "./CardSymbol";
-import { LoyaltyCost } from "../../specifics/LoyaltyCost";
+import { LoyaltyCost } from "../../parts/specifics/LoyaltyCost";
 
 type TextParserProps = {
   text?: string;

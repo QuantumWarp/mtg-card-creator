@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import { Card } from "../../models/card";
+import { clickHandler } from "../helpers/general";
 
 type BottomInfoProps = {
   card: Card;
@@ -18,20 +19,11 @@ export function BottomInfo({ card, onClick }: BottomInfoProps) {
   const setCode = card.set.code.toUpperCase();
   const artist = card.artist;
 
-  const clickHandler = (
-    e: React.MouseEvent<HTMLElement, MouseEvent>,
-    part: keyof Card
-  ) => {
-    if (!onClick) return;
-    onClick(part);
-    e.stopPropagation();
-  }
-
   return (
     <Box
       sx={{
-        position: "absolute",
-        bottom: "2.5%",
+        mt: "1%",
+        mb: "2.5%",
         px: "6.4%",
         boxSizing: "border-box",
         display: "flex",
@@ -48,22 +40,22 @@ export function BottomInfo({ card, onClick }: BottomInfoProps) {
           alignItems: "flex-start"
         }}
       >
-        <Box onClick={(e) => clickHandler(e, "collectorNumber")}>
+        <Box onClick={(e) => clickHandler(e, onClick, "collectorNumber")}>
           <span>{collectorNumber}</span>
           /
-          <span onClick={(e) => clickHandler(e, "set")}>{cardCount}</span>
+          <span onClick={(e) => clickHandler(e, onClick, "set")}>{cardCount}</span>
           {" "}
-          <span onClick={(e) => clickHandler(e, "rarity")}>{rarityLetter}</span>
+          <span onClick={(e) => clickHandler(e, onClick, "rarity")}>{rarityLetter}</span>
         </Box>
 
         <Box>
-          <span onClick={(e) => clickHandler(e, "set")}>{setCode}</span>
+          <span onClick={(e) => clickHandler(e, onClick, "set")}>{setCode}</span>
           <span style={{ visibility: (setCode || artist) ? "visible" : "hidden"}}> - </span>
-          <span onClick={(e) => clickHandler(e, "artist")}>{artist}</span>
+          <span onClick={(e) => clickHandler(e, onClick, "artist")}>{artist}</span>
         </Box>
       </Box>
 
-      <Box sx={{ mt: showPowerToughness ? "2.8%" : 0 }}>
+      <Box sx={{ mt: showPowerToughness ? "4.2%" : 0 }}>
         {card.real ? "© Wizards of the Coast" : "Custom Card"}
       </Box>
     </Box>
