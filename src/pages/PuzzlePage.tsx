@@ -1,4 +1,4 @@
-import { Box, Button, CircularProgress, Grid2, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Grid, Typography } from "@mui/material";
 import { PageContainer } from "../components/PageContainer";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
@@ -34,13 +34,13 @@ function PuzzlePage() {
 
   return (
     <PageContainer key={location.key}>
-      <Box display="flex" alignItems="center" justifyContent="space-between">
+      <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <Typography variant="h3">
           Puzzle {puzzleIndex + 1}
           {completed && <Check sx={{ ml: 2, width: 38, height: 38, color: "green" }} />}
         </Typography>
 
-        <Grid2 container spacing={1}>
+        <Grid container spacing={1}>
           {puzzleIndex !== puzzleList.length - 1 && (
             <Button
               onClick={() => navigate(`/puzzles/${puzzleIndex + 1}`)}
@@ -52,16 +52,16 @@ function PuzzlePage() {
             onClick={() => navigate("/puzzle-list")}
             variant="outlined"
           >Back</Button>
-        </Grid2>
+        </Grid>
       </Box>
       
-      <Typography mb={4} fontWeight="bold">
+      <Typography sx={{ mb: 4, fontWeight: "bold" }}>
         {puzzle.categories.join(", ")}
       </Typography>
 
-      <Grid2 container spacing={2}>
-        <Grid2 display="flex" flexDirection="column" size={{ xs: 12, lg: 6 }} gap={2}>
-          <Typography variant="h6" mt={10}>Setup</Typography>
+      <Grid container spacing={2}>
+        <Grid size={{ xs: 12, lg: 6 }} sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+          <Typography variant="h6" sx={{ mt: 10 }}>Setup</Typography>
           <ul style={{ marginTop: 0, marginBottom: 0 }}>
             {puzzle.setup.map((line, index) => (
               <li key={index}>
@@ -72,14 +72,14 @@ function PuzzlePage() {
             ))}
           </ul>
 
-          <Typography variant="h6" mt={3}>Question</Typography>
-          <Typography ml={4} fontWeight="bold" fontSize={24}>
+          <Typography variant="h6" sx={{ mt: 3 }}>Question</Typography>
+          <Typography sx={{ ml: 4, fontWeight: "bold", fontSize: 24 }}>
             {renderPuzzleLine(puzzle.question, setCardName, true)}
           </Typography>
     
           
           {!showAnswer &&
-            <Box mt={3}>
+            <Box sx={{ mt: 3 }}>
               <Button
                 variant="contained"
                 onClick={() => {
@@ -95,12 +95,12 @@ function PuzzlePage() {
 
           {showAnswer && (
             <>
-              <Typography variant="h6" mt={3}>Answer</Typography>
-              <Typography ml={4} fontWeight="bold" fontSize={24}>
+              <Typography variant="h6" sx={{ mt: 3 }}>Answer</Typography>
+              <Typography sx={{ ml: 4, fontWeight: "bold", fontSize: 24 }}>
                 {renderPuzzleLine(puzzle.answer, setCardName, true)}
               </Typography>
 
-              <Typography variant="h6" mt={3}>Explanation</Typography>
+              <Typography variant="h6" sx={{ mt: 3 }}>Explanation</Typography>
               <ul style={{ marginTop: 0, marginBottom: 0 }}>
                 {puzzle.explanation.map((line, index) => (
                   <li key={index}>
@@ -112,10 +112,10 @@ function PuzzlePage() {
               </ul>
             </>
           )}
-        </Grid2>
+        </Grid>
 
-        <Grid2 size={{ xs: 12, lg: 6 }}>
-          <Box display="flex" justifyContent="center" mb={2} gap={2}>
+        <Grid size={{ xs: 12, lg: 6 }}>
+          <Box sx={{ display: "flex", justifyContent: "center", mb: 2, gap: 2 }}>
             <Button
               variant="contained"
               onClick={() => {
@@ -139,21 +139,21 @@ function PuzzlePage() {
             </Button>
           </Box>
 
-          <Box display="flex" justifyContent="center">
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
             {card && <CardDisplay card={card} hideFlavorText />}
             {loading && (
-              <Box width="100%" height={500} display="flex" alignItems="center" justifyContent="center">
+              <Box sx={{ width: "100%", height: 500, display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <CircularProgress />
               </Box>
             )}
             {error && (
-              <Box width="100%" height={500} display="flex" alignItems="center" justifyContent="center">
+              <Box sx={{ width: "100%", height: 500, display: "flex", alignItems: "center", justifyContent: "center" }}>
                 Error loading card
               </Box>
             )}
           </Box>
-        </Grid2>
-      </Grid2>
+        </Grid>
+      </Grid>
     </PageContainer>
   );
 }

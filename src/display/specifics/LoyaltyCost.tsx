@@ -6,7 +6,7 @@ type LoyaltyCostProps = {
 
 export function LoyaltyCost({ cost }: LoyaltyCostProps) {
   return (
-    <Box component="span" border="2px solid black">
+    <Box component="span" sx={{ border: "2px solid black" }}>
       {cost}
     </Box>
   );

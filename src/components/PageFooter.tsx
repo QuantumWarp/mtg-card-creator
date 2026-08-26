@@ -1,4 +1,4 @@
-import { DarkMode, HelpOutline, LightMode, CancelPresentation, Download, Upload } from "@mui/icons-material";
+import { DarkMode, HelpOutlined, LightMode, CancelPresentation, Download, Upload } from "@mui/icons-material";
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Link, Tooltip, Typography, useColorScheme, useMediaQuery } from "@mui/material";
 import { useMemo, useState } from "react";
 import { backup, canBackup, restore } from "../storage/backup-restore";
@@ -31,11 +31,11 @@ export function PageFooter() {
   };
 
   return (
-    <Box p={2} display="flex" alignItems="center" flexDirection="column">
-      <Box mb={1}>
+    <Box sx={{ p: 2, display: "flex", alignItems: "center", flexDirection: "column" }}>
+      <Box sx={{ mb: 1 }}>
         <Tooltip title="About this app" placement="top">
           <IconButton onClick={() => setOpenAbout(true)}>
-            <HelpOutline />
+            <HelpOutlined />
           </IconButton>
         </Tooltip>
 
@@ -96,7 +96,7 @@ export function PageFooter() {
         <DialogTitle>About</DialogTitle>
 
         <DialogContent>
-          <Typography mb={2}>
+          <Typography sx={{ mb: 2 }}>
             MTG Card Creator is unofficial Fan Content permitted under the Fan Content Policy.
             Not approved/endorsed by Wizards.
             Portions of the materials used are property of Wizards of the Coast.

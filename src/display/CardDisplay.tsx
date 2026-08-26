@@ -13,7 +13,7 @@ type CardDisplayProps = {
 export function CardDisplay({
   width, card, hideFlavorText, onClick
 }: CardDisplayProps) {
-  const cardRef = useRef<HTMLElement>();
+  const cardRef = useRef<HTMLElement>(undefined);
   const theme = useTheme();
   const [fontSize, setFontSize] = useState(24);
 

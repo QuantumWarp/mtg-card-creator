@@ -1,4 +1,4 @@
-import { Box, Button, Grid2, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import { PageContainer } from "../components/PageContainer";
 import { EditCardForm } from "../components/EditCardForm";
 import { useEffect, useState } from "react";
@@ -30,12 +30,12 @@ export function EditCardPage() {
 
   return (
     <PageContainer>
-      <Box display="flex" alignItems="center" justifyContent="space-between" mb={8}>
+      <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 8 }}>
         <Typography variant="h3">
           Edit Card
         </Typography>
 
-        <Grid2 container spacing={1}>
+        <Grid container spacing={1}>
           <Button
             onClick={save}
             variant="outlined"
@@ -74,22 +74,22 @@ export function EditCardPage() {
           >
             Are you sure you want to delete <b>{card.name}?</b>
           </ConfirmationDialog>
-        </Grid2>
+        </Grid>
       </Box>
 
-      <Grid2 container spacing={{ xs: 4, lg: 0 }} width="100%">
-        <Grid2 size={{ xs: 12, lg: 6 }}>
+      <Grid container spacing={{ xs: 4, lg: 0 }} sx={{ width: "100%" }}>
+        <Grid size={{ xs: 12, lg: 6 }}>
           <EditCardForm
             card={card}
             onChange={setCard}
             focusKey={focusKey}
           /> 
-        </Grid2>
+        </Grid>
 
-        <Grid2 size={{ xs: 12, lg: 6 }} display="flex" justifyContent={{ xs: "center", lg: "flex-end" }}>
+        <Grid size={{ xs: 12, lg: 6 }} sx={{ display: "flex", justifyContent: { xs: "center", lg: "flex-end" }}}>
           <CardDisplay card={card} onClick={setFocusKey} />
-        </Grid2>
-      </Grid2>
+        </Grid>
+      </Grid>
     </PageContainer>
   );
 }

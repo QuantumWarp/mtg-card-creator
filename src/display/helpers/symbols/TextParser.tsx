@@ -15,7 +15,7 @@ export function TextParser({ text: fullText }: TextParserProps) {
     const segments = text.split(/(\(.*?\)|^.*—)/g).filter(x => !!x);
 
     return (
-      <Box key={index} mt={index === 0 ? 0 : "0.6em"}>
+      <Box key={index} sx={{ mt: index === 0 ? 0 : "0.6em" }}>
         {segments.map((segment) => renderSegment(segment))}
       </Box>
     );
@@ -25,7 +25,7 @@ export function TextParser({ text: fullText }: TextParserProps) {
     const parts = text.split(/([+−]?\d+:)|(\{.*?\})/g).filter(x => !!x);
     const italic = text.startsWith("(") || text.endsWith("—");
     return (
-      <Box key={text} component="span" fontStyle={italic ? "italic" : "inherit"}>
+      <Box key={text} component="span" sx={{ fontStyle: italic ? "italic" : "inherit" }}>
         {parts.map((part, partIndex) => renderPart(part, partIndex))}
       </Box>
     );
@@ -33,13 +33,13 @@ export function TextParser({ text: fullText }: TextParserProps) {
 
   function renderPart(text: string, index: number) {
     if (/^\{.*?\}$/.test(text)) return (
-      <Box display="inline-block" key={index + text} marginTop={-1}>
+      <Box key={index + text} sx={{ display: "inline-block", marginTop: -1 }}>
         <CardSymbol encoded={text} size="0.8em" noShadow />
       </Box>
     );
 
     if (/^[+−]?\d+:$/.test(text)) return (
-      <Box display="inline-block" key={index + text} marginTop={-1}>
+      <Box key={index + text} sx={{ display: "inline-block", marginTop: -1 }}>
         <LoyaltyCost cost={text.replace(":", "")} />:
       </Box>
     );
@@ -52,7 +52,7 @@ export function TextParser({ text: fullText }: TextParserProps) {
   }
 
   return (
-    <Box display="flex" flexDirection="column">
+    <Box sx={{ display: "flex", flexDirection: "column" }}>
       {blocks.map((block, index) => renderBlock(block, index))}
     </Box>
   );

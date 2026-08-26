@@ -1,5 +1,5 @@
 import { Autocomplete, TextField } from "@mui/material";
-import { MutableRefObject, useMemo } from "react";
+import { RefObject, useMemo } from "react";
 import { CatalogType } from "../../scryfall/requests/catalog.request";
 import { useCatalogs } from "../../scryfall/use-catalogs";
 import Case from "case";
@@ -10,7 +10,7 @@ type TypelineOption = {
 }
 
 type TypelineControlProps = {
-  inputRef?: MutableRefObject<HTMLInputElement | undefined>;
+  inputRef?: RefObject<HTMLInputElement | undefined>;
   value: string;
   onChange: (value: string) => void;
 }

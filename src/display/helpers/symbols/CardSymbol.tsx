@@ -13,7 +13,7 @@ export function CardSymbol({ encoded, size = "1em", noShadow = false }: CardSymb
   if (!symbol) return encoded;
 
   return (
-    <Box ml="0.1em" mt="0.2em">
+    <Box sx={{ ml: "0.1em", mt: "0.2em" }}>
       <img
         src={symbol.svgUri}
         style={{

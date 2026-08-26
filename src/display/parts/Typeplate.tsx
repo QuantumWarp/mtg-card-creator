@@ -65,10 +65,12 @@ export function Typeplate({ card, onClick }: TypeplateProps) {
           <Box>{typeline}</Box>
 
           <Box
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            position="relative"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              position: "relative",
+            }}
             onClick={(e) => {
               if (!onClick) return;
               onClick("rarity");

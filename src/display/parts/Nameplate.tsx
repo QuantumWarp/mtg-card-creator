@@ -95,9 +95,11 @@ export function Nameplate({ card, onClick }: NameplateProps) {
         >
           <Box>{name}</Box>
           <Box
-            minWidth="15%"
-            display="flex"
-            justifyContent="flex-end"
+            sx={{
+              minWidth: "15%",
+              display: "flex",
+              justifyContent: "flex-end",
+            }}
             onClick={(e) => {
               if (!onClick) return;
               onClick("manaCost");

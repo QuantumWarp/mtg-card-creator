@@ -42,7 +42,7 @@ export function SymbolSelector({
       }}
       
     >
-      <Box p={1} width={410}>
+      <Box sx={{ p: 1, width: 410 }}>
         {filteredSymbols?.map((x) => symbolButton(x.symbol))}
       </Box>
     </Popover>

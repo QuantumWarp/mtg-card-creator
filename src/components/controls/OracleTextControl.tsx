@@ -1,9 +1,9 @@
 import { Button, InputAdornment, TextField } from "@mui/material";
 import { SymbolSelector } from "./SymbolSelector";
-import { MutableRefObject, useState } from "react";
+import { RefObject, useState } from "react";
 
 type OracleTextControlProps = {
-  inputRef?: MutableRefObject<HTMLInputElement | undefined>;
+  inputRef?: RefObject<HTMLInputElement | undefined>;
   value: string;
   onChange: (value: string) => void;
 }

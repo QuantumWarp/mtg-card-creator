@@ -38,7 +38,7 @@ export function Textbox({ card, hideFlavorText, onClick }: TextboxProps) {
         e.stopPropagation();
       }}
     >
-      <Box flex={1} display="flex" alignItems="center">
+      <Box sx={{ flex: 1, display: "flex", alignItems: "center" }}>
         <TextParser text={text} />
       </Box>
 
@@ -55,8 +55,10 @@ export function Textbox({ card, hideFlavorText, onClick }: TextboxProps) {
           />
 
           <Box
-            my="0.2em"
-            fontSize="90%" 
+            sx={{
+              my: "0.2em",
+              fontSize: "90%",
+            }}
             onClick={(e) => {
               if (!onClick) return;
               onClick("flavorText");

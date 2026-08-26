@@ -63,7 +63,7 @@ export function BottomInfo({ card, onClick }: BottomInfoProps) {
         </Box>
       </Box>
 
-      <Box mt={showPowerToughness ? "2.8%" : 0}>
+      <Box sx={{ mt: showPowerToughness ? "2.8%" : 0 }}>
         {card.real ? "© Wizards of the Coast" : "Custom Card"}
       </Box>
     </Box>

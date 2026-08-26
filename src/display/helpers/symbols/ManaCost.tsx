@@ -12,7 +12,7 @@ export function ManaCost({ manaCost }: { manaCost: string }) {
         if (x.length === 0) return undefined;
         if (!/^\{.*?\}$/.test(x)) return <span key={x}>{x}</span>;
         return (
-          <Box display="inline-block" key={index + x}>
+          <Box key={index + x} sx={{ display: "inline-block" }}>
             <CardSymbol encoded={x} />
           </Box>
         );
