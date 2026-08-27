@@ -1,15 +1,10 @@
+import { Layout } from "../../models/layout";
 import { Rarity } from "../../models/rarity";
 import { scryfallRequest } from "../helpers/scryfall.request";
 import { scryfallUrl } from "../helpers/url";
 
-export interface ScryfallCard {
-  id: string;
-
+export interface ScryfallCardFace {
   name: string;
-  setId: string;
-  setName: string;
-  rarity: Rarity;
-  collectorNumber: string;
 
   manaCost: string;
   colors: string[];
@@ -18,14 +13,25 @@ export interface ScryfallCard {
 
   power: string;
   toughness: string;
-
+  loyalty: string;
+  
   oracleText: string;
   flavorText: string;
-
+  
   artUri: string;
   artist: string;
+}
 
-  // TODO: card faces
+export interface ScryfallCard extends ScryfallCardFace {
+  id: string;
+
+  setId: string;
+  setName: string;
+  rarity: Rarity;
+  collectorNumber: string;
+  layout: Layout;
+
+  cardFaces: ScryfallCardFace[];
 }
 
 export const cardRequest = async (name: string): Promise<ScryfallCard> => {
@@ -36,11 +42,21 @@ export const cardRequest = async (name: string): Promise<ScryfallCard> => {
   return {
     id: json.id,
 
-    name: json.name,
     setId: json.set_id,
     setName: json.set_name,
     rarity: json.rarity,
     collectorNumber: json.collector_number,
+    layout: json.layout,
+
+    ...cardFaceFromJson(json),
+
+    cardFaces: json.card_faces ? json.card_faces.map((x: any) => cardFaceFromJson(x)) : []
+  };
+}
+
+const cardFaceFromJson = (json: any): ScryfallCardFace => {
+  return {
+    name: json.name,
 
     manaCost: json.mana_cost || "",
     colors: json.colors,
@@ -49,6 +65,7 @@ export const cardRequest = async (name: string): Promise<ScryfallCard> => {
   
     power: json.power,
     toughness: json.toughness,
+    loyalty: json.loyalty,
   
     oracleText: json.oracle_text || "",
     flavorText: json.flavor_text || "",

@@ -13,6 +13,18 @@ export function RealCardsPage() {
   const { results, isFetching } = useAutocomplete(search);
   const { card, loading, error } = useRealCard(name);
 
+  const renderButton = (reason: string, name: string) => (
+    <Button onClick={() => setName(name)}>
+      <Box sx={{ flex: 1, textAlign: "right" }}>
+        {reason}
+      </Box>
+      <Box sx={{ width: "30px" }}>-</Box>
+      <Box sx={{ flex: 1.2, textAlign: "left" }}>
+        {name}
+      </Box>
+    </Button>
+  )
+
   return (
     <PageContainer>
       <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
@@ -52,28 +64,39 @@ export function RealCardsPage() {
           />
 
           <Typography variant="h6" sx={{ mt: 4, mb: 2, textAlign: "center" }}>
-            Working Examples
+            Examples
           </Typography>
 
-          <Button onClick={() => setName("Charging Badger")}>Charging Badger</Button>
-          <Button onClick={() => setName("Lightning Bolt")}>Lightning Bolt</Button>
-          <Button onClick={() => setName("Mana Drain")}>Mana Drain</Button>
-          <Button onClick={() => setName("Narset, Enlightened Exile")}>Narset, Enlightened Exile</Button>
-          <Button onClick={() => setName("Solemn Simulacrum")}>Solemn Simulacrum</Button>
-          <Button onClick={() => setName("Lazav, Dimir Mastermind")}>Lazav, Dimir Mastermind</Button>
-          <Button onClick={() => setName("Windswept Heath")}>Windswept Heath</Button>
-          <Button onClick={() => setName("Island")}>Island</Button>
-
-          <Typography variant="h6" sx={{ mt: 4, mb: 2, textAlign: "center" }}>
-            Unformatted Examples
-          </Typography>
-
-          <Button onClick={() => setName("Jace, Memory Adept")}>Planeswalker - Jace, Memory Adept</Button>
-          <Button onClick={() => setName("Search for Azcanta")}>Flip - Search for Azcanta</Button>
-          <Button onClick={() => setName("Phyrexian Scriptures")}>Saga - Phyrexian Scriptures</Button>
-          <Button onClick={() => setName("Invasion of Ixalan")}>Battle - Invasion of Ixalan</Button>
-          <Button onClick={() => setName("Lovestruck Beast")}>Adventure - Lovestruck Beast</Button>
-          <Button onClick={() => setName("Destined // Lead")}>Split - Destined // Lead</Button>
+          {renderButton("Basics", "Charging Badger")}
+          {renderButton("Basics", "Lightning Bolt")}
+          {renderButton("Basics", "Mana Drain")}
+          {renderButton("Basics", "Dirge Bat")}
+          {renderButton("2 Color", "Lazav, Dimir Mastermind")}
+          {renderButton("3 Color", "Narset, Enlightened Exile")}
+          {renderButton("Artifact", "Solemn Simulacrum")}
+          {renderButton("Land", "Island")}
+          {renderButton("Colored Land", "Windswept Heath")}
+          {renderButton("Transform", "Search for Azcanta")}
+          {renderButton("Modal", "Bala Ged Recovery")}
+          {renderButton("Planeswalker", "Jace, Memory Adept")}
+          {renderButton("Planeswalker Transform", "Arlinn, the Pack's Hope")}
+          {renderButton("Saga", "Phyrexian Scriptures")}
+          {renderButton("Saga Transform", "Azusa's Many Journeys")}
+          {renderButton("Saga Creature", "Summon: Fenrir")}
+          {renderButton("Adventure", "Lovestruck Beast")}
+          {renderButton("Omen", "Disruptive Stormbrood")}
+          {renderButton("Prepared", "Jadzi, Steward of Fate")}
+          {renderButton("Case", "Case of the Shattered Pact")}
+          {renderButton("Class", "Stormchaser's Talent")}
+          {renderButton("Battle", "Invasion of Ixalan")}
+          {renderButton("Aftermath", "Destined // Lead")}
+          {renderButton("Fuse", "Give // Take")}
+          {renderButton("Split", "Flotsam // Jetsam")}
+          {renderButton("Room", "Smoky Lounge // Misty Salon")}
+          {renderButton("Vehicle", "Smuggler's Copter")}
+          {renderButton("Spacecraft", "Exploration Broodship")}
+          {renderButton("Devoid", "Thought Harvester")}
+          {renderButton("Color Indicator", "Asmoranomardicadaistinaculdacar")}
         </Grid>
 
         <Grid size={{ xs: 12, lg: 6 }} sx={{ display: "flex", justifyContent: { xs: "center", lg: "flex-end" }}}>

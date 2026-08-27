@@ -16,7 +16,7 @@ export function LegendaryHeader({ card }: Props) {
       sx={{ 
         position: "absolute",
         filter: "drop-shadow(-0.10em 0 0.08em rgba(0, 0, 0, 0.4))",
-        ...sizing(104, 126, -2, -21),
+        ...sizing(104, 127, -2, -21),
       }}
     >
       <Box

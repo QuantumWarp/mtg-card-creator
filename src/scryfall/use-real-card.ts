@@ -1,5 +1,5 @@
-import { cardRequest, ScryfallCard } from "./requests/card.request";
-import { Card } from "../models/card";
+import { cardRequest, ScryfallCard, ScryfallCardFace } from "./requests/card.request";
+import { Card, CardFace } from "../models/card";
 import { ScryfallSet, setRequest } from "./requests/set.request";
 import { localStorageCache } from "./caching/local-storage.cache";
 import { useEffect, useState } from "react";
@@ -41,9 +41,9 @@ const createCard = (
 ): Card => ({
     real: true,
     id: scryfallCard.id,
-    name: scryfallCard.name,
     rarity: scryfallCard.rarity,
     collectorNumber: scryfallCard.collectorNumber,
+    layout: scryfallCard.layout,
 
     set: {
       name: scryfallCard.setName,
@@ -51,6 +51,14 @@ const createCard = (
       iconUri: scryfallSet.iconSvgUri,
       cardCount: scryfallSet.cardCount,
     },
+    
+    ...createCardFace(scryfallCard),
+  
+    cardFaces: scryfallCard.cardFaces.map((x) => createCardFace(x)),
+  })
+
+const createCardFace = (scryfallCard: ScryfallCardFace): CardFace => ({
+    name: scryfallCard.name,
   
     manaCost: scryfallCard.manaCost,
     colors: scryfallCard.colors as Color[],
@@ -59,12 +67,11 @@ const createCard = (
   
     power: scryfallCard.power,
     toughness: scryfallCard.toughness,
+    loyalty: scryfallCard.loyalty,
   
     text: scryfallCard.oracleText,
     flavorText: scryfallCard.flavorText,
   
     artUri: scryfallCard.artUri,
     artist: scryfallCard.artist,
-  
-    cardFaces: []
   })

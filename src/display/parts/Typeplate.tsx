@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, SxProps } from "@mui/material";
 import { center, roundedBorder, sizing } from "../helpers/styles";
 import { Card } from "../../models/card";
 import { getGradient, getPalettes } from "../helpers/palette";
@@ -7,10 +7,12 @@ import { clickHandler } from "../helpers/general";
 
 type TypeplateProps = {
   card: Card;
+  hideRarity?: boolean;
+  sx?: SxProps;
   onClick?: (part: keyof Card) => void;
 }
 
-export function Typeplate({ card, onClick }: TypeplateProps) {
+export function Typeplate({ card, hideRarity, sx, onClick }: TypeplateProps) {
   const { typeline, set, rarity } = card;
   const { iconUri } = set;
 
@@ -24,13 +26,22 @@ export function Typeplate({ card, onClick }: TypeplateProps) {
   const [color1, color2, multicolor] = getPalettes(card);
   const background = getGradient(color1.dark, color2?.dark);
   const color = color2 ? multicolor : color1;
+  const isPlaneswalker = typeline.includes("Planeswalker");
+
+  const blunting = {
+    ...((sx as any)?.borderEndStartRadius === 0 && { borderEndStartRadius: 0 }),
+    ...((sx as any)?.borderEndEndRadius === 0 && { borderEndEndRadius: 0 }),
+    ...((sx as any)?.borderStartEndRadius === 0 && { borderStartEndRadius: 0 }),
+    ...((sx as any)?.borderStartStartRadius === 0 && { borderStartStartRadius: 0 }),
+  };
 
   return (
     <Box
       sx={{
-        fontSize: "56%",
+        fontSize: "58%",
         fontWeight: "bold",
         ...sizing(92, 7.5),
+        ...sx,
       }}
       onClick={(e) => clickHandler(e, onClick, "typeline")}
     >
@@ -43,6 +54,8 @@ export function Typeplate({ card, onClick }: TypeplateProps) {
           clipPath: "inset(0px -0.2em 0px -0.2em)",
           ...sizing(100, 100),
           ...roundedBorder(15, 30),
+          ...(isPlaneswalker && { borderEndStartRadius: 5, borderEndEndRadius: 5 }),
+          ...blunting,
         }}
       >
         <Box
@@ -51,26 +64,24 @@ export function Typeplate({ card, onClick }: TypeplateProps) {
             p: "0.4% 2.4% 1% 2.4%",
             border: "0.02em solid black",
             boxSizing: "border-box",
+            boxShadow: "inset 0.12em -0.12em 0.12em rgba(0, 0, 0, 0.5), inset -0.12em 0.12em 0.12em rgba(255, 255, 255, 0.5)",
             ...sizing(100, 100),
-            ...roundedBorder(10, 20),
             ...center({ justifyContent: "space-between" }),
-            boxShadow: "inset 0.12em -0.12em 0.12em rgba(0, 0, 0, 0.5), inset -0.12em 0.12em 0.12em rgba(255, 255, 255, 0.5)"
+            ...roundedBorder(10, 20),
+            ...(isPlaneswalker && { borderEndStartRadius: 5, borderEndEndRadius: 5 }),
+            ...blunting,
           }}
         >
           <Box>{typeline}</Box>
 
-          <Box
+          {!hideRarity && <Box
             sx={{
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               position: "relative",
             }}
-            onClick={(e) => {
-              if (!onClick) return;
-              onClick("rarity");
-              e.stopPropagation();
-            }}
+            onClick={(e) => clickHandler(e, onClick, "rarity")}
           >
             <img
               src={iconUri || "./custom-set.svg"}
@@ -88,7 +99,7 @@ export function Typeplate({ card, onClick }: TypeplateProps) {
                 height: "1.5em"
               }}
             />
-          </Box>
+          </Box>}
         </Box>
       </Box>
     </Box>

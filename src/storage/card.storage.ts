@@ -1,6 +1,7 @@
 import { v4 as uuid } from "uuid";
 import { Card } from "../models/card";
 import { Rarity } from "../models/rarity";
+import { Layout } from "../models/layout";
 
 const cardPrefix = "mtg-card-creator-card-";
 
@@ -32,6 +33,7 @@ export const defaultCard = (): Card => {
     name: "",
     rarity: Rarity.Common,
     collectorNumber: "",
+    layout: Layout.Normal,
 
     set: {
       name: "",

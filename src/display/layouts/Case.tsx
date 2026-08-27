@@ -16,22 +16,20 @@ type Props = {
   onClick?: (part?: keyof Card) => void;
 }
 
-export function SagaLayout({ card, hideFlavorText, onClick }: Props) {
-  const showFlip = card.cardFaces && card.cardFaces.length > 1;
-
+export function CaseLayout({ card, hideFlavorText, onClick }: Props) {
   return (
     <BaseBackground
       texture={<TexturedBackground card={card} />}
     >
-      <Nameplate card={card} onClick={onClick} showFlip={showFlip} />
+      <Nameplate card={card} onClick={onClick} />
       
       <GradientBackground card={card} sx={{ flex: 1, ...sizing(87.5, 0)}}>
         <Box sx={{ flex: 1 }}>
-          <Textbox card={card} hideFlavorText={hideFlavorText} onClick={onClick} />
+          <Art card={card} onClick={onClick} />
         </Box>
 
         <Box sx={{ flex: 1 }}>
-          <Art card={card} onClick={onClick} />
+          <Textbox card={card} hideFlavorText={hideFlavorText} onClick={onClick} />
         </Box>
       </GradientBackground>
 

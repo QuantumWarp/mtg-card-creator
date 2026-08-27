@@ -3,7 +3,11 @@ import { sizing } from "../../helpers/styles";
 import { getPalettes, palettes } from "../../helpers/palette";
 import { Card } from "../../../models/card";
 
-export function TexturedBackground({ card }: { card: Card }) {
+type Props = {
+  card: Card;
+}
+
+export function TexturedBackground({ card }: Props) {
   const { typeline } = card;
   const [color1, color2, multicolor] = getPalettes(card);
   const color = color2 ? multicolor : color1;

@@ -3,8 +3,8 @@ import { ReactNode } from 'react';
 import { sizing } from '../../helpers/styles';
 
 type Props = {
+  texture?: ReactNode;
   children: ReactNode;
-  texture: ReactNode;
 }
 
 export function BaseBackground({ children, texture }: Props) {
