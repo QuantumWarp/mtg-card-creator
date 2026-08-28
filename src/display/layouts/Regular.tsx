@@ -17,24 +17,25 @@ type Props = {
 }
 
 export function RegularLayout({ card, hideFlavorText, onClick }: Props) {
-  const { typeline } = card;
+  const { name, typeline, cardFaces } = card;
   const isPlaneswalker = typeline.includes("Planeswalker");
-  const showFlip = card.cardFaces && card.cardFaces.length > 1;
+  const rounded = isPlaneswalker ? roundedBorder(16, 140) : {};
+  const isBackFace = cardFaces && cardFaces[0] && name !== cardFaces[0].name;
 
   return (
     <BaseBackground
       texture={<TexturedBackground card={card} />}
     >
-      <Nameplate card={card} onClick={onClick} showFlip={showFlip} />
+      <Nameplate card={card} onClick={onClick} dark={isBackFace} />
       
       <GradientBackground card={card} sx={{
-        ...sizing(87.5, 41), 
-        ...(isPlaneswalker && roundedBorder(10, 130)) 
+        ...sizing(isPlaneswalker ? 89 : 87.5, isPlaneswalker ? 44.5 : 43), 
+        ...rounded,
       }}>
-        <Art card={card} onClick={onClick} />
+        <Art card={card} onClick={onClick} sx={rounded} />
       </GradientBackground>
       
-      <Typeplate card={card} onClick={onClick} />
+      <Typeplate card={card} onClick={onClick} dark={isBackFace} />
 
       <GradientBackground showBottom card={card} sx={{ flex: 1, ...sizing(87.5, 0) }}>
         <Textbox card={card} hideFlavorText={hideFlavorText} onClick={onClick} />

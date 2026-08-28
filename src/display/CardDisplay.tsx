@@ -6,6 +6,8 @@ import { SagaLayout } from './layouts/Saga';
 import { AdventureLayout } from './layouts/Adventure';
 import { CaseLayout } from './layouts/Case';
 import { spliceFace } from './helpers/general';
+import { BattleLayout } from './layouts/Battle';
+import { SplitLayout } from './layouts/Split';
 
 type CardDisplayProps = {
   width?: string;
@@ -64,7 +66,13 @@ export function CardDisplay({
     || card.layout === "prepare"
   );
 
-  const isRegular = !isSaga && !isAdventure && !isCase;
+  const isBattle = typeline.includes("Battle");
+  
+  const isSplit = card.layout === "split";
+
+  const isRegular = !isSaga && !isAdventure && !isCase && !isBattle && !isSplit;
+
+  const rotate = isSplit || isBattle;
   
   return (
     <Box
@@ -74,7 +82,8 @@ export function CardDisplay({
         width: width || "min(100%, 500px)",
         fontSize: `${fontSize}px`,
         cursor: onClick ? "pointer" : "default",
-        userSelect: onClick ? "none" : "auto"
+        userSelect: onClick ? "none" : "auto",
+        transform: rotate ? "translateX(-100px) rotate(90deg)" : "",
       }}
       onClick={() => onClick?.()}
     >
@@ -82,6 +91,8 @@ export function CardDisplay({
       {isSaga && <SagaLayout card={cardWithFace} hideFlavorText={hideFlavorText} onClick={clickHandler} />}
       {isAdventure && <AdventureLayout card={cardWithFace} hideFlavorText={hideFlavorText} onClick={clickHandler} />}
       {isCase && <CaseLayout card={cardWithFace} hideFlavorText={hideFlavorText} onClick={clickHandler} />}
+      {isBattle && <BattleLayout card={cardWithFace} hideFlavorText={hideFlavorText} onClick={clickHandler} />}
+      {isSplit && <SplitLayout card={cardWithFace} hideFlavorText={hideFlavorText} onClick={clickHandler} />}
     </Box>
   );
 }

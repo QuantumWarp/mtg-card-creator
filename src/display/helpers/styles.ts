@@ -1,4 +1,4 @@
-export const roundedBorder = (x: number, y: number) => {
+export function roundedBorder(x: number, y: number) {
   const value = `${x}px ${y}px`;
   return {
     borderEndEndRadius: value,
@@ -8,7 +8,7 @@ export const roundedBorder = (x: number, y: number) => {
   }
 };
 
-export const sizing = (width: number, height: number, left?: number, top?: number) => {
+export function sizing(width: number, height: number, left?: number, top?: number) {
   return {
     width: `${width}%`,
     height: `${height}%`,
@@ -17,10 +17,10 @@ export const sizing = (width: number, height: number, left?: number, top?: numbe
   }
 };
 
-export const center = (override: {
+export function center(override: {
   alignItems?: string,
   justifyContent?: string
-} = {}) => {
+} = {}) {
   return {
     display: "flex",
     alignItems: override.alignItems || "center",
@@ -28,7 +28,7 @@ export const center = (override: {
   }
 };
 
-export const leftShadow = () => {
+export function leftShadow() {
   return {
     boxShadow: "-0.14em 0 0.05em rgba(0, 0, 0, 0.4)",
   }

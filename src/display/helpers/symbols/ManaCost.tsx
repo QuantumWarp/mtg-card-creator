@@ -1,7 +1,11 @@
 import { Box } from "@mui/material";
 import { CardSymbol } from "./CardSymbol";
 
-export function ManaCost({ manaCost }: { manaCost: string }) {
+type Props = {
+  manaCost: string;
+}
+
+export function ManaCost({ manaCost }: Props) {
   if (!manaCost) return;
 
   const split = manaCost.split(/(\{.*?\})/);

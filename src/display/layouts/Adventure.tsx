@@ -23,7 +23,7 @@ export function AdventureLayout({ card, hideFlavorText, onClick }: Props) {
     <BaseBackground
       texture={<TexturedBackground card={card} />}
     >
-      <Nameplate card={card} onClick={onClick} />
+      <Nameplate card={card} onClick={onClick} hideFlip />
       
       <GradientBackground card={card} sx={sizing(87.5, 41)}>
         <Art card={card} onClick={onClick} />
@@ -59,6 +59,7 @@ function MiniCard({ card }: { card: Card }) {
   return (
     <Box sx={{ flex: 1, display: "flex", flexDirection: "column" }}>
       <Nameplate
+        hideFlip
         card={cardWithFace}
         sx={{
           ...sizing(107, 18),

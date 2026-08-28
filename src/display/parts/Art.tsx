@@ -1,17 +1,16 @@
-import { Box } from "@mui/material";
+import { Box, SxProps } from "@mui/material";
 import { Card } from "../../models/card";
-import { roundedBorder, sizing } from "../helpers/styles";
+import { sizing } from "../helpers/styles";
 import { clickHandler } from "../helpers/general";
 
 type Props = {
   card: Card;
+  objectPosition?: string;
+  sx?: SxProps;
   onClick?: (part: keyof Card) => void;
 }
 
-export function Art({ card, onClick }: Props) {
-  const { typeline } = card;
-  const isPlaneswalker = typeline.includes("Planeswalker")
-
+export function Art({ card, objectPosition, sx, onClick }: Props) {
   return (
     <Box
       sx={{
@@ -20,16 +19,16 @@ export function Art({ card, onClick }: Props) {
         display: "flex",
         justifyContent: "stretch",
         alignItems: "stretch",
-        ...sizing(100, 100),
-        ...(isPlaneswalker && roundedBorder(10, 130)),
         overflow: "hidden",
+        ...sizing(100, 100),
+        ...sx,
       }}
       onClick={(e) => clickHandler(e, onClick, "artUri")}
     >
       {card.artUri && (
         <img
           src={card.artUri}
-          style={{ objectFit: "cover", width: "100%", height: "100%" }}
+          style={{ objectFit: "cover", objectPosition: objectPosition || "top", width: "100%", height: "100%" }}
         />
       )}
     </Box>

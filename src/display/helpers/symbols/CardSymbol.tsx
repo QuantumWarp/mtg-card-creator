@@ -1,13 +1,13 @@
 import { Box } from "@mui/material";
 import { useSymbol } from "../../../scryfall/use-symbol";
 
-type CardSymbolProps = {
+type Props = {
   encoded: string;
   size?: string;
   noShadow?: boolean;
 }
 
-export function CardSymbol({ encoded, size = "1em", noShadow = false }: CardSymbolProps) {
+export function CardSymbol({ encoded, size = "1em", noShadow = false }: Props) {
   const symbol = useSymbol(encoded);
 
   if (!symbol) return encoded;

@@ -10,7 +10,7 @@ export function clickHandler(
   e.stopPropagation();
 }
 
-export function spliceFace(card: Card, faceIndex: number) {
+export function spliceFace(card: Card, faceIndex: number, skipColors?: boolean) {
   if (!card.cardFaces || card.cardFaces.length === 0) return card;
 
   let cardWithFace = card;
@@ -21,7 +21,7 @@ export function spliceFace(card: Card, faceIndex: number) {
     cardWithFace.artUri = card.artUri;
   }
 
-  if (faceIndex !== 0 && !face.colors) {
+  if (skipColors || (faceIndex !== 0 && !face.colors)) {
     cardWithFace.colors = undefined;
   }
 

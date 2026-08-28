@@ -17,13 +17,11 @@ type Props = {
 }
 
 export function SagaLayout({ card, hideFlavorText, onClick }: Props) {
-  const showFlip = card.cardFaces && card.cardFaces.length > 1;
-
   return (
     <BaseBackground
       texture={<TexturedBackground card={card} />}
     >
-      <Nameplate card={card} onClick={onClick} showFlip={showFlip} />
+      <Nameplate card={card} onClick={onClick} />
       
       <GradientBackground card={card} sx={{ flex: 1, ...sizing(87.5, 0)}}>
         <Box sx={{ flex: 1 }}>

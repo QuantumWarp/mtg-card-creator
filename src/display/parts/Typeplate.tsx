@@ -1,18 +1,18 @@
 import { Box, SxProps } from "@mui/material";
-import { center, roundedBorder, sizing } from "../helpers/styles";
 import { Card } from "../../models/card";
-import { getGradient, getPalettes } from "../helpers/palette";
 import { Rarity } from "../../models/rarity";
 import { clickHandler } from "../helpers/general";
+import { BannerBackground } from "./backgrounds/BannerBackground";
 
-type TypeplateProps = {
+type Props = {
   card: Card;
   hideRarity?: boolean;
+  dark?: boolean;
   sx?: SxProps;
   onClick?: (part: keyof Card) => void;
 }
 
-export function Typeplate({ card, hideRarity, sx, onClick }: TypeplateProps) {
+export function Typeplate({ card, hideRarity, dark, sx, onClick }: Props) {
   const { typeline, set, rarity } = card;
   const { iconUri } = set;
 
@@ -22,86 +22,48 @@ export function Typeplate({ card, hideRarity, sx, onClick }: TypeplateProps) {
     rare: "invert(0.5) sepia(1) saturate(5) hue-rotate(18deg)",
     mythic: "invert(0.5) sepia(1) saturate(5) hue-rotate(-35deg)",
   };
-  
-  const [color1, color2, multicolor] = getPalettes(card);
-  const background = getGradient(color1.dark, color2?.dark);
-  const color = color2 ? multicolor : color1;
+
   const isPlaneswalker = typeline.includes("Planeswalker");
 
-  const blunting = {
-    ...((sx as any)?.borderEndStartRadius === 0 && { borderEndStartRadius: 0 }),
-    ...((sx as any)?.borderEndEndRadius === 0 && { borderEndEndRadius: 0 }),
-    ...((sx as any)?.borderStartEndRadius === 0 && { borderStartEndRadius: 0 }),
-    ...((sx as any)?.borderStartStartRadius === 0 && { borderStartStartRadius: 0 }),
-  };
-
   return (
-    <Box
+    <BannerBackground
+      dark={dark}
+      card={card}
+      onClick={(e) => clickHandler(e, onClick, "name")}
       sx={{
         fontSize: "58%",
-        fontWeight: "bold",
-        ...sizing(92, 7.5),
-        ...sx,
+        ...(isPlaneswalker && { borderEndStartRadius: 5, borderEndEndRadius: 5 }),
+        ...sx
       }}
-      onClick={(e) => clickHandler(e, onClick, "typeline")}
     >
-      <Box
-        sx={{
-          background: background,
-          p: "0.8%",
-          boxSizing: "border-box",
-          boxShadow: "-0.14em 0 0.05em rgba(0, 0, 0, 0.4)",
-          clipPath: "inset(0px -0.2em 0px -0.2em)",
-          ...sizing(100, 100),
-          ...roundedBorder(15, 30),
-          ...(isPlaneswalker && { borderEndStartRadius: 5, borderEndEndRadius: 5 }),
-          ...blunting,
-        }}
-      >
-        <Box
-          sx={{
-            backgroundColor: color.mid,
-            p: "0.4% 2.4% 1% 2.4%",
-            border: "0.02em solid black",
-            boxSizing: "border-box",
-            boxShadow: "inset 0.12em -0.12em 0.12em rgba(0, 0, 0, 0.5), inset -0.12em 0.12em 0.12em rgba(255, 255, 255, 0.5)",
-            ...sizing(100, 100),
-            ...center({ justifyContent: "space-between" }),
-            ...roundedBorder(10, 20),
-            ...(isPlaneswalker && { borderEndStartRadius: 5, borderEndEndRadius: 5 }),
-            ...blunting,
-          }}
-        >
-          <Box>{typeline}</Box>
+      <Box>{typeline}</Box>
 
-          {!hideRarity && <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              position: "relative",
-            }}
-            onClick={(e) => clickHandler(e, onClick, "rarity")}
-          >
-            <img
-              src={iconUri || "./custom-set.svg"}
-              style={{ position: "absolute", width: "1.56em", height: "1.55em" }}
-            />
-            <img
-              src={iconUri || "./custom-set.svg"}
-              style={{ position: "absolute", width: "1.44em", height: "1.45em" }}
-            />
-            <img
-              src={iconUri || "./custom-set.svg"}
-              style={{
-                filter: rarityMap[rarity],
-                width: "1.5em",
-                height: "1.5em"
-              }}
-            />
-          </Box>}
-        </Box>
-      </Box>
-    </Box>
+      {!hideRarity && <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          position: "relative",
+        }}
+        onClick={(e) => clickHandler(e, onClick, "rarity")}
+      >
+        <img
+          src={iconUri || "./custom-set.svg"}
+          style={{ position: "absolute", width: "1.56em", height: "1.55em" }}
+        />
+        <img
+          src={iconUri || "./custom-set.svg"}
+          style={{ position: "absolute", width: "1.44em", height: "1.45em" }}
+        />
+        <img
+          src={iconUri || "./custom-set.svg"}
+          style={{
+            filter: rarityMap[rarity],
+            width: "1.5em",
+            height: "1.5em"
+          }}
+        />
+      </Box>}
+    </BannerBackground>
   );
 }

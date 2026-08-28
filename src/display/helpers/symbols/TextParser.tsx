@@ -2,11 +2,11 @@ import { Box } from "@mui/material";
 import { CardSymbol } from "./CardSymbol";
 import { LoyaltyCost } from "../../parts/specifics/LoyaltyCost";
 
-type TextParserProps = {
+type Props = {
   text?: string;
 }
 
-export function TextParser({ text: fullText }: TextParserProps) {
+export function TextParser({ text: fullText }: Props) {
   if (!fullText) return;
 
   const blocks = fullText.split("\n").filter(x => !!x);
