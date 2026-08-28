@@ -62,3 +62,11 @@ function deriveColors(card: Card, isLand: boolean) {
   }
   return colors;
 }
+
+export function isColoredManaCost(card: Card) {
+  return card.manaCost.includes("W")
+    || card.manaCost.includes("B")
+    || card.manaCost.includes("U")
+    || card.manaCost.includes("R")
+    || card.manaCost.includes("G");
+}

@@ -42,7 +42,7 @@ export function Textbox({ card, hideFlavorText, onClick }: TextboxProps) {
 
       {flavorText && !hideFlavorText && (
         <Box>
-          <Box
+          {text && (<Box
             sx={{
               height: '0.1em',
               background: 'linear-gradient(to right, transparent, #A9A9A9 50%, transparent)',
@@ -50,7 +50,7 @@ export function Textbox({ card, hideFlavorText, onClick }: TextboxProps) {
               width: '100%',
               my: "0.4em"
             }}
-          />
+          />)}
 
           <Box
             sx={{ my: "0.2em", fontSize: "90%" }}

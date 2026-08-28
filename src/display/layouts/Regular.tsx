@@ -9,6 +9,7 @@ import { Card } from '../../models/card';
 import { BaseBackground } from '../parts/backgrounds/BaseBackground';
 import { GradientBackground } from '../parts/backgrounds/GradientBackground';
 import { roundedBorder, sizing } from '../helpers/styles';
+import { Loyalty } from '../parts/specifics/Loyalty';
 
 type Props = {
   card: Card;
@@ -42,6 +43,7 @@ export function RegularLayout({ card, hideFlavorText, onClick }: Props) {
       </GradientBackground>
 
       <PowerToughness card={card} onClick={onClick} />
+      <Loyalty card={card} onClick={onClick} />
 
       <BottomInfo card={card} onClick={onClick} />
     </BaseBackground>

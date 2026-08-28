@@ -3,6 +3,7 @@ import { Card } from "../../models/card";
 import { Rarity } from "../../models/rarity";
 import { clickHandler } from "../helpers/general";
 import { BannerBackground } from "./backgrounds/BannerBackground";
+import { ColorIndicator } from "./specifics/ColorIndicator";
 
 type Props = {
   card: Card;
@@ -31,12 +32,15 @@ export function Typeplate({ card, hideRarity, dark, sx, onClick }: Props) {
       card={card}
       onClick={(e) => clickHandler(e, onClick, "name")}
       sx={{
-        fontSize: "58%",
+        fontSize: "56%",
         ...(isPlaneswalker && { borderEndStartRadius: 5, borderEndEndRadius: 5 }),
         ...sx
       }}
     >
-      <Box>{typeline}</Box>
+      <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+        <ColorIndicator card={card} />
+        <Box>{typeline}</Box>
+      </Box>
 
       {!hideRarity && <Box
         sx={{
