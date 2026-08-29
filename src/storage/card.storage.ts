@@ -10,7 +10,7 @@ export const getCards = (): Card[] => {
   const cardIds = keys.filter((x) => x.startsWith(cardPrefix)).map((x) => x.replace(cardPrefix, ""));
   const cards = cardIds.map((x) => getCard(x));
 
-  return cards.sort((a, b) => a.name.localeCompare(b.name));
+  return cards.sort((a, b) => a.frontFace.parts[0].name.localeCompare(b.frontFace.parts[0].name));
 }
 
 export const getCard = (id: string): Card => {
@@ -29,34 +29,18 @@ export const deleteCard = (card: Card): void => {
 
 export const defaultCard = (): Card => {
   return {
+    real: false,
     id: uuid(),
-    name: "",
+  
     rarity: Rarity.Common,
-    collectorNumber: "",
-    layout: Layout.Normal,
+    set: {},
 
-    set: {
-      name: "",
-      code: "",
-      iconUri: "",
-      cardCount: 0
+    frontFace: {
+      layout: Layout.Regular,
+      parts: [{
+        name: "",
+        colors: [],
+      }],
     },
-
-    manaCost: "",
-    colors: undefined,
-
-    typeline: "",
-
-    power: undefined,
-    toughness: undefined,
-
-    text: "",
-    flavorText: "",
-    textScaling: 1,
-
-    artUri: "",
-    artist: "",
-
-    cardFaces: [],
   }
 }

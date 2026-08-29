@@ -3,27 +3,32 @@ import { Art } from '../parts/Art';
 import { Textbox } from '../parts/Textbox';
 import { Typeplate } from '../parts/Typeplate';
 import { BottomInfo } from '../parts/BottomInfo';
-import { Card } from '../../models/card';
+import { Card, CardFace } from '../../models/card';
 import { BaseBackground } from '../parts/backgrounds/BaseBackground';
 import { GradientBackground } from '../parts/backgrounds/GradientBackground';
 import { roundedBorder, sizing } from '../helpers/styles';
 import { RotatedContent } from '../parts/backgrounds/RotatedContent';
 import { Box } from '@mui/material';
+import { DisplayData } from '../display-data';
 
 type Props = {
   card: Card;
-  hideFlavorText?: boolean;
-  onClick?: (part?: keyof Card) => void;
+  cardFace: CardFace;
+  displayData: DisplayData;
 }
 
-export function BattleLayout({ card, hideFlavorText, onClick }: Props) {
+export function BattleLayout({ card, cardFace, displayData }: Props) {
+  const cardPart = cardFace.parts[0];
+
   return (
     <BaseBackground>
       <RotatedContent sx={{ ml: "-2%" }}>
-        <Nameplate card={card} onClick={onClick} sx={{ mt: 0, height:"12%" }} />
+        <Nameplate showFlip card={card} cardPart={cardPart} displayData={displayData} sx={{ mt: 0, height:"12%" }} />
 
         <Box sx={{ ...sizing(96, 41), position: "relative" }}>
-          <Art card={card} onClick={onClick}
+          <Art
+            cardPart={cardPart}
+            displayData={displayData}
             sx={{
               position: "absolute",
               zIndex: -1,
@@ -33,14 +38,14 @@ export function BattleLayout({ card, hideFlavorText, onClick }: Props) {
           />
         </Box>
         
-        <Typeplate card={card} onClick={onClick} sx={{ height:"12%" }}  />
+        <Typeplate card={card} cardPart={cardPart} displayData={displayData} sx={{ height:"12%" }}  />
 
-        <GradientBackground showBottom card={card} sx={{ flex: 1, ...sizing(87.5, 0) }}>
-          <Textbox card={card} hideFlavorText={hideFlavorText} onClick={onClick} />
+        <GradientBackground showBottom cardPart={cardPart} sx={{ flex: 1, ...sizing(87.5, 0) }}>
+          <Textbox cardPart={cardPart} displayData={displayData} />
         </GradientBackground>
       </RotatedContent>
 
-      <BottomInfo card={card} onClick={onClick} />
+      <BottomInfo card={card} cardPart={cardPart} displayData={displayData} />
     </BaseBackground>
   );
 }

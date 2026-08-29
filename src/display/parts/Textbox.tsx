@@ -1,19 +1,19 @@
 import { Box } from "@mui/material";
-import { Card } from "../../models/card";
+import { CardPart } from "../../models/card";
 import { getGradient, getPalettes } from "../helpers/palette";
 import { TextParser } from "../helpers/symbols/TextParser";
 import { clickHandler } from "../helpers/general";
 import { sizing } from "../helpers/styles";
+import { DisplayData } from "../display-data";
 
 type TextboxProps = {
-  card: Card;
-  hideFlavorText?: boolean;
-  onClick?: (part: keyof Card) => void;
+  cardPart: CardPart;
+  displayData: DisplayData;
 }
 
-export function Textbox({ card, hideFlavorText, onClick }: TextboxProps) {
-  const { text, flavorText } = card;
-  const [color1, color2] = getPalettes(card);
+export function Textbox({ cardPart, displayData }: TextboxProps) {
+  const { text, flavorText } = cardPart;
+  const [color1, color2] = getPalettes(cardPart);
   const background = getGradient(color1.light, color2?.light);
 
   return (
@@ -28,19 +28,19 @@ export function Textbox({ card, hideFlavorText, onClick }: TextboxProps) {
         flexDirection: "column",
         alignItems: "flex-start",
         textAlign: "start",
-        fontSize: (68 * (Number(card.textScaling) || 1)) + "%",
+        fontSize: (68 * (Number(cardPart.textScaling) || 1)) + "%",
         boxShadow: "inset 0.04em 0.04em 0.16em 0.12em rgba(0,0,0,0.3)",
         overflow: "auto",
         whiteSpace: "pre-line",
         ...sizing(100, 100),
       }}
-      onClick={(e) => clickHandler(e, onClick, "text")}
+      onClick={(e) => clickHandler(e, displayData, "text")}
     >
       <Box sx={{ flex: 1, display: "flex", alignItems: "center" }}>
         <TextParser text={text} />
       </Box>
 
-      {flavorText && !hideFlavorText && (
+      {flavorText && !displayData.hideFlavorText && (
         <Box>
           {text && (<Box
             sx={{
@@ -54,7 +54,7 @@ export function Textbox({ card, hideFlavorText, onClick }: TextboxProps) {
 
           <Box
             sx={{ my: "0.2em", fontSize: "90%" }}
-            onClick={(e) => clickHandler(e, onClick, "flavorText")}
+            onClick={(e) => clickHandler(e, displayData, "flavorText")}
           >
             <em>
               <TextParser text={flavorText} />

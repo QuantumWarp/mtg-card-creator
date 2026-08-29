@@ -1,30 +1,15 @@
 export enum Layout {
-  Normal = 'normal',
-  Transform = 'transform',
-  Mutate = 'mutate',
+  Regular = 'regular',
+  Planeswalker = 'planeswalker',
   Adventure = 'adventure',
   Prepare = 'prepare',
   Split = 'split',
-  Modal = 'modal_dfc',
-  Class = 'class',
   Case = 'case',
   Saga = 'saga',
   Battle = 'battle',
+}
 
-  // Skipped
-  Token = 'token',
-  Flip = 'flip',
-  Meld = 'meld',
-  Leveler = 'leveler',
-  Prototype = 'prototype',
-  Planar = 'planar',
-  Scheme = 'scheme',
-  Vanguard = 'vanguard',
-  TokenModal = 'double_faced_token',
-  Emblem = 'emblem',
-  Augment = 'augment',
-  Host = 'host',
-  ArtSeries = 'art_series',
-  Reversible = 'reversible_card',
-  Front = 'front_card',
+export enum DoubleFaceType {
+  Modal = 'modal',
+  Transform = 'transform'
 }

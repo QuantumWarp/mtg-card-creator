@@ -1,16 +1,16 @@
 import { Box } from "@mui/material"
-import { Card } from "../../../models/card";
+import { CardPart } from "../../../models/card";
 import { getPalettes, isColoredManaCost } from "../../helpers/palette";
 
 type Props = {
-  card: Card;
+  cardPart: CardPart;
 }
 
-export function ColorIndicator({ card }: Props) {
-  const showIndicator = card.colors && card.colors.length !== 0 && !isColoredManaCost(card);
+export function ColorIndicator({ cardPart }: Props) {
+  const showIndicator = cardPart.colors && cardPart.colors.length !== 0 && !isColoredManaCost(cardPart);
   if (!showIndicator) return null;
 
-  const [color1, color2] = getPalettes(card);
+  const [color1, color2] = getPalettes(cardPart);
   console.log(color2)
 
   return (

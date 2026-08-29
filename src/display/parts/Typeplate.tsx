@@ -1,20 +1,22 @@
 import { Box, SxProps } from "@mui/material";
-import { Card } from "../../models/card";
+import { Card, CardPart } from "../../models/card";
 import { Rarity } from "../../models/rarity";
 import { clickHandler } from "../helpers/general";
 import { BannerBackground } from "./backgrounds/BannerBackground";
 import { ColorIndicator } from "./specifics/ColorIndicator";
+import { DisplayData } from "../display-data";
 
 type Props = {
   card: Card;
+  cardPart: CardPart;
+  displayData: DisplayData;
   hideRarity?: boolean;
-  dark?: boolean;
   sx?: SxProps;
-  onClick?: (part: keyof Card) => void;
 }
 
-export function Typeplate({ card, hideRarity, dark, sx, onClick }: Props) {
-  const { typeline, set, rarity } = card;
+export function Typeplate({ card, cardPart, displayData, hideRarity, sx }: Props) {
+  const { set, rarity } = card;
+  const { typeline } = cardPart;
   const { iconUri } = set;
 
   const rarityMap: Record<Rarity, string> = {
@@ -24,13 +26,14 @@ export function Typeplate({ card, hideRarity, dark, sx, onClick }: Props) {
     mythic: "invert(0.5) sepia(1) saturate(5) hue-rotate(-35deg)",
   };
 
-  const isPlaneswalker = typeline.includes("Planeswalker");
+  const isPlaneswalker = typeline?.includes("Planeswalker");
+  const dark = !displayData.isFront;
 
   return (
     <BannerBackground
       dark={dark}
-      card={card}
-      onClick={(e) => clickHandler(e, onClick, "name")}
+      cardPart={cardPart}
+      onClick={(e) => clickHandler(e, displayData, "name")}
       sx={{
         fontSize: "56%",
         ...(isPlaneswalker && { borderEndStartRadius: 5, borderEndEndRadius: 5 }),
@@ -38,7 +41,7 @@ export function Typeplate({ card, hideRarity, dark, sx, onClick }: Props) {
       }}
     >
       <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
-        <ColorIndicator card={card} />
+        <ColorIndicator cardPart={cardPart} />
         <Box>{typeline}</Box>
       </Box>
 
@@ -49,7 +52,7 @@ export function Typeplate({ card, hideRarity, dark, sx, onClick }: Props) {
           justifyContent: "center",
           position: "relative",
         }}
-        onClick={(e) => clickHandler(e, onClick, "rarity")}
+        onClick={(e) => clickHandler(e, displayData, "rarity")}
       >
         <img
           src={iconUri || "./custom-set.svg"}

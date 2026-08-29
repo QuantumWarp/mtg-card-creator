@@ -12,6 +12,7 @@ export function RotatedContent({ children, sx }: Props) {
     <Box
       sx={{
         flex: 1,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         position: (sx as any)?.position || "relative",
         ...sizing(100, 100)
       }}

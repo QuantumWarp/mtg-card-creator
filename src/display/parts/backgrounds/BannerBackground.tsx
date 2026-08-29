@@ -1,12 +1,12 @@
 import { ReactNode } from "react";
 import { Box, CSSObject, SxProps } from "@mui/material";
 import { center, roundedBorder, sizing } from "../../helpers/styles";
-import { Card } from "../../../models/card";
+import { CardPart } from "../../../models/card";
 import { getGradient, getPalettes } from "../../helpers/palette";
 
 
 type Props = {
-  card: Card;
+  cardPart: CardPart;
   children: ReactNode;
   dark?: boolean;
   removeOuterBorder?: boolean;
@@ -14,8 +14,8 @@ type Props = {
   onClick?: React.MouseEventHandler<HTMLDivElement>;
 }
 
-export function BannerBackground({ card, children, dark, removeOuterBorder, sx, onClick }: Props) {
-  const [color1, color2, multicolor] = getPalettes(card);
+export function BannerBackground({ cardPart, children, dark, removeOuterBorder, sx, onClick }: Props) {
+  const [color1, color2, multicolor] = getPalettes(cardPart);
   const background = getGradient(color1.dark, color2?.dark);
   const color = color2 ? multicolor : color1;
   

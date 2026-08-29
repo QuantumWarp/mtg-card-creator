@@ -1,18 +1,18 @@
 import { Box, SxProps } from "@mui/material";
-import { Card } from "../../../models/card";
+import { CardPart } from "../../../models/card";
 import { getGradient, getPalettes } from "../../helpers/palette";
 import { ReactNode } from "react";
 import { leftShadow } from "../../helpers/styles";
 
 type Props = {
-  card: Card;
+  cardPart: CardPart;
   children: ReactNode;
   sx?: SxProps;
   showBottom?: boolean;
 }
 
-export function GradientBackground({ card, sx, children, showBottom = false }: Props) {
-  const [color1, color2] = getPalettes(card);
+export function GradientBackground({ cardPart, sx, children, showBottom = false }: Props) {
+  const [color1, color2] = getPalettes(cardPart);
 
   return (
     <Box

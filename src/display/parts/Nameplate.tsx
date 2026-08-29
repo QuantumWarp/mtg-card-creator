@@ -1,49 +1,50 @@
 import { Box, SxProps } from "@mui/material";
-import { Card } from "../../models/card";
+import { Card, CardPart } from "../../models/card";
 import { ManaCost } from "../helpers/symbols/ManaCost";
 import { LegendaryHeader } from "./specifics/LegendaryHeader";
 import { clickHandler } from "../helpers/general";
 import { FlipIcon } from "./specifics/FlipIcon";
 import { BannerBackground } from "./backgrounds/BannerBackground";
+import { DisplayData } from "../display-data";
 
 
 type NameplateProps = {
   card: Card;
-  hideFlip?: boolean;
-  dark?: boolean
+  cardPart: CardPart;
+  displayData: DisplayData;
+  showFlip?: boolean;
   sx?: SxProps;
-  onClick?: (part: keyof Card) => void;
 }
 
-export function Nameplate({ card, hideFlip, dark, sx, onClick }: NameplateProps) {
-  const { name, manaCost, typeline, cardFaces } = card;
-  const showFlip = !hideFlip && cardFaces && cardFaces.length > 1;
-  const isPlaneswalker = typeline.includes("Planeswalker");
-  const legendaryHeader = typeline.includes("Legendary") && !isPlaneswalker;
+export function Nameplate({ card, cardPart, displayData, showFlip, sx }: NameplateProps) {
+  const { name, manaCost, typeline } = cardPart;
+  const isPlaneswalker = typeline?.includes("Planeswalker");
+  const legendaryHeader = typeline?.includes("Legendary") && !isPlaneswalker;
+  const dark = !displayData.isFront;
 
   return (
     <BannerBackground
       dark={dark}
       removeOuterBorder={legendaryHeader}
-      card={card}
-      onClick={(e) => clickHandler(e, onClick, "name")}
+      cardPart={cardPart}
+      onClick={(e) => clickHandler(e, displayData, "name")}
       sx={{
         mt: isPlaneswalker ? "3.4%" : "5.5%", 
         ...(isPlaneswalker && { borderEndStartRadius: 5, borderEndEndRadius: 5 }),
         ...sx
       }}
     >
-      {legendaryHeader && <LegendaryHeader card={card} />}
+      {legendaryHeader && <LegendaryHeader cardPart={cardPart} />}
 
       <Box sx={{ display: "flex", gap: 1 }}>
-        {showFlip && <FlipIcon card={card} onClick={onClick} />}
+        {showFlip && <FlipIcon card={card} displayData={displayData} />}
 
         <Box>{name}</Box>
       </Box>
 
       <Box
         sx={{ minWidth: "15%", display: "flex", justifyContent: "flex-end" }}
-        onClick={(e) => clickHandler(e, onClick, "manaCost")}
+        onClick={(e) => clickHandler(e, displayData, "manaCost")}
       >
         <ManaCost manaCost={manaCost} />
       </Box>

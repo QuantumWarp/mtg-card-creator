@@ -1,41 +1,51 @@
 import { Color } from "./color";
-import { Layout } from "./layout";
+import { DoubleFaceType, Layout } from "./layout";
 import { Rarity } from "./rarity";
 
+export interface Card {
+  real: boolean;
+
+  id: string;
+  rarity: Rarity;
+  collectorNumber?: string | number;
+  set: SetInformation;
+
+  frontFace: CardFace;
+  backFace?: CardFace;
+  doubleFaceType?: DoubleFaceType;
+}
+
+export interface SetInformation {
+  id?: string;
+  name?: string;
+  iconUri?: string;
+  code?: string;
+  total?: number;
+}
+
 export interface CardFace {
+  layout: Layout;
+  parts: CardPart[];
+}
+
+export interface CardPart {
   name: string;
   
-  manaCost: string;
+  manaCost?: string;
   colors?: Color[];
 
-  typeline: string;
+  typeline?: string;
 
   power?: string | number;
   toughness?: string | number;
   loyalty?: string | number;
+  defense?: string | number;
 
-  text: string;
+  text?: string;
   flavorText?: string;
+
+  artUri?: string;
+  artist?: string;
+  
   textScaling?: string | number;
-
-  artUri: string;
-  artist: string;
-}
-
-export interface Card extends CardFace {
-  real?: boolean;
-
-  id: string;
-  rarity: Rarity;
-  collectorNumber: string;
-  layout: Layout;
-
-  set: {
-    name?: string;
-    iconUri?: string;
-    code: string;
-    cardCount: number;
-  };
-
-  cardFaces?: CardFace[];
 }

@@ -1,17 +1,16 @@
 import { Box } from "@mui/material";
 import { Card } from "../../../models/card";
 import { clickHandler } from "../../helpers/general";
+import { DisplayData } from "../../display-data";
 
 type Props = {
   card: Card;
-  onClick?: (part: keyof Card) => void;
+  displayData: DisplayData;
 }
 
-export function FlipIcon({ card, onClick }: Props) {
-  const canFlip = card.cardFaces && card.cardFaces.length > 0;
+export function FlipIcon({ card, displayData }: Props) {
+  const canFlip = card.doubleFaceType !== undefined;
   if (!canFlip) return null;
-
-  const isFirstFace = card.cardFaces?.[0].name === card.name;
 
   return (
     <Box
@@ -25,7 +24,7 @@ export function FlipIcon({ card, onClick }: Props) {
         ml: "-0.35em",
         position: "relative",
       }}
-      onClick={(e) => clickHandler(e, onClick, "cardFaces")}
+      onClick={(e) => clickHandler(e, displayData, "doubleFaceType")}
     >
       <Box
         sx={{
@@ -33,7 +32,7 @@ export function FlipIcon({ card, onClick }: Props) {
           position: "absolute",
           top: "50%",
           left: "50%",
-          transform: "translate(-50%, -50%)" + (isFirstFace ? "" : " rotate(180deg)"),
+          transform: "translate(-50%, -50%)" + (displayData.isFront ? "" : " rotate(180deg)"),
           height: "92%",
           width: "92%",
           borderRadius: "50%",

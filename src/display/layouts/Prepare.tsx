@@ -18,7 +18,7 @@ type Props = {
   displayData: DisplayData;
 }
 
-export function AdventureLayout({ card, cardFace, displayData }: Props) {
+export function PrepareLayout({ card, cardFace, displayData }: Props) {
   const mainPart = cardFace.parts[0];
   const miniPart = cardFace.parts[1];
 

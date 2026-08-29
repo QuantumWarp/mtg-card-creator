@@ -1,21 +1,22 @@
 import { Box } from "@mui/material";
 import { center, roundedBorder, sizing } from "../helpers/styles";
-import { Card } from "../../models/card";
+import { CardPart } from "../../models/card";
 import { getPalettes } from "../helpers/palette";
 import { clickHandler } from "../helpers/general";
+import { DisplayData } from "../display-data";
 
 type PowerToughnessProps = {
-  card: Card;
-  onClick?: (part: keyof Card) => void;
+  cardPart: CardPart;
+  displayData: DisplayData;
 }
 
-export function PowerToughness({ card, onClick }: PowerToughnessProps) {
-  const showPowerToughness = card.power !== undefined
-    || card.toughness !== undefined
-    || card.typeline.toLowerCase().includes("creature");
+export function PowerToughness({ cardPart, displayData }: PowerToughnessProps) {
+  const showPowerToughness = cardPart.power !== undefined
+    || cardPart.toughness !== undefined
+    || cardPart.typeline?.toLowerCase().includes("creature");
   if (!showPowerToughness) return null;
 
-  const [color1, color2, multicolor] = getPalettes(card);
+  const [color1, color2, multicolor] = getPalettes(cardPart);
   const color = color2 ? multicolor : color1;
 
   return (
@@ -30,7 +31,7 @@ export function PowerToughness({ card, onClick }: PowerToughnessProps) {
         bottom: "5%",
         right: "3.5%"
       }}
-      onClick={(e) => clickHandler(e, onClick, "power")}
+      onClick={(e) => clickHandler(e, displayData, "power")}
     >
       <Box
         sx={{
@@ -55,10 +56,10 @@ export function PowerToughness({ card, onClick }: PowerToughnessProps) {
             boxShadow: "inset 0.12em -0.12em 0.12em rgba(255, 255, 255, 0.3), inset -0.12em 0.12em 0.12em rgba(0, 0, 0, 0.5)"
           }}
         >
-          <span>{card.power || "?"}</span>
+          <span>{cardPart.power || "?"}</span>
           /
-          <span onClick={(e) => clickHandler(e, onClick, "toughness")}>
-            {card.toughness || "?"}
+          <span onClick={(e) => clickHandler(e, displayData, "toughness")}>
+            {cardPart.toughness || "?"}
           </span>
         </Box>
       </Box>

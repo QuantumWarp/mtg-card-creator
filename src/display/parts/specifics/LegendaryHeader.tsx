@@ -1,14 +1,14 @@
 import { Box } from "@mui/material";
-import { Card } from "../../../models/card";
+import { CardPart } from "../../../models/card";
 import { sizing } from "../../helpers/styles";
 import { getPalettes, getGradient } from "../../helpers/palette";
 
 type Props = {
-  card: Card;
+  cardPart: CardPart;
 }
 
-export function LegendaryHeader({ card }: Props) {
-  const [color1, color2] = getPalettes(card);
+export function LegendaryHeader({ cardPart }: Props) {
+  const [color1, color2] = getPalettes(cardPart);
   const background = getGradient(color1.dark, color2?.dark);
 
   return (

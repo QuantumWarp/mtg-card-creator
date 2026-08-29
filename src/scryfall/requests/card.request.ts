@@ -1,4 +1,4 @@
-import { Layout } from "../../models/layout";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Rarity } from "../../models/rarity";
 import { scryfallRequest } from "../helpers/scryfall.request";
 import { scryfallUrl } from "../helpers/url";
@@ -14,6 +14,7 @@ export interface ScryfallCardFace {
   power: string;
   toughness: string;
   loyalty: string;
+  defense: string;
   
   oracleText: string;
   flavorText: string;
@@ -29,7 +30,7 @@ export interface ScryfallCard extends ScryfallCardFace {
   setName: string;
   rarity: Rarity;
   collectorNumber: string;
-  layout: Layout;
+  layout: ScryfallLayout;
 
   cardFaces: ScryfallCardFace[];
 }
@@ -58,7 +59,7 @@ const cardFaceFromJson = (json: any): ScryfallCardFace => {
   return {
     name: json.name,
 
-    manaCost: json.mana_cost || "",
+    manaCost: json.mana_cost,
     colors: json.colors,
   
     typeline: json.type_line,
@@ -66,11 +67,43 @@ const cardFaceFromJson = (json: any): ScryfallCardFace => {
     power: json.power,
     toughness: json.toughness,
     loyalty: json.loyalty,
+    defense: json.defense,
   
-    oracleText: json.oracle_text || "",
-    flavorText: json.flavor_text || "",
+    oracleText: json.oracle_text,
+    flavorText: json.flavor_text,
   
     artUri: json.image_uris?.art_crop,
     artist: json.artist,
   };
+}
+
+export enum ScryfallLayout {
+  Normal = 'normal',
+  Transform = 'transform',
+  Adventure = 'adventure',
+  Prepare = 'prepare',
+  Split = 'split',
+  Modal = 'modal_dfc',
+  Class = 'class',
+  Case = 'case',
+  Saga = 'saga',
+  Battle = 'battle',
+
+  // Skipped
+  Mutate = 'mutate',
+  Token = 'token',
+  Flip = 'flip',
+  Meld = 'meld',
+  Leveler = 'leveler',
+  Prototype = 'prototype',
+  Planar = 'planar',
+  Scheme = 'scheme',
+  Vanguard = 'vanguard',
+  TokenModal = 'double_faced_token',
+  Emblem = 'emblem',
+  Augment = 'augment',
+  Host = 'host',
+  ArtSeries = 'art_series',
+  Reversible = 'reversible_card',
+  Front = 'front_card',
 }

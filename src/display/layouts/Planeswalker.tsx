@@ -2,13 +2,14 @@ import { Nameplate } from '../parts/Nameplate';
 import { Art } from '../parts/Art';
 import { Textbox } from '../parts/Textbox';
 import { Typeplate } from '../parts/Typeplate';
+import { PowerToughness } from '../parts/PowerToughness';
 import { BottomInfo } from '../parts/BottomInfo';
 import { TexturedBackground } from '../parts/backgrounds/TexturedBackground';
 import { Card, CardFace } from '../../models/card';
 import { BaseBackground } from '../parts/backgrounds/BaseBackground';
-import { Box } from '@mui/material';
-import { sizing } from '../helpers/styles';
 import { GradientBackground } from '../parts/backgrounds/GradientBackground';
+import { roundedBorder, sizing } from '../helpers/styles';
+import { Loyalty } from '../parts/specifics/Loyalty';
 import { DisplayData } from '../display-data';
 
 type Props = {
@@ -17,7 +18,7 @@ type Props = {
   displayData: DisplayData;
 }
 
-export function CaseLayout({ card, cardFace, displayData }: Props) {
+export function PlaneswalkerLayout({ card, cardFace, displayData }: Props) {
   const cardPart = cardFace.parts[0];
 
   return (
@@ -26,17 +27,21 @@ export function CaseLayout({ card, cardFace, displayData }: Props) {
     >
       <Nameplate showFlip={!!card.doubleFaceType} card={card} cardPart={cardPart} displayData={displayData} />
       
-      <GradientBackground cardPart={cardPart} sx={{ flex: 1, ...sizing(87.5, 0)}}>
-        <Box sx={{ flex: 1 }}>
-          <Art cardPart={cardPart} displayData={displayData} />
-        </Box>
+      <GradientBackground cardPart={cardPart} sx={{
+        ...sizing(89, 44.5), 
+        ...roundedBorder(16, 140),
+      }}>
+        <Art cardPart={cardPart} displayData={displayData} sx={roundedBorder(16, 140)} />
+      </GradientBackground>
+      
+      <Typeplate card={card} cardPart={cardPart} displayData={displayData} />
 
-        <Box sx={{ flex: 1 }}>
-          <Textbox cardPart={cardPart} displayData={displayData}  />
-        </Box>
+      <GradientBackground showBottom cardPart={cardPart} sx={{ flex: 1, ...sizing(87.5, 0) }}>
+        <Textbox cardPart={cardPart} displayData={displayData} />
       </GradientBackground>
 
-      <Typeplate card={card} cardPart={cardPart} displayData={displayData} />
+      <PowerToughness cardPart={cardPart} displayData={displayData} />
+      <Loyalty cardPart={cardPart} displayData={displayData} />
 
       <BottomInfo card={card} cardPart={cardPart} displayData={displayData} />
     </BaseBackground>

@@ -1,16 +1,17 @@
 import { Box, SxProps } from "@mui/material";
-import { Card } from "../../models/card";
+import { CardPart } from "../../models/card";
 import { sizing } from "../helpers/styles";
 import { clickHandler } from "../helpers/general";
+import { DisplayData } from "../display-data";
 
 type Props = {
-  card: Card;
+  cardPart: CardPart;
+  displayData: DisplayData;
   objectPosition?: string;
   sx?: SxProps;
-  onClick?: (part: keyof Card) => void;
 }
 
-export function Art({ card, objectPosition, sx, onClick }: Props) {
+export function Art({ cardPart, displayData, objectPosition, sx }: Props) {
   return (
     <Box
       sx={{
@@ -23,11 +24,11 @@ export function Art({ card, objectPosition, sx, onClick }: Props) {
         ...sizing(100, 100),
         ...sx,
       }}
-      onClick={(e) => clickHandler(e, onClick, "artUri")}
+      onClick={(e) => clickHandler(e, displayData, "artUri")}
     >
-      {card.artUri && (
+      {cardPart.artUri && (
         <img
-          src={card.artUri}
+          src={cardPart.artUri}
           style={{ objectFit: "cover", objectPosition: objectPosition || "top", width: "100%", height: "100%" }}
         />
       )}

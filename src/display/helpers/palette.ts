@@ -1,5 +1,5 @@
 
-import { Card } from "../../models/card";
+import { CardPart } from "../../models/card";
 import { Color } from "../../models/color";
 
 export interface Palette {
@@ -18,12 +18,12 @@ export const palettes = {
   [Color.Green]: { dark: "#1e905c", mid: "#c6fff0", light: "#edffff" },
 };
 
-export function getPalettes(card: Card) {
-  const { typeline } = card;
-  const isLand = typeline.toLowerCase().includes("land");
+export function getPalettes(cardPart: CardPart) {
+  const { typeline } = cardPart;
+  const isLand = !!typeline?.toLowerCase().includes("land");
 
-  let colors = card.colors;
-  colors = (isLand || !colors) ? deriveColors(card, isLand) : colors;
+  let colors = cardPart.colors;
+  colors = (isLand || !colors) ? deriveColors(cardPart, isLand) : colors;
 
   let expectedColors = colors;
 
@@ -44,29 +44,31 @@ export function getGradient(color1: string, color2: string) {
   return `linear-gradient(to right, ${color1} 0%, ${color1} 25%, ${color2} 75%, ${color2} 100%)`;
 }
 
-function deriveColors(card: Card, isLand: boolean) {
+export function deriveColors(cardPart: Pick<CardPart, 'text' | 'manaCost'>, isLand: boolean) {
+  const { text, manaCost } = cardPart;
   const colors = [];
   if (isLand) {
-    if (card.text.includes("{W}") || card.text.includes("Plains")) colors.push(Color.White);
-    if (card.text.includes("{B}") || card.text.includes("Swamp")) colors.push(Color.Black);
-    if (card.text.includes("{U}") || card.text.includes("Island")) colors.push(Color.Blue);
-    if (card.text.includes("{R}") || card.text.includes("Mountain")) colors.push(Color.Red);
-    if (card.text.includes("{G}") || card.text.includes("Forest")) colors.push(Color.Green);
-    if (card.text.includes("add one mana of any color")) return Object.values(Color);
+    if (text?.includes("{W}") || text?.includes("Plains")) colors.push(Color.White);
+    if (text?.includes("{B}") || text?.includes("Swamp")) colors.push(Color.Black);
+    if (text?.includes("{U}") || text?.includes("Island")) colors.push(Color.Blue);
+    if (text?.includes("{R}") || text?.includes("Mountain")) colors.push(Color.Red);
+    if (text?.includes("{G}") || text?.includes("Forest")) colors.push(Color.Green);
+    if (text?.includes("add one mana of any color")) return Object.values(Color);
   } else {
-    if (card.manaCost.includes("W")) colors.push(Color.White);
-    if (card.manaCost.includes("B")) colors.push(Color.Black);
-    if (card.manaCost.includes("U")) colors.push(Color.Blue);
-    if (card.manaCost.includes("R")) colors.push(Color.Red);
-    if (card.manaCost.includes("G")) colors.push(Color.Green);
+    if (manaCost?.includes("W")) colors.push(Color.White);
+    if (manaCost?.includes("B")) colors.push(Color.Black);
+    if (manaCost?.includes("U")) colors.push(Color.Blue);
+    if (manaCost?.includes("R")) colors.push(Color.Red);
+    if (manaCost?.includes("G")) colors.push(Color.Green);
   }
   return colors;
 }
 
-export function isColoredManaCost(card: Card) {
-  return card.manaCost.includes("W")
-    || card.manaCost.includes("B")
-    || card.manaCost.includes("U")
-    || card.manaCost.includes("R")
-    || card.manaCost.includes("G");
+export function isColoredManaCost(cardPart: CardPart) {
+  const { manaCost } = cardPart;
+  return manaCost?.includes("W")
+    || manaCost?.includes("B")
+    || manaCost?.includes("U")
+    || manaCost?.includes("R")
+    || manaCost?.includes("G");
 }

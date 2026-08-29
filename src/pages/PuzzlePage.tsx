@@ -140,7 +140,7 @@ function PuzzlePage() {
           </Box>
 
           <Box sx={{ display: "flex", justifyContent: "center" }}>
-            {card && <CardDisplay card={card} hideFlavorText />}
+            {card && <CardDisplay card={card} displayData={{ hideFlavorText: true }} />}
             {loading && (
               <Box sx={{ width: "100%", height: 500, display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <CircularProgress />

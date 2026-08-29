@@ -4,54 +4,56 @@ import { Textbox } from '../parts/Textbox';
 import { Typeplate } from '../parts/Typeplate';
 import { BottomInfo } from '../parts/BottomInfo';
 import { TexturedBackground } from '../parts/backgrounds/TexturedBackground';
-import { Card } from '../../models/card';
+import { Card, CardFace, CardPart } from '../../models/card';
 import { BaseBackground } from '../parts/backgrounds/BaseBackground';
 import { Box } from '@mui/material';
 import { sizing } from '../helpers/styles';
 import { GradientBackground } from '../parts/backgrounds/GradientBackground';
 import { PowerToughness } from '../parts/PowerToughness';
+import { DisplayData } from '../display-data';
 
 type Props = {
   card: Card;
-  hideFlavorText?: boolean;
-  onClick?: (part?: keyof Card) => void;
+  cardFace: CardFace;
+  displayData: DisplayData;
 }
 
-export function SagaLayout({ card, hideFlavorText, onClick }: Props) {
-  const sagaPart = { ...card, flavorText: "" };
-  const creaturePart = { ...card, text: "" };
+export function SagaLayout({ card, cardFace, displayData }: Props) {
+  const cardPart = cardFace.parts[0];
+  const sagaPart: CardPart = { ...cardPart, flavorText: "" };
+  const creaturePart: CardPart = { ...cardPart, text: "" };
 
-  const isCreature = card.typeline.includes("Creature");
+  const isCreature = cardPart.typeline?.includes("Creature");
 
   return (
     <BaseBackground
-      texture={<TexturedBackground card={card} />}
+      texture={<TexturedBackground cardPart={cardPart} />}
     >
-      <Nameplate card={card} onClick={onClick} />
+      <Nameplate showFlip={!!card.doubleFaceType} card={card} cardPart={cardPart} displayData={displayData} />
       
-      <GradientBackground card={card} sx={{ flex: 1, ...sizing(87.5, 0)}}>
+      <GradientBackground cardPart={cardPart} sx={{ flex: 1, ...sizing(87.5, 0)}}>
         <Box sx={{ flex: 1 }}>
-          <Textbox card={sagaPart} hideFlavorText={hideFlavorText} onClick={onClick} />
+          <Textbox cardPart={sagaPart} displayData={displayData} />
         </Box>
 
         <Box sx={{ flex: 1 }}>
-          <Art card={card} onClick={onClick} />
+          <Art cardPart={cardPart} displayData={displayData} />
         </Box>
       </GradientBackground>
 
-      <Typeplate card={card} onClick={onClick} />
+      <Typeplate card={card} cardPart={cardPart} displayData={displayData} />
 
       {isCreature && (
         <>
-          <GradientBackground showBottom card={card} sx={{ ...sizing(87.5, 12)}}>
-            <Textbox card={creaturePart} hideFlavorText={hideFlavorText} onClick={onClick} />
+          <GradientBackground showBottom cardPart={cardPart} sx={{ ...sizing(87.5, 12)}}>
+            <Textbox cardPart={creaturePart} displayData={displayData} />
           </GradientBackground>
 
-          <PowerToughness card={card} onClick={onClick} />
+          <PowerToughness cardPart={cardPart} displayData={displayData} />
         </>
       )}
 
-      <BottomInfo card={card} onClick={onClick} />
+      <BottomInfo card={card} cardPart={cardPart} displayData={displayData} />
     </BaseBackground>
   );
 }

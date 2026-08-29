@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import { CardSymbol } from "./CardSymbol";
 
 type Props = {
-  manaCost: string;
+  manaCost: string | undefined;
 }
 
 export function ManaCost({ manaCost }: Props) {

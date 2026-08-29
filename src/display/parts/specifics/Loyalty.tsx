@@ -1,15 +1,16 @@
 import { Box } from "@mui/material";
-import { Card } from "../../../models/card";
+import { CardPart } from "../../../models/card";
 import { clickHandler } from "../../helpers/general";
 import { center, sizing } from "../../helpers/styles";
+import { DisplayData } from "../../display-data";
 
 type Props = {
-  card: Card;
-  onClick?: (part: keyof Card) => void;
+  cardPart: CardPart;
+  displayData: DisplayData
 }
 
-export function Loyalty({ card, onClick }: Props) {
-  if (!card.loyalty) return;
+export function Loyalty({ cardPart, displayData }: Props) {
+  if (!cardPart.loyalty) return;
 
   return (
     <Box
@@ -23,7 +24,7 @@ export function Loyalty({ card, onClick }: Props) {
         bottom: "5%",
         right: "3.5%"
       }}
-      onClick={(e) => clickHandler(e, onClick, "loyalty")}
+      onClick={(e) => clickHandler(e, displayData, "loyalty")}
     >
       <Box
         sx={{
@@ -47,7 +48,7 @@ export function Loyalty({ card, onClick }: Props) {
             boxShadow: "inset 0.12em -0.12em 0.12em rgba(255, 255, 255, 0.3), inset -0.12em 0.12em 0.12em rgba(0, 0, 0, 0.5)"
           }}
         >
-          {card.loyalty}
+          {cardPart.loyalty}
         </Box>
       </Box>
     </Box>

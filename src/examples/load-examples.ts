@@ -20,7 +20,7 @@ export const loadExamplesIfRequired = async (existing: Card[]) => {
     saveCard(card);
   }
 
-  return examples.sort((a, b) => a.name.localeCompare(b.name));
+  return examples.sort((a, b) => a.frontFace.parts[0].name.localeCompare(b.frontFace.parts[0].name));
 };
 
 const createExamples = async () => {
@@ -31,7 +31,7 @@ const createExamples = async () => {
   ];
 
   for (const card of cards) {
-    card.artUri = await compressImage(card.artUri);
+    card.frontFace.parts[0].artUri = await compressImage(card.frontFace.parts[0].artUri as string);
   }
 
   return cards;
