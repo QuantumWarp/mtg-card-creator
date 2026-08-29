@@ -35,11 +35,11 @@ export function PrepareLayout({ card, cardFace, displayData }: Props) {
       <Typeplate card={card} cardPart={mainPart} displayData={displayData} />
 
       <GradientBackground showBottom cardPart={mainPart} sx={{ flex: 1, ...sizing(87.5, 0) }}>
-        <MiniCard card={card} cardPart={miniPart} mainPart={mainPart} displayData={displayData} />
-
         <Box sx={{ flex: 1 }}>
           <Textbox cardPart={mainPart} displayData={displayData} />
         </Box>
+
+        <MiniCard card={card} cardPart={miniPart} mainPart={mainPart} displayData={displayData} />
       </GradientBackground>
 
       <PowerToughness cardPart={mainPart} displayData={displayData} />
@@ -69,10 +69,9 @@ function MiniCard({ card, cardPart, mainPart, displayData }: MiniCard) {
         displayData={displayData}
         sx={{
           ...sizing(107, 18),
-          ml: "-7%",
           mt: 0,
-          borderStartEndRadius: 0,
-          borderEndEndRadius: 0,
+          borderStartStartRadius: 0,
+          borderEndStartRadius: 0,
         }}
       />
 
@@ -83,9 +82,8 @@ function MiniCard({ card, cardPart, mainPart, displayData }: MiniCard) {
         displayData={displayData}
         sx={{
           ...sizing(107, 18),
-          ml: "-7%",
-          borderStartEndRadius: 0,
-          borderEndEndRadius: 0,
+          borderStartStartRadius: 0,
+          borderEndStartRadius: 0,
         }}
       />
 

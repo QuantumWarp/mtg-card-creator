@@ -27,6 +27,7 @@ export function BottomInfo({ card, cardPart, displayData }: BottomInfoProps) {
         mt: "1%",
         mb: "2.5%",
         px: "6.4%",
+        minHeight: "5.1%",
         boxSizing: "border-box",
         display: "flex",
         justifyContent: "space-between",
@@ -44,10 +45,10 @@ export function BottomInfo({ card, cardPart, displayData }: BottomInfoProps) {
       >
         <Box onClick={(e) => clickHandler(e, displayData, "collectorNumber")}>
           <span>{collectorNumber}</span>
-          /
+          {cardCount ? "/" : ""}
           <span onClick={(e) => clickHandler(e, displayData, "set")}>{cardCount}</span>
           {" "}
-          <span onClick={(e) => clickHandler(e, displayData, "rarity")}>{rarityLetter}</span>
+          {cardCount ? <span onClick={(e) => clickHandler(e, displayData, "rarity")}>{rarityLetter}</span> : ""}
         </Box>
 
         <Box>

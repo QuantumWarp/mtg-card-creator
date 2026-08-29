@@ -1,5 +1,5 @@
 import { v4 as uuid } from "uuid";
-import { Card } from "../models/card";
+import { Card, CardFace } from "../models/card";
 import { Rarity } from "../models/rarity";
 import { Layout } from "../models/layout";
 
@@ -35,12 +35,16 @@ export const defaultCard = (): Card => {
     rarity: Rarity.Common,
     set: {},
 
-    frontFace: {
-      layout: Layout.Regular,
-      parts: [{
-        name: "",
-        colors: [],
-      }],
-    },
+    frontFace: defaultFace(),
   }
+}
+
+export const defaultFace = (): CardFace => {
+  return {
+    layout: Layout.Regular,
+    parts: [{
+      name: "",
+      colors: [],
+    }],
+  };
 }

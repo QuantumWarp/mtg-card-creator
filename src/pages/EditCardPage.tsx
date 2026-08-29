@@ -12,6 +12,7 @@ export function EditCardPage() {
   const navigate = useNavigate();
   const { card: initialCard } = useLoaderData() as { card: Card };
   const [card, setCard] = useState(initialCard);
+  const [frontEdit, setFrontEdit] = useState(true);
   const [focusKey, setFocusKey] = useState<keyof Card | keyof CardPart>();
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [cancelOpen, setCancelOpen] = useState(false);
@@ -81,13 +82,15 @@ export function EditCardPage() {
         <Grid size={{ xs: 12, lg: 6 }}>
           <EditCardForm
             card={card}
+            frontEdit={frontEdit}
+            onFrontEditChange={setFrontEdit}
             onChange={setCard}
             // focusKey={focusKey}
           /> 
         </Grid>
 
         <Grid size={{ xs: 12, lg: 6 }} sx={{ display: "flex", justifyContent: { xs: "center", lg: "flex-end" }}}>
-          <CardDisplay card={card} displayData={{ onClick: setFocusKey }} />
+          <CardDisplay card={card} displayData={{ isFront: frontEdit, onClick: setFocusKey }} />
         </Grid>
       </Grid>
     </PageContainer>

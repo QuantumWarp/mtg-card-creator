@@ -22,7 +22,6 @@ export function CardDisplay({ card, displayData: initialDisplayData = {} }: Prop
   const theme = useTheme();
   const [fontSize, setFontSize] = useState(24);
   const [frontFace, setFrontFace] = useState(true);
-  console.log(card)
 
   const clickHandler = (part: keyof Card | keyof CardPart | undefined) => {
     if (part === "doubleFaceType") {
@@ -33,7 +32,8 @@ export function CardDisplay({ card, displayData: initialDisplayData = {} }: Prop
     initialDisplayData.onClick?.(part)
   };
 
-  useEffect(() => { setFrontFace(true); }, [card]);
+  useEffect(() => { if (initialDisplayData.isFront) setFrontFace(true); }, [card, initialDisplayData.isFront]);
+  useEffect(() => { setFrontFace(initialDisplayData.isFront ?? true); }, [initialDisplayData.isFront]);
 
   useEffect(() => {
     const updateFontSize = () => {
