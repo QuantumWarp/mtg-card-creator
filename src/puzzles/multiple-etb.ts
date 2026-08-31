@@ -20,8 +20,8 @@ const puzzle: Puzzle = {
     question: "How many treasure tokens are created?",
     answer: "2",
     explanation: [
-        "[Ganax](Ganax, Astral Hunter) explicitly triggers for itself.",
-        "In the same way [Ganax](Ganax, Astral Hunter) 'sees' itself enter and triggers, it 'sees' any other creatures entering at the same time as it."
+        "[Ganax] explicitly triggers for itself.",
+        "In the same way [Ganax] 'sees' itself enter and triggers, it 'sees' any other creatures entering at the same time as it."
     ]
 };
 

@@ -4,11 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { puzzleList } from "../puzzles/core/puzzle-list";
 import { complexityColorMap } from "../puzzles/core/puzzle.helper";
 import { Check, Visibility } from "@mui/icons-material";
-import { getCompletedPuzzles } from "../storage/puzzle.storage";
+import { clearCompletedPuzzles, getCompletedPuzzles } from "../storage/puzzle.storage";
+import { useState } from "react";
 
 export function PuzzleListPage() {
   const navigate = useNavigate();
-  const completedPuzzles = getCompletedPuzzles();
+  const [completedPuzzles, setCompletedPuzzles] = useState(getCompletedPuzzles());
 
   return (
     <PageContainer>
@@ -18,6 +19,12 @@ export function PuzzleListPage() {
         </Typography>
 
         <Grid container spacing={1}>
+          <Button
+            color="error"
+            variant="outlined"
+            onClick={() => { clearCompletedPuzzles(); setCompletedPuzzles([]); }}
+          >Reset</Button>
+
           <Button
             onClick={() => navigate("/")}
             variant="outlined"
