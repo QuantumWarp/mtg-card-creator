@@ -1,4 +1,4 @@
-import { Box, useTheme } from '@mui/material';
+import { Box, Button, Typography, useTheme } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
 import { RegularLayout } from './layouts/Regular';
 import { Card, CardPart } from '../models/card';
@@ -11,15 +11,48 @@ import { Layout } from '../models/layout';
 import { DisplayData } from './display-data';
 import { PlaneswalkerLayout } from './layouts/Planeswalker';
 import { PrepareLayout } from './layouts/Prepare';
+import { ErrorBoundary } from 'react-error-boundary';
+import { BaseBackground } from './parts/backgrounds/BaseBackground';
+import { deleteCard } from '../storage/card.storage';
 
 type Props = {
   card: Card;
   displayData?: DisplayData;
 }
 
-export function CardDisplay({ card, displayData: initialDisplayData = {} }: Props) {
-  const cardRef = useRef<HTMLElement>(undefined);
+export function CardDisplay({ card, displayData }: Props) {
   const theme = useTheme();
+
+  return (
+    <Box
+      sx={{
+        boxShadow: theme.palette.mode === "dark" ? "none" : 5,
+        width: displayData?.width || "min(100%, 500px)",
+      }}
+    >
+      <ErrorBoundary
+        fallbackRender={() => (
+          <BaseBackground>
+            <Box sx={{ display: "flex", flexDirection: "column", justifyContent:"center", alignItems: "center", height: "80%", color: "white" }}>
+              <Typography sx={{ mx: 4, textAlign: "center" }}>
+                Error displaying card. You can still export the card in a backup to save the data before deletion.
+              </Typography>
+
+              <Button sx={{ width: "40%" }} onClick={() => deleteCard(card)}>
+                Delete
+              </Button>
+            </Box>
+          </BaseBackground>
+        )}
+      >
+        <CardDisplayInner card={card} displayData={displayData} />
+      </ErrorBoundary>
+    </Box>
+  );
+}
+
+function CardDisplayInner({ card, displayData: initialDisplayData = {} }: Props) {
+  const cardRef = useRef<HTMLElement>(undefined);
   const [fontSize, setFontSize] = useState(24);
   const [frontFace, setFrontFace] = useState(true);
 
@@ -49,26 +82,25 @@ export function CardDisplay({ card, displayData: initialDisplayData = {} }: Prop
     return () => window.removeEventListener('resize', updateFontSize);
   }, [cardRef]);
 
-  const cardFace = frontFace ? card.frontFace : card.backFace!;
+  const cardFace = (frontFace || !card.backFace) ? card.frontFace : card.backFace;
   const rotate = [Layout.Split, Layout.Battle].includes(cardFace.layout);
   const displayData: DisplayData = {
     ...initialDisplayData,
     onClick: clickHandler,
-    isFront: frontFace,
+    isFront: frontFace || !card.backFace,
   }
   
   return (
     <Box
       ref={cardRef}
+      onClick={() => displayData?.onClick?.()}
       sx={{
-        boxShadow: theme.palette.mode === "dark" ? "none" : 5,
-        width: displayData.width || "min(100%, 500px)",
         fontSize: `${fontSize}px`,
-        cursor: displayData.onClick ? "pointer" : "default",
-        userSelect: displayData.onClick ? "none" : "auto",
-        transform: rotate ? "translateX(-100px) rotate(90deg)" : "",
+        transform: rotate ? "rotate(90deg)" : "",
+        transformOrigin: "center",
+        cursor: displayData?.onClick ? "pointer" : "default",
+        userSelect: displayData?.onClick ? "none" : "auto",
       }}
-      onClick={() => displayData.onClick?.()}
     >
       {cardFace.layout === Layout.Regular && (
         <RegularLayout card={card} cardFace={cardFace} displayData={displayData} />

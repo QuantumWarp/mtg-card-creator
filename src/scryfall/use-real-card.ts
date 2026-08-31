@@ -12,12 +12,16 @@ export function useRealCard(name: string, setCode?: string) {
   const [error, setError] = useState<Error>();
 
   useEffect(() => {
+    let ignore = false;
+
     setCard(undefined);
     setError(undefined);
 
     fetchRealCard(name, setCode)
-      .then((x) => setCard(x))
-      .catch((x) => setError(x));
+      .then((x) => !ignore && setCard(x))
+      .catch((x) => !ignore && setError(x));
+
+    return () => { ignore = true; }
   }, [name, setCode]);
 
   return {
@@ -27,7 +31,7 @@ export function useRealCard(name: string, setCode?: string) {
   };
 }
 
-async function fetchRealCard(name: string, setCode?: string): Promise<Card> {
+export async function fetchRealCard(name: string, setCode?: string): Promise<Card> {
   const key = `scryfall-card-${name}` + (setCode ? `-${setCode}` : "");
   const scryfallCard = await localStorageCache(key, () => cardRequest(name, setCode));
   const setId = scryfallCard.setId;
@@ -130,7 +134,6 @@ function parsePart(card: ScryfallCard, scryfallFace: ScryfallCardFace): CardPart
   const requiresColorReassignment = card.layout === ScryfallLayout.Split ||
     ([ScryfallLayout.Adventure, ScryfallLayout.Prepare].includes(card.layout) && card.name !== scryfallFace.name);
 
-  console.log(manaCost, colors, matchesColors)
   return {
     name: scryfallFace.name || card.name,
     manaCost: manaCost,

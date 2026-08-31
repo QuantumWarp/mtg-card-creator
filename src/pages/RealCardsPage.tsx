@@ -1,20 +1,19 @@
-import { Autocomplete, Box, Button, CircularProgress, Grid, TextField, Typography } from "@mui/material";
+import { Autocomplete, Box, Button, Grid, TextField, Typography } from "@mui/material";
 import { PageContainer } from "../components/PageContainer";
-import { useRealCard } from "../scryfall/use-real-card";
-import { CardDisplay } from "../display/CardDisplay";
 import { useState } from "react";
 import { useAutocomplete } from "../scryfall/use-autocomplete";
 import { useNavigate } from "react-router-dom";
+import { RealCardDisplay } from "../components/RealCardDisplay";
 
 export function RealCardsPage() {
   const navigate = useNavigate();
   const [name, setName] = useState("Charging Badger");
+  const [setCode, setSetCode] = useState<string | undefined>("BNG")
   const [search, setSearch] = useState("");
   const { results, isFetching } = useAutocomplete(search);
-  const { card, loading, error } = useRealCard(name);
 
-  const renderButton = (reason: string, name: string) => (
-    <Button onClick={() => setName(name)}>
+  const renderButton = (reason: string, name: string, setCode: string) => (
+    <Button onClick={() => { setName(name); setSetCode(setCode); }}>
       <Box sx={{ flex: 1, textAlign: "right" }}>
         {reason}
       </Box>
@@ -44,7 +43,7 @@ export function RealCardsPage() {
         All symbols, artwork and characters resulting from these searches are copyrighted by Wizards of the Coast.
       </Typography>
 
-      <Grid container spacing={{ xs: 4, lg: 0 }} sx={{ width: "100%" }}>
+      <Grid container spacing={4} sx={{ width: "100%" }}>
         <Grid size={6} sx={{ display: "flex", flexDirection: "column" }}>
           <Autocomplete
             fullWidth
@@ -53,7 +52,11 @@ export function RealCardsPage() {
             options={results || []}
             loading={isFetching}
             filterOptions={(x) => x}
-            onChange={(_, value) => value && setName(value)}
+            onChange={(_, value) => {
+              if (!value) return;
+              setName(value);
+              setSetCode(undefined);
+            }}
             renderInput={(params) =>
               <TextField
                 {...params}
@@ -67,51 +70,38 @@ export function RealCardsPage() {
             Examples
           </Typography>
 
-          {renderButton("Basics", "Charging Badger")}
-          {renderButton("Basics", "Lightning Bolt")}
-          {renderButton("Basics", "Mana Drain")}
-          {renderButton("Basics", "Dirge Bat")}
-          {renderButton("2 Color", "Lazav, Dimir Mastermind")}
-          {renderButton("3 Color", "Narset, Enlightened Exile")}
-          {renderButton("Artifact", "Solemn Simulacrum")}
-          {renderButton("Land", "Island")}
-          {renderButton("Colored Land", "Windswept Heath")}
-          {renderButton("Transform", "Search for Azcanta")}
-          {renderButton("Modal", "Bala Ged Recovery")}
-          {renderButton("Planeswalker", "Jace, Memory Adept")}
-          {renderButton("Planeswalker Transform", "Arlinn, the Pack's Hope")}
-          {renderButton("Saga", "Phyrexian Scriptures")}
-          {renderButton("Saga Transform", "Azusa's Many Journeys")}
-          {renderButton("Saga Creature", "Summon: Fenrir")}
-          {renderButton("Adventure", "Lovestruck Beast")}
-          {renderButton("Omen", "Disruptive Stormbrood")}
-          {renderButton("Prepared", "Jadzi, Steward of Fate")}
-          {renderButton("Case", "Case of the Shattered Pact")}
-          {renderButton("Class", "Stormchaser's Talent")}
-          {renderButton("Battle", "Invasion of Ixalan")}
-          {renderButton("Aftermath", "Destined // Lead")}
-          {renderButton("Fuse", "Give // Take")}
-          {renderButton("Split", "Flotsam // Jetsam")}
-          {renderButton("Room", "Smoky Lounge // Misty Salon")}
-          {renderButton("Vehicle", "Smuggler's Copter")}
-          {renderButton("Spacecraft", "Exploration Broodship")}
-          {renderButton("Devoid", "Thought Harvester")}
-          {renderButton("Color Indicator", "Asmoranomardicadaistinaculdacar")}
+          {renderButton("Basics", "Charging Badger", "BNG")}
+          {renderButton("Basics", "Lightning Bolt", "M10")}
+          {renderButton("Basics", "Mana Drain", "IMA")}
+          {renderButton("2 Color", "Lazav, Dimir Mastermind", "GTC")}
+          {renderButton("3 Color", "Narset, Enlightened Exile", "MAT")}
+          {renderButton("Artifact", "Solemn Simulacrum", "M21")}
+          {renderButton("Land", "Island", "BFZ")}
+          {renderButton("Colored Land", "Windswept Heath", "KTK")}
+          {renderButton("Transform", "Search for Azcanta", "XLN")}
+          {renderButton("Modal", "Bala Ged Recovery", "ZNR")}
+          {renderButton("Planeswalker", "Jace, Memory Adept", "M14")}
+          {renderButton("Planeswalker Transform", "Arlinn, the Pack's Hope", "MID")}
+          {renderButton("Saga", "Phyrexian Scriptures", "DOM")}
+          {renderButton("Saga Transform", "Azusa's Many Journeys", "NEO")}
+          {renderButton("Saga Creature", "Summon: Fenrir", "FIN")}
+          {renderButton("Adventure", "Lovestruck Beast", "ELD")}
+          {renderButton("Omen", "Disruptive Stormbrood", "TDM")}
+          {renderButton("Prepared", "Jadzi, Steward of Fate", "SOS")}
+          {renderButton("Case", "Case of the Shattered Pact", "MKM")}
+          {renderButton("Class", "Stormchaser's Talent", "BLB")}
+          {renderButton("Battle", "Invasion of Ixalan", "MOM")}
+          {renderButton("Aftermath", "Destined // Lead", "AKH")}
+          {renderButton("Fuse", "Give // Take", "DGM")}
+          {renderButton("Split", "Flotsam // Jetsam", "MKM")}
+          {renderButton("Room", "Smoky Lounge // Misty Salon", "DSK")}
+          {renderButton("Vehicle", "Smuggler's Copter", "KLD")}
+          {renderButton("Spacecraft", "Exploration Broodship", "EOC")}
+          {renderButton("Devoid", "Thought Harvester", "OGW")}
+          {renderButton("Color Indicator", "Asmoranomardicadaistinaculdacar", "MM2")}
         </Grid>
 
-        <Grid size={{ xs: 12, lg: 6 }} sx={{ display: "flex", justifyContent: { xs: "center", lg: "flex-end" }}}>
-          {card && <CardDisplay card={card} />}
-          {loading && (
-            <Box sx={{ width: "100%", height: 500, display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <CircularProgress />
-            </Box>
-          )}
-          {error && (
-            <Box sx={{ width: "100%", height: 500, display: "flex", alignItems: "center", justifyContent: "center" }}>
-              Error loading card
-            </Box>
-          )}
-        </Grid>
+        <RealCardDisplay name={name} setCode={setCode} />
       </Grid>
     </PageContainer>
   );

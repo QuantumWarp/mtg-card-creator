@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Tooltip, Typography } from "@mui/material";
 import { PageContainer } from "../components/PageContainer";
 import { EditCardForm } from "../components/EditCardForm";
 import { useEffect, useState } from "react";
@@ -18,6 +18,7 @@ export function EditCardPage() {
   const [cancelOpen, setCancelOpen] = useState(false);
 
   const dirty = card !== initialCard;
+  const isExample = card.id.includes("example");
 
   const save = () => {
     saveCard(card);
@@ -37,10 +38,15 @@ export function EditCardPage() {
         </Typography>
 
         <Grid container spacing={1}>
-          <Button
-            onClick={save}
-            variant="outlined"
-          >Save</Button>
+          <Tooltip title={isExample && "Examples cannot be saved. Please create a new card."}>
+            <span>
+              <Button
+                disabled={isExample}
+                onClick={save}
+                variant="outlined"
+              >Save</Button>
+            </span>
+          </Tooltip>
 
           <Button
             onClick={() => {
@@ -60,11 +66,17 @@ export function EditCardPage() {
             Are you sure you want to discard your changes?
           </ConfirmationDialog>
 
-          <Button
-            color="error"
-            variant="outlined"
-            onClick={() => setDeleteOpen(true)}
-          >Delete</Button>
+
+          <Tooltip title={isExample && "Examples cannot be deleted here. Please hide examples using the bottom toolbar button."}>
+            <span>
+              <Button
+                disabled={isExample}
+                color="error"
+                variant="outlined"
+                onClick={() => setDeleteOpen(true)}
+              >Delete</Button>
+            </span>
+          </Tooltip>
 
           <ConfirmationDialog
             title="Delete Card"
@@ -85,7 +97,6 @@ export function EditCardPage() {
             frontEdit={frontEdit}
             onFrontEditChange={setFrontEdit}
             onChange={setCard}
-            // focusKey={focusKey}
           /> 
         </Grid>
 

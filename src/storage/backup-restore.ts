@@ -4,8 +4,7 @@ import { deleteCard, getCards, saveCard } from "./card.storage";
 
 export function canBackup() {
   const cards = getCards();
-  const nonExamples = cards.filter((x) => !x.id.startsWith("example-"));
-  return nonExamples.length !== 0;
+  return cards.length > 0;
 }
 
 export function backup() {
@@ -36,4 +35,8 @@ export function restore(file: File, navigate: NavigateFunction) {
     navigate("/", { replace: true });
   };
   reader.readAsText(file);
+}
+
+export function deleteAllData() {
+  localStorage.clear()
 }

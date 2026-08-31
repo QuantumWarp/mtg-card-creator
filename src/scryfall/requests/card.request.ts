@@ -36,10 +36,13 @@ export interface ScryfallCard extends ScryfallCardFace {
 }
 
 export const cardRequest = async (name: string, setCode?: string): Promise<ScryfallCard> => {
+  if (!name) throw Error();
+
   let url = scryfallUrl + `/cards/named?exact=${encodeURIComponent(name)}`;
   if (setCode) url += `&set=${setCode}`;
 
   const json = await scryfallRequest(url);
+  if (!json.id) throw Error()
 
   return {
     id: json.id,

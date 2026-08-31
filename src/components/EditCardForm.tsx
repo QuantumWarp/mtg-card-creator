@@ -9,7 +9,6 @@ import { EditCardSpecificsForm } from "./forms/EditCardSpecificsForm";
 
 type Props = {
   card: Card;
-  focusKey?: keyof Card;
   frontEdit: boolean;
   onFrontEditChange: (isFront: boolean) => void;
   onChange: (card: Card) => void;
@@ -40,6 +39,7 @@ export function EditCardForm({ card, frontEdit, onFrontEditChange, onChange }: P
                 } else {
                   onChange({ ...card, doubleFaceType: undefined, backFace: undefined });
                   onFrontEditChange(true);
+                  setPartIndex(0);
                 }
               }}
             />

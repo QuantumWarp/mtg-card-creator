@@ -1,38 +1,39 @@
 import { Card } from "../models/card";
-import { saveCard } from "../storage/card.storage";
-import { compressImage } from "../storage/image";
+import { deleteCard } from "../storage/card.storage";
 import { crystallize } from "./crystallize";
 import { oceansEdge } from "./oceans-edge";
 import { packCaller } from "./pack-caller";
 
-const loadedKey = "mtg-card-creator-loaded";
+const hideExamplesKey = "mtg-card-creator-hide-examples";
 
-export const loadExamplesIfRequired = async (existing: Card[]) => {
-  const loaded = localStorage.getItem(loadedKey);
-  localStorage.setItem(loadedKey, "true");
+const examples = [
+  crystallize,
+  packCaller,
+  oceansEdge,
+];
 
-  if (loaded) return existing;
-  if (existing.length > 0) return existing;
-
-  const examples = await createExamples();
-
-  for (const card of examples) {
-    saveCard(card);
-  }
-
-  return examples.sort((a, b) => a.frontFace.parts[0].name.localeCompare(b.frontFace.parts[0].name));
+export const appendExamples = (existing: Card[]) => {
+  const stripped = stripOldExamples(existing);
+  return examplesEnabled() ? stripped.concat(examples) : stripped;
 };
 
-const createExamples = async () => {
-  const cards = [
-    crystallize,
-    packCaller,
-    oceansEdge,
-  ];
+export const toggleExamples = () => {
+  if (examplesEnabled()) localStorage.setItem(hideExamplesKey, "true");
+  else localStorage.removeItem(hideExamplesKey);  
+}
 
-  for (const card of cards) {
-    card.frontFace.parts[0].artUri = await compressImage(card.frontFace.parts[0].artUri as string);
-  }
+export const examplesEnabled = () => {
+  return !localStorage.getItem(hideExamplesKey);
+}
 
-  return cards;
+export const getExample = (exampleId: string) => {
+  return examples.find((x) => x.id === exampleId);
 };
+
+const stripOldExamples = (existing: Card[]) => {
+  const existingExamples = existing.filter((x) => x.id.includes("example"));
+  for (const card of existingExamples) {
+    deleteCard(card);
+  }
+  return existing.filter((x) => !x.id.includes("example"))
+}

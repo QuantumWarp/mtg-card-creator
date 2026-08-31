@@ -10,9 +10,12 @@ export interface ScryfallSet {
 }
 
 export const setRequest = async (setId: string): Promise<ScryfallSet> => {
+  if (!setId) throw Error();
+
   const url = scryfallUrl + `/sets/${setId}`;
 
   const json = await scryfallRequest(url);
+  if (!json.id) throw Error()
 
   return {
     id: json.id,

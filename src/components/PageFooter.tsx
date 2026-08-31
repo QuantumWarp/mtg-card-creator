@@ -1,11 +1,17 @@
-import { DarkMode, HelpOutlined, LightMode, CancelPresentation, Download, Upload } from "@mui/icons-material";
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Link, Tooltip, Typography, useColorScheme, useMediaQuery } from "@mui/material";
+import { DarkMode, HelpOutlined, LightMode, CancelPresentation, Download, Upload, ToggleOff, ToggleOn, Delete } from "@mui/icons-material";
+import { Box, IconButton, Tooltip, Typography, useColorScheme, useMediaQuery } from "@mui/material";
 import { useMemo, useState } from "react";
-import { backup, canBackup, restore } from "../storage/backup-restore";
+import { backup, canBackup, deleteAllData, restore } from "../storage/backup-restore";
 import { useNavigate } from "react-router-dom";
 import { ConfirmationDialog } from "./ConfirmationDialog";
+import { examplesEnabled, toggleExamples } from "../examples/load-examples";
+import { AboutDialog } from "./AboutDialog";
 
-export function PageFooter() {
+type Props = {
+  reload?: () => void;
+}
+
+export function PageFooter({ reload }: Props) {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const navigate = useNavigate();
   const { mode, setMode, systemMode } = useColorScheme();
@@ -13,6 +19,8 @@ export function PageFooter() {
   const year = new Date().getFullYear();
   const [openAbout, setOpenAbout] = useState(false);
   const [openClearCache, setOpenClearCache] = useState(false);
+  const [openDeleteAll, setOpenDeleteAll] = useState(false);
+  const [examplesToggle, setExamplesToggle] = useState(examplesEnabled());
 
   const isRestore = useMemo(() => !canBackup(), []);
 
@@ -39,6 +47,17 @@ export function PageFooter() {
           </IconButton>
         </Tooltip>
 
+        <Tooltip title={examplesToggle ? "Hide Examples" : "Show Examples"} placement="top">
+          <IconButton onClick={() => {
+            toggleExamples();
+            setExamplesToggle(!examplesToggle);
+            reload?.()
+          }}>
+            {examplesToggle && <ToggleOn />}
+            {!examplesToggle && <ToggleOff />}
+          </IconButton>
+        </Tooltip>
+
         <Tooltip title={color !== 'dark' ? "Dark mode" : "Light mode"} placement="top">
           <IconButton onClick={updateMode}>
             {color === 'dark' && <LightMode />}
@@ -52,18 +71,11 @@ export function PageFooter() {
           </IconButton>
         </Tooltip>
 
-        <ConfirmationDialog
-          title="Clear Scryfall cache"
-          action="Clear"
-          open={openClearCache}
-          onConfirm={() => clearScryfallCache()}
-          onClose={() => setOpenClearCache(false)}
-        >
-          Are you sure you want to clear the Scryfall cache?
-          You should only need to do this to get the very latest updates
-          and errata from Scryfall.
-        </ConfirmationDialog>
-
+        <Tooltip title="Delete all data" placement="top">
+          <IconButton component="label" onClick={() => setOpenDeleteAll(true)}>
+            <Delete />
+          </IconButton>
+        </Tooltip>
       
         {!isRestore && (
           <Tooltip title="Backup" placement="top">
@@ -92,28 +104,31 @@ export function PageFooter() {
         )}
       </Box>
 
-      <Dialog open={openAbout}>
-        <DialogTitle>About</DialogTitle>
+      <ConfirmationDialog
+        title="Delete all data"
+        action="Delete"
+        open={openDeleteAll}
+        onConfirm={() => deleteAllData()}
+        onClose={() => setOpenDeleteAll(false)}
+      >
+        Are you sure you want to delete <b>ALL</b> data?
+        Please consider backing up first.
+      </ConfirmationDialog>
 
-        <DialogContent>
-          <Typography sx={{ mb: 2 }}>
-            MTG Card Creator is unofficial Fan Content permitted under the Fan Content Policy.
-            Not approved/endorsed by Wizards.
-            Portions of the materials used are property of Wizards of the Coast.
-            ©Wizards of the Coast LLC.
-          </Typography>
-          <Typography>
-            To see more technical information about this app check out
-            the <Link href="https://github.com/QuantumWarp/mtg-card-creator">Github repo</Link>.
-          </Typography>
-        </DialogContent>
 
-        <DialogActions>
-          <Button onClick={() => setOpenAbout(false)}>
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <ConfirmationDialog
+        title="Clear Scryfall cache"
+        action="Clear"
+        open={openClearCache}
+        onConfirm={() => clearScryfallCache()}
+        onClose={() => setOpenClearCache(false)}
+      >
+        Are you sure you want to clear the Scryfall cache?
+        You should only need to do this to get the very latest updates
+        and errata from Scryfall.
+      </ConfirmationDialog>
+
+      <AboutDialog open={openAbout} onClose={() => setOpenAbout(false)} />
 
       <Typography variant="body2">
         Copyright © {year}

@@ -10,7 +10,18 @@ export const getCards = (): Card[] => {
   const cardIds = keys.filter((x) => x.startsWith(cardPrefix)).map((x) => x.replace(cardPrefix, ""));
   const cards = cardIds.map((x) => getCard(x));
 
-  return cards.sort((a, b) => a.frontFace.parts[0].name.localeCompare(b.frontFace.parts[0].name));
+  return cards.sort((a, b) => {
+    const compareCode = (a.set.code || "").localeCompare(b.set.code || "");
+    if (compareCode !== 0) return compareCode;
+
+    const numA = parseInt(String(a.collectorNumber), 10) || 0;
+    const numB = parseInt(String(b.collectorNumber), 10) || 0;
+    const compareNum = numA - numB;
+    if (compareNum !== 0) return compareNum;
+
+    return a.frontFace.parts[0].name.localeCompare(b.frontFace.parts[0].name);
+  });
+    
 }
 
 export const getCard = (id: string): Card => {

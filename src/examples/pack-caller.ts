@@ -19,7 +19,7 @@ export const packCaller: Card = {
       typeline: "Creature — Wolf",
       artUri: "./pack-caller.jpg",
       text: "When Pack Caller enters, look at the top 4 cards of your library. You may reveal any number of Wolf cards from among them and put them into your hand.",
-      flavorText: "Where there is one, often there are\nmany.",
+      flavorText: "Where there is one, often there are many.",
       artist: "Stiller Beobachter",
       power: 3,
       toughness: 3,
