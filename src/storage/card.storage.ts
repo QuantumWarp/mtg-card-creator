@@ -11,7 +11,7 @@ export const getCards = (): Card[] => {
   const cards = cardIds.map((x) => getCard(x));
 
   return cards.sort((a, b) => {
-    const compareCode = (a.set.code || "").localeCompare(b.set.code || "");
+    const compareCode = (a.set?.code || "").localeCompare(b.set?.code || "");
     if (compareCode !== 0) return compareCode;
 
     const numA = parseInt(String(a.collectorNumber), 10) || 0;
@@ -19,7 +19,7 @@ export const getCards = (): Card[] => {
     const compareNum = numA - numB;
     if (compareNum !== 0) return compareNum;
 
-    return a.frontFace.parts[0].name.localeCompare(b.frontFace.parts[0].name);
+    return a.frontFace?.parts[0]?.name.localeCompare(b.frontFace?.parts[0]?.name) || 0;
   });
     
 }
