@@ -7,6 +7,10 @@ const puzzle: Puzzle = {
         "Triggers",
         "Priority"
     ],
+    cards: [
+        { name: "Ajani's Mantra", setCode: "M11" },
+        { name: "Persistent Constrictor", setCode: "DSC" },
+    ],
     setup: [
         "You have 1 life remaining",
         "You control an [Ajani's Mantra]",
@@ -19,7 +23,7 @@ const puzzle: Puzzle = {
         "Triggers are put on the stack in order of priority.",
         "As it is your upkeep, you have priority first, so your [Ajani's Mantra] trigger goes on the stack first.",
         "Then your opponent's [Persistent Constrictor] trigger goes on the stack on top of it.",
-        "The topmost trigger resolves first, so the [Persistent Constrictor] trigger resolves first, causing you to lose 1 life.",
+        "The top-most trigger resolves first, so the [Persistent Constrictor] trigger resolves first, causing you to lose 1 life.",
         "You go to 0 life and lose the game before your [Ajani's Mantra] trigger can resolve.",
         "Note: State-based actions (such as checking if a player is at 0 life) are checked whenever a player would receive priority. " + 
         "This includes after each trigger resolves."

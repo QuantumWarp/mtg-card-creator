@@ -18,19 +18,17 @@ export const palettes = {
   [Color.Green]: { dark: "#1e905c", mid: "#c6fff0", light: "#edffff" },
 };
 
+export function getGradient(color1: string, color2: string) {
+  if (!color2) return color1;
+  return `linear-gradient(to right, ${color1} 0%, ${color1} 25%, ${color2} 75%, ${color2} 100%)`;
+}
+
 export function getPalettes(cardPart: CardPart) {
   const { typeline } = cardPart;
   const isLand = !!typeline?.toLowerCase().includes("land");
 
-  let colors = cardPart.colors;
-  colors = (isLand || !colors) ? deriveColors(cardPart, isLand) : colors;
-
-  let expectedColors = colors;
-
-  const manaCostOrder = Object.values(Color);
-  expectedColors = expectedColors
-    .sort((a, b) => manaCostOrder.indexOf(a) - manaCostOrder.indexOf(b))
-
+  const colors =  deriveCardColoring(cardPart);
+  const expectedColors = sortColors(colors);
   switch (expectedColors.length) {
     case 0: return [isLand ? palettes.Multicolor : palettes.Colorless];
     case 1: return [palettes[expectedColors[0]]];
@@ -39,36 +37,71 @@ export function getPalettes(cardPart: CardPart) {
   }
 }
 
-export function getGradient(color1: string, color2: string) {
-  if (!color2) return color1;
-  return `linear-gradient(to right, ${color1} 0%, ${color1} 25%, ${color2} 75%, ${color2} 100%)`;
+export function deriveCardColoring(cardPart: CardPart) {
+  const { text, colors, manaCost, typeline } = cardPart;
+  if (colors) return colors;
+
+  const isLand = !!typeline?.toLowerCase().includes("land");
+  if (!isLand) return colorsFromManaCost(manaCost);
+
+  const coloring = [];
+  if (text?.includes("{W}") || text?.includes("Plains")) coloring.push(Color.White);
+  if (text?.includes("{B}") || text?.includes("Swamp")) coloring.push(Color.Black);
+  if (text?.includes("{U}") || text?.includes("Island")) coloring.push(Color.Blue);
+  if (text?.includes("{R}") || text?.includes("Mountain")) coloring.push(Color.Red);
+  if (text?.includes("{G}") || text?.includes("Forest")) coloring.push(Color.Green);
+  if (text?.includes("add one mana of any color")) return Object.values(Color);
+  return coloring;
 }
 
-export function deriveColors(cardPart: Pick<CardPart, 'text' | 'manaCost'>, isLand: boolean) {
-  const { text, manaCost } = cardPart;
+export function colorsFromManaCost(manaCost: string | undefined) {
   const colors = [];
-  if (isLand) {
-    if (text?.includes("{W}") || text?.includes("Plains")) colors.push(Color.White);
-    if (text?.includes("{B}") || text?.includes("Swamp")) colors.push(Color.Black);
-    if (text?.includes("{U}") || text?.includes("Island")) colors.push(Color.Blue);
-    if (text?.includes("{R}") || text?.includes("Mountain")) colors.push(Color.Red);
-    if (text?.includes("{G}") || text?.includes("Forest")) colors.push(Color.Green);
-    if (text?.includes("add one mana of any color")) return Object.values(Color);
-  } else {
-    if (manaCost?.includes("W")) colors.push(Color.White);
-    if (manaCost?.includes("B")) colors.push(Color.Black);
-    if (manaCost?.includes("U")) colors.push(Color.Blue);
-    if (manaCost?.includes("R")) colors.push(Color.Red);
-    if (manaCost?.includes("G")) colors.push(Color.Green);
-  }
+  if (manaCost?.includes("W")) colors.push(Color.White);
+  if (manaCost?.includes("B")) colors.push(Color.Black);
+  if (manaCost?.includes("U")) colors.push(Color.Blue);
+  if (manaCost?.includes("R")) colors.push(Color.Red);
+  if (manaCost?.includes("G")) colors.push(Color.Green);
   return colors;
 }
 
 export function isColoredManaCost(cardPart: CardPart) {
   const { manaCost } = cardPart;
-  return manaCost?.includes("W")
-    || manaCost?.includes("B")
-    || manaCost?.includes("U")
-    || manaCost?.includes("R")
-    || manaCost?.includes("G");
+  return colorsFromManaCost(manaCost).length > 0;
 }
+
+export function sortColors(colors: Color[]) {
+  if (colors.length < 2) return colors;
+  const match = colorOrders
+    .filter((x) => x.length === colors.length)
+    .filter((x) => colors.every((c) => x.includes(c)));
+  return match[0].split("") as Color[];
+}
+
+const colorOrders = [
+  "WU",
+  "UB",
+  "BR",
+  "RG",
+  "GW",
+  "WB",
+  "UR",
+  "BG",
+  "RW",
+  "GU",
+  "GWU",
+  "WUB",
+  "UBR",
+  "BRG",
+  "RGW",
+  "RWB",
+  "GUR",
+  "WBG",
+  "URW",
+  "BGU",
+  "WUBR",
+  "UBRG",
+  "BRGW",
+  "RGWU",
+  "GWUB",
+  "WUBRG",
+];

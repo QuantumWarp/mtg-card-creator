@@ -7,6 +7,11 @@ const puzzle: Puzzle = {
         "Triggers",
         "Enters"
     ],
+    cards: [
+        { name: "Ganax, Astral Hunter", setCode: "CLB" },
+        { name: "Volcanic Dragon", setCode: "M20" },
+        { name: "Displace", setCode: "EMN" },
+    ],
     setup: [
         "You control a [Ganax, Astral Hunter]",
         "You control a [Volcanic Dragon]",

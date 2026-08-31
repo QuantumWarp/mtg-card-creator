@@ -6,12 +6,18 @@ const puzzle: Puzzle = {
     categories: [
         "Priority"
     ],
+    cards: [
+        { name: "Doom Blade", setCode: "M14" },
+        { name: "Eumidian Terrabotanist", setCode: "EOE" },
+        { name: "Forest", setCode: "BFZ" },
+        { name: "Ajani's Welcome", setCode: "M19" },
+    ],
     setup: [
         "Your opponent has a [Doom Blade] in hand and mana to cast it",
         "You have an [Eumidian Terrabotanist] and a [Forest] in hand",
         "You cast [Eumidian Terrabotanist]",
     ],
-    question: "Can your opponent destroy your [Terrabotanist](Eumidian Terrabotanist) before you play your land to prevent you gaining 1 life?",
+    question: "Can your opponent destroy your [Terrabotanist] before you play your land to prevent you gaining 1 life?",
     answer: "No",
     explanation: [
         "Whenever an action is taken in the game the person whose turn it is gets priority to perform actions",

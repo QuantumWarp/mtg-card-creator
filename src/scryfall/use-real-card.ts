@@ -5,9 +5,9 @@ import { localStorageCache } from "./caching/local-storage.cache";
 import { useEffect, useState } from "react";
 import { Color } from "../models/color";
 import { DoubleFaceType, Layout } from "../models/layout";
-import { deriveColors } from "../display/helpers/palette";
+import { colorsFromManaCost } from "../display/helpers/palette";
 
-export function useRealCard(name: string) {
+export function useRealCard(name: string, setCode?: string) {
   const [card, setCard] = useState<Card>();
   const [error, setError] = useState<Error>();
 
@@ -15,10 +15,10 @@ export function useRealCard(name: string) {
     setCard(undefined);
     setError(undefined);
 
-    fetchRealCard(name)
+    fetchRealCard(name, setCode)
       .then((x) => setCard(x))
       .catch((x) => setError(x));
-  }, [name]);
+  }, [name, setCode]);
 
   return {
     card,
@@ -27,8 +27,9 @@ export function useRealCard(name: string) {
   };
 }
 
-async function fetchRealCard(name: string): Promise<Card> {
-  const scryfallCard = await localStorageCache(`scryfall-card-${name}`, () => cardRequest(name));
+async function fetchRealCard(name: string, setCode?: string): Promise<Card> {
+  const key = `scryfall-card-${name}` + (setCode ? `-${setCode}` : "");
+  const scryfallCard = await localStorageCache(key, () => cardRequest(name, setCode));
   const setId = scryfallCard.setId;
   const scryfallSet = await localStorageCache(`scryfall-set-${setId}`, () => setRequest(setId));
   return parseCard(scryfallCard, scryfallSet);
@@ -121,17 +122,19 @@ function parseLayout(card: ScryfallCard, scryfallFaces: ScryfallCardFace[]): Lay
 }
 
 function parsePart(card: ScryfallCard, scryfallFace: ScryfallCardFace): CardPart {
-  let colors = (scryfallFace.colors || card.colors) as Color[];
-  const requiresColorAssignment = card.layout === ScryfallLayout.Split ||
-    ([ScryfallLayout.Adventure, ScryfallLayout.Prepare].includes(card.layout) && card.name !== scryfallFace.name);
-  if (requiresColorAssignment) {
-    colors = deriveColors({ text: "", manaCost: scryfallFace.manaCost }, scryfallFace.typeline.includes('Land'));
-  }
+  const manaCost = scryfallFace.manaCost || card.manaCost;
+  const colors = (scryfallFace.colors || card.colors) as Color[];
+  const fromManaCost = colorsFromManaCost(manaCost);
+  const matchesColors = colors.length === fromManaCost.length && fromManaCost.every((x) => colors.includes(x));
 
+  const requiresColorReassignment = card.layout === ScryfallLayout.Split ||
+    ([ScryfallLayout.Adventure, ScryfallLayout.Prepare].includes(card.layout) && card.name !== scryfallFace.name);
+
+  console.log(manaCost, colors, matchesColors)
   return {
     name: scryfallFace.name || card.name,
-    manaCost: scryfallFace.manaCost || card.manaCost,
-    colors: colors,
+    manaCost: manaCost,
+    colors: (matchesColors || requiresColorReassignment) ? undefined : colors,
     typeline: scryfallFace.typeline || card.typeline,
     power: scryfallFace.power || card.power,
     toughness: scryfallFace.toughness || card.toughness,

@@ -50,7 +50,7 @@ export function ManaCostControl({
         />
       </Grid>
       
-      <Grid size={{ xs: 12, sm: 6 }} sx={{ display: "flex", justifyContent: "center" }}>
+      <Grid size={6} sx={{ display: "flex", justifyContent: "flex-start" }}>
         {symbolButton("{W}")}
         {symbolButton("{U}")}
         {symbolButton("{B}")}

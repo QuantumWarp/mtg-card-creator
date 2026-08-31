@@ -7,12 +7,16 @@ const puzzle: Puzzle = {
         "Dealing Damage",
         "Life Total"
     ],
+    cards: [
+        { name: "Platinum Emperion", setCode: "SOM" },
+        { name: "Trygon Predator", setCode: "FDN" }
+    ],
     setup: [
         "You control a tapped [Platinum Emperion]",
         "Your opponent controls a [Trygon Predator]",
         "Your opponent attacks you with the [Trygon Predator]",
     ],
-    question: "Will your opponent be able to destroy your [Emperion](Platinum Emperion)?",
+    question: "Will your opponent be able to destroy your [Emperion]?",
     answer: "Yes",
     explanation: [
         "Although your life total cannot change due to the effect of [Platinum Emperion], " +

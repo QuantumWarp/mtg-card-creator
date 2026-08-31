@@ -35,8 +35,9 @@ export interface ScryfallCard extends ScryfallCardFace {
   cardFaces: ScryfallCardFace[];
 }
 
-export const cardRequest = async (name: string): Promise<ScryfallCard> => {
-  const url = scryfallUrl + `/cards/named?exact=${encodeURIComponent(name)}`;
+export const cardRequest = async (name: string, setCode?: string): Promise<ScryfallCard> => {
+  let url = scryfallUrl + `/cards/named?exact=${encodeURIComponent(name)}`;
+  if (setCode) url += `&set=${setCode}`;
 
   const json = await scryfallRequest(url);
 

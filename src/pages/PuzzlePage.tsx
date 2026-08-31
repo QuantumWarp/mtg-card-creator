@@ -5,7 +5,7 @@ import { useState } from "react";
 import { puzzleList } from "../puzzles/core/puzzle-list";
 import { CardDisplay } from "../display/CardDisplay";
 import { useRealCard } from "../scryfall/use-real-card";
-import { getPuzzleCards, renderPuzzleLine } from "../puzzles/core/puzzle.helper";
+import { renderPuzzleLine } from "../puzzles/core/puzzle.helper";
 import { getCompletedPuzzles, markPuzzleCompleted } from "../storage/puzzle.storage";
 import { Check } from "@mui/icons-material";
 
@@ -27,10 +27,9 @@ function PuzzlePage() {
   const completedPuzzles = getCompletedPuzzles();
   const [completed, setCompleted] = useState(completedPuzzles.includes(puzzle.id));
 
-  const cards = getPuzzleCards(puzzle, showAnswer);
-
-  const [cardName, setCardName] = useState(cards[0]);
-  const { card, loading, error } = useRealCard(cardName);
+  const cards = puzzle.cards;
+  const [selectedCard, setSelectedCard] = useState(cards[0]);
+  const { card, loading, error } = useRealCard(selectedCard.name, selectedCard.setCode);
 
   return (
     <PageContainer key={location.key}>
@@ -66,7 +65,7 @@ function PuzzlePage() {
             {puzzle.setup.map((line, index) => (
               <li key={index}>
                 <Typography>
-                  {renderPuzzleLine(line, setCardName)}
+                  {renderPuzzleLine(line, puzzle, setSelectedCard)}
                 </Typography>
               </li>
             ))}
@@ -74,7 +73,7 @@ function PuzzlePage() {
 
           <Typography variant="h6" sx={{ mt: 3 }}>Question</Typography>
           <Typography sx={{ ml: 4, fontWeight: "bold", fontSize: 24 }}>
-            {renderPuzzleLine(puzzle.question, setCardName, true)}
+            {renderPuzzleLine(puzzle.question, puzzle, setSelectedCard, true)}
           </Typography>
     
           
@@ -97,7 +96,7 @@ function PuzzlePage() {
             <>
               <Typography variant="h6" sx={{ mt: 3 }}>Answer</Typography>
               <Typography sx={{ ml: 4, fontWeight: "bold", fontSize: 24 }}>
-                {renderPuzzleLine(puzzle.answer, setCardName, true)}
+                {renderPuzzleLine(puzzle.answer, puzzle, setSelectedCard, true)}
               </Typography>
 
               <Typography variant="h6" sx={{ mt: 3 }}>Explanation</Typography>
@@ -105,7 +104,7 @@ function PuzzlePage() {
                 {puzzle.explanation.map((line, index) => (
                   <li key={index}>
                     <Typography>
-                      {renderPuzzleLine(line, setCardName)}
+                      {renderPuzzleLine(line, puzzle, setSelectedCard)}
                     </Typography>
                   </li>
                 ))}
@@ -119,9 +118,9 @@ function PuzzlePage() {
             <Button
               variant="contained"
               onClick={() => {
-                const currentCardIndex = cards.indexOf(cardName);
+                const currentCardIndex = cards.indexOf(selectedCard);
                 const previousCardIndex = (currentCardIndex - 1 + cards.length) % cards.length;
-                setCardName(cards[previousCardIndex]);
+                setSelectedCard(cards[previousCardIndex]);
               }}
             >
               Previous
@@ -130,9 +129,9 @@ function PuzzlePage() {
             <Button
               variant="contained"
               onClick={() => {
-                const currentCardIndex = cards.indexOf(cardName);
+                const currentCardIndex = cards.indexOf(selectedCard);
                 const nextCardIndex = (currentCardIndex + 1) % cards.length;
-                setCardName(cards[nextCardIndex]);
+                setSelectedCard(cards[nextCardIndex]);
               }}
             >
               Next

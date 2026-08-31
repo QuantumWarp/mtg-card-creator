@@ -5,8 +5,8 @@ import { ManaCostControl } from "../controls/ManaCostControl";
 import { OracleTextControl } from "../controls/OracleTextControl";
 import { TypelineControl } from "../controls/TypelineControl";
 import { useRef } from "react";
-import { deriveColors } from "../../display/helpers/palette";
 import { Layout } from "../../models/layout";
+import { ColorControl } from "../controls/ColorControl";
 
 type Props = {
   layout: Layout;
@@ -44,11 +44,15 @@ export function EditCardPartForm({ layout, cardPart, onChange }: Props) {
         <ManaCostControl
           inputRef={manaCostRef}
           value={cardPart.manaCost || ""}
-          onChange={(x) => onChange({ 
-            ...cardPart,
-            manaCost: x || undefined,
-            colors: x ? deriveColors({ text: "", manaCost: x }, !!cardPart.typeline?.includes("Land")) : undefined,
-          })}
+          onChange={(x) => onChange({ ...cardPart, manaCost: x || undefined })}
+        />
+      </Grid>
+
+      <Grid size={12}>
+        <ColorControl
+          inputRef={manaCostRef}
+          value={cardPart.colors}
+          onChange={(x) => onChange({ ...cardPart, colors: x, })}
         />
       </Grid>
 
