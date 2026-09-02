@@ -2,7 +2,6 @@ import { Nameplate } from '../parts/Nameplate';
 import { Art } from '../parts/Art';
 import { Textbox } from '../parts/Textbox';
 import { Typeplate } from '../parts/Typeplate';
-import { PowerToughness } from '../parts/PowerToughness';
 import { BottomInfo } from '../parts/BottomInfo';
 import { TexturedBackground } from '../parts/backgrounds/TexturedBackground';
 import { Card, CardFace } from '../../models/card';
@@ -40,7 +39,6 @@ export function PlaneswalkerLayout({ card, cardFace, displayData }: Props) {
         <Textbox cardPart={cardPart} displayData={displayData} />
       </GradientBackground>
 
-      <PowerToughness cardPart={cardPart} displayData={displayData} />
       <Loyalty cardPart={cardPart} displayData={displayData} />
 
       <BottomInfo card={card} cardPart={cardPart} displayData={displayData} />

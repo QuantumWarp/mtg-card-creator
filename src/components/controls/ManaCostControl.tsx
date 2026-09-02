@@ -2,12 +2,13 @@ import { Button, ButtonBase, Grid, TextField } from "@mui/material";
 import { CardSymbol } from "../../display/helpers/symbols/CardSymbol";
 import { SymbolSelector } from "./SymbolSelector";
 import { RefObject, useState } from "react";
+import { Close } from "@mui/icons-material";
 
 
 type ManaCostControlProps = {
   inputRef?: RefObject<HTMLInputElement | undefined>;
   value: string;
-  onChange: (value: string) => void;
+  onChange: (value: string | undefined) => void;
 }
 
 export function ManaCostControl({
@@ -46,7 +47,13 @@ export function ManaCostControl({
           label="Mana Cost"
           fullWidth
           value={value}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={(e) => onChange(e.target.value || undefined)}
+          slotProps={{ input: {
+            endAdornment: value && <Close
+              sx={{ cursor: "pointer" }}
+              onClick={() => onChange(undefined)}
+            />
+          }}}
         />
       </Grid>
       

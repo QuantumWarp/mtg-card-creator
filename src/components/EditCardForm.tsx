@@ -2,26 +2,46 @@ import { Checkbox, Divider, FormControlLabel, Grid, Tab, Tabs } from "@mui/mater
 import { Card, CardFace } from "../models/card";
 import { DoubleFaceType, Layout } from "../models/layout";
 import { defaultFace } from "../storage/card.storage";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { EditCardFaceForm } from "./forms/EditCardFaceForm";
 import { EditCardPartForm } from "./forms/EditCardPartForm";
 import { EditCardSpecificsForm } from "./forms/EditCardSpecificsForm";
+import { CardClick } from "../display/display-data";
+import { ConfirmationDialog } from "./ConfirmationDialog";
 
 type Props = {
   card: Card;
   frontEdit: boolean;
+  focusData: CardClick | undefined;
   onFrontEditChange: (isFront: boolean) => void;
   onChange: (card: Card) => void;
 }
 
-export function EditCardForm({ card, frontEdit, onFrontEditChange, onChange }: Props) {
+export function EditCardForm({ card, frontEdit, focusData, onFrontEditChange, onChange }: Props) {
   const [partIndex, setPartIndex] = useState(0);
+  const [removeDoubleOpen, setRemoveDoubleOpen] = useState(false);
   const cardFace = frontEdit ? card.frontFace : card.backFace!;
   const cardPart = cardFace.parts[partIndex];
 
+  useEffect(() => {
+    if (focusData) {
+      if (focusData.cardKey === "doubleFaceType") {
+        onFrontEditChange(!frontEdit);
+      }
+      if (focusData.cardPart) {
+        const newPartIndex = cardFace.parts.indexOf(focusData.cardPart);
+        setPartIndex(newPartIndex);
+      }
+    }
+  }, [focusData, cardFace.parts, frontEdit, onFrontEditChange]);
+
   return (
     <Grid container spacing={2} sx={{ alignItems: "center" }}>
-      <EditCardSpecificsForm card={card} onChange={onChange} />
+      <EditCardSpecificsForm
+        card={card}
+        focusKey={focusData?.cardKey}
+        onChange={onChange}
+      />
 
       <Grid size={4}>
         <FormControlLabel
@@ -37,9 +57,7 @@ export function EditCardForm({ card, frontEdit, onFrontEditChange, onChange }: P
                     backFace: defaultFace(),
                   });
                 } else {
-                  onChange({ ...card, doubleFaceType: undefined, backFace: undefined });
-                  onFrontEditChange(true);
-                  setPartIndex(0);
+                  setRemoveDoubleOpen(true);
                 }
               }}
             />
@@ -90,6 +108,7 @@ export function EditCardForm({ card, frontEdit, onFrontEditChange, onChange }: P
 
       <EditCardPartForm
         layout={cardFace.layout}
+        focusKey={focusData?.cardKey}
         cardPart={cardPart}
         onChange={(newPart) => {
           const newParts = [...cardFace.parts];
@@ -102,6 +121,21 @@ export function EditCardForm({ card, frontEdit, onFrontEditChange, onChange }: P
           });
         }}
       />
+
+      <ConfirmationDialog
+        title="Remove Back Face"
+        action="Remove"
+        open={removeDoubleOpen}
+        onConfirm={() => {
+          onChange({ ...card, doubleFaceType: undefined, backFace: undefined });
+          onFrontEditChange(true);
+          setPartIndex(0);
+        }}
+        onClose={() => setRemoveDoubleOpen(false)}
+      >
+        Are you sure you want to remove the back face?
+        You will permanently lose all data entered into the back face.
+      </ConfirmationDialog>
     </Grid>
   )
 }

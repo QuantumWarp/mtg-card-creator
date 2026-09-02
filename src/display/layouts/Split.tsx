@@ -52,7 +52,7 @@ function MiniCard({ card, cardPart, displayData, left }: MiniProps) {
           <Art cardPart={cardPart} displayData={displayData} objectPosition={left ? "left" : "right"} />
         </GradientBackground>
 
-        <Typeplate hideRarity card={card} cardPart={cardPart} displayData={displayData} sx={{ height: "8%" }}/>
+        <Typeplate card={card} cardPart={cardPart} displayData={displayData} sx={{ height: "9%" }}/>
 
         <GradientBackground
             showBottom

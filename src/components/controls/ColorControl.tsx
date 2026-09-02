@@ -1,17 +1,14 @@
 import { ButtonBase, Checkbox, FormControlLabel, Grid } from "@mui/material";
 import { CardSymbol } from "../../display/helpers/symbols/CardSymbol";
-import { RefObject } from "react";
 import { Color } from "../../models/color";
 
 
 type Props = {
-  inputRef?: RefObject<HTMLInputElement | undefined>;
   value: Color[] | undefined;
   onChange: (value: Color[] | undefined) => void;
 }
 
 export function ColorControl({
-  inputRef,
   value,
   onChange
 }: Props) {
@@ -39,7 +36,6 @@ export function ColorControl({
     <Grid container spacing={2}>
       <Grid size={6}>
         <FormControlLabel
-          ref={inputRef}
           label="Color from Mana Cost"
           control={
             <Checkbox

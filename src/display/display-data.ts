@@ -1,8 +1,16 @@
-import { Card, CardPart } from "../models/card";
+import { Card, CardFace, CardPart, SetInformation } from "../models/card";
+
+export type CardKey =
+  | keyof Card
+  | keyof CardFace
+  | keyof CardPart
+  | keyof SetInformation;
+
+export type CardClick = { cardKey?: CardKey, cardPart?: CardPart };
 
 export class DisplayData {
   width?: string;
   hideFlavorText?: boolean;
-  onClick?: (part?: keyof Card | keyof CardPart) => void;
   isFront?: boolean;
+  onClick?: (cardClick?: CardClick) => void;
 }

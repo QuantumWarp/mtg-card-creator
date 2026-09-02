@@ -24,7 +24,7 @@ export function Loyalty({ cardPart, displayData }: Props) {
         bottom: "5%",
         right: "3.5%"
       }}
-      onClick={(e) => clickHandler(e, displayData, "loyalty")}
+      onClick={(e) => clickHandler(e, displayData, "loyalty", cardPart)}
     >
       <Box
         sx={{

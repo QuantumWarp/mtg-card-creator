@@ -27,7 +27,7 @@ export function Nameplate({ card, cardPart, displayData, showFlip, sx }: Namepla
       dark={dark}
       removeOuterBorder={legendaryHeader}
       cardPart={cardPart}
-      onClick={(e) => clickHandler(e, displayData, "name")}
+      onClick={(e) => clickHandler(e, displayData, "name", cardPart)}
       sx={{
         mt: isPlaneswalker ? "3.4%" : "5.5%", 
         ...(isPlaneswalker && { borderEndStartRadius: 5, borderEndEndRadius: 5 }),
@@ -44,7 +44,7 @@ export function Nameplate({ card, cardPart, displayData, showFlip, sx }: Namepla
 
       <Box
         sx={{ minWidth: "15%", display: "flex", justifyContent: "flex-end" }}
-        onClick={(e) => clickHandler(e, displayData, "manaCost")}
+        onClick={(e) => clickHandler(e, displayData, "manaCost", cardPart)}
       >
         <ManaCost manaCost={manaCost} />
       </Box>

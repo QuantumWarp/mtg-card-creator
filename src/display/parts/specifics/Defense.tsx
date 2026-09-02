@@ -16,15 +16,15 @@ export function Defense({ cardPart, displayData }: Props) {
     <Box
       sx={{
         position: "absolute",
-        height: "6.5%",
+        height: "12%",
         display: "flex",
-        width: "18%",
+        width: "15%",
         fontSize: "64%",
         fontWeight: "bold",
-        bottom: "5%",
-        right: "3.5%"
+        bottom: "3%",
+        right: "3%"
       }}
-      onClick={(e) => clickHandler(e, displayData, "defense")}
+      onClick={(e) => clickHandler(e, displayData, "defense", cardPart)}
     >
       <Box
         sx={{

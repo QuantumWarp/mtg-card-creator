@@ -10,6 +10,7 @@ import { roundedBorder, sizing } from '../helpers/styles';
 import { RotatedContent } from '../parts/backgrounds/RotatedContent';
 import { Box } from '@mui/material';
 import { DisplayData } from '../display-data';
+import { Defense } from '../parts/specifics/Defense';
 
 type Props = {
   card: Card;
@@ -43,6 +44,8 @@ export function BattleLayout({ card, cardFace, displayData }: Props) {
         <GradientBackground showBottom cardPart={cardPart} sx={{ flex: 1, ...sizing(87.5, 0) }}>
           <Textbox cardPart={cardPart} displayData={displayData} />
         </GradientBackground>
+        
+        <Defense cardPart={cardPart} displayData={displayData} />
       </RotatedContent>
 
       <BottomInfo card={card} cardPart={cardPart} displayData={displayData} />

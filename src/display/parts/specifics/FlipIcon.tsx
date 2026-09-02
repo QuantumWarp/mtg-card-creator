@@ -24,7 +24,7 @@ export function FlipIcon({ card, displayData }: Props) {
         ml: "-0.35em",
         position: "relative",
       }}
-      onClick={(e) => clickHandler(e, displayData, "doubleFaceType")}
+      onClick={(e) => clickHandler(e, displayData, "doubleFaceType", undefined)}
     >
       <Box
         sx={{

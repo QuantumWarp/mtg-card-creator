@@ -43,18 +43,18 @@ export function BottomInfo({ card, cardPart, displayData }: BottomInfoProps) {
           alignItems: "flex-start"
         }}
       >
-        <Box onClick={(e) => clickHandler(e, displayData, "collectorNumber")}>
+        <Box onClick={(e) => clickHandler(e, displayData, "collectorNumber", undefined)}>
           <span>{collectorNumber}</span>
           {cardCount ? "/" : ""}
-          <span onClick={(e) => clickHandler(e, displayData, "set")}>{cardCount}</span>
+          <span onClick={(e) => clickHandler(e, displayData, "total", undefined)}>{cardCount}</span>
           {" "}
-          {cardCount ? <span onClick={(e) => clickHandler(e, displayData, "rarity")}>{rarityLetter}</span> : ""}
+          {cardCount ? <span onClick={(e) => clickHandler(e, displayData, "rarity", cardPart)}>{rarityLetter}</span> : ""}
         </Box>
 
         <Box>
-          <span onClick={(e) => clickHandler(e, displayData, "set")}>{setCode}</span>
+          <span onClick={(e) => clickHandler(e, displayData, "code", undefined)}>{setCode}</span>
           <span style={{ visibility: (setCode || artist) ? "visible" : "hidden"}}> - </span>
-          <span onClick={(e) => clickHandler(e, displayData, "artist")}>{artist}</span>
+          <span onClick={(e) => clickHandler(e, displayData, "artist", cardPart)}>{artist}</span>
         </Box>
       </Box>
 

@@ -34,7 +34,7 @@ export function Textbox({ cardPart, displayData }: TextboxProps) {
         whiteSpace: "pre-line",
         ...sizing(100, 100),
       }}
-      onClick={(e) => clickHandler(e, displayData, "text")}
+      onClick={(e) => clickHandler(e, displayData, "text", cardPart)}
     >
       <Box sx={{ flex: 1, display: "flex", alignItems: "center" }}>
         <TextParser text={text} />
@@ -54,7 +54,7 @@ export function Textbox({ cardPart, displayData }: TextboxProps) {
 
           <Box
             sx={{ my: "0.2em", fontSize: "90%" }}
-            onClick={(e) => clickHandler(e, displayData, "flavorText")}
+            onClick={(e) => clickHandler(e, displayData, "flavorText", cardPart)}
           >
             <em>
               <TextParser text={flavorText} />

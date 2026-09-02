@@ -31,7 +31,7 @@ export function PowerToughness({ cardPart, displayData }: PowerToughnessProps) {
         bottom: "5%",
         right: "3.5%"
       }}
-      onClick={(e) => clickHandler(e, displayData, "power")}
+      onClick={(e) => clickHandler(e, displayData, "power", cardPart)}
     >
       <Box
         sx={{
@@ -58,7 +58,7 @@ export function PowerToughness({ cardPart, displayData }: PowerToughnessProps) {
         >
           <span>{cardPart.power || "?"}</span>
           /
-          <span onClick={(e) => clickHandler(e, displayData, "toughness")}>
+          <span onClick={(e) => clickHandler(e, displayData, "toughness", cardPart)}>
             {cardPart.toughness || "?"}
           </span>
         </Box>

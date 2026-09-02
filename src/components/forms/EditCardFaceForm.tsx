@@ -2,6 +2,8 @@ import { FormControl, Grid, InputLabel, MenuItem, Select } from "@mui/material";
 import { CardFace, CardPart } from "../../models/card";
 import Case from "case";
 import { Layout } from "../../models/layout";
+import { ConfirmationDialog } from "../ConfirmationDialog";
+import { useState } from "react";
 
 type EditCardFormProps = {
   cardFace: CardFace;
@@ -9,14 +11,26 @@ type EditCardFormProps = {
 }
 
 export function EditCardFaceForm({ cardFace, onChange }: EditCardFormProps) {
+  const [confirmOpen, setConfirmOpen] = useState<Layout>();
+  const twoPartLayouts = [Layout.Adventure, Layout.Prepare, Layout.Split];
+
   const handleLayoutChange = (newLayout: Layout) => {
+    if (twoPartLayouts.includes(cardFace.layout) && !twoPartLayouts.includes(newLayout)) {
+      setConfirmOpen(newLayout);
+      return;
+    } else {
+      changeLayout(newLayout);
+    }
+  };
+
+  const changeLayout = (newLayout: Layout) => {
     const newParts = getNewParts(newLayout);
     const updatedParts = applyUpdates(newLayout, newParts);
     onChange({ ...cardFace, layout: newLayout, parts: updatedParts });
   };
 
   const getNewParts = (newLayout: Layout): CardPart[] => {
-    const twoPartLayout = [Layout.Adventure, Layout.Prepare, Layout.Split].includes(newLayout);
+    const twoPartLayout = twoPartLayouts.includes(newLayout);
     const expectedPartCount = twoPartLayout ? 2 : 1;
     const currentPartCount = cardFace.parts.length;
     if (expectedPartCount > currentPartCount) return [...cardFace.parts, { name: "" }]
@@ -62,6 +76,17 @@ export function EditCardFaceForm({ cardFace, onChange }: EditCardFormProps) {
           ))}
         </Select>
       </FormControl>
+      
+      <ConfirmationDialog
+        title="Change Layout"
+        action="Confirm"
+        open={!!confirmOpen}
+        onConfirm={() => confirmOpen && changeLayout(confirmOpen)}
+        onClose={() => setConfirmOpen(undefined)}
+      >
+        Changing layout from <b>{Case.title(cardFace.layout)}</b> to <b>{Case.title(confirmOpen || "")}</b> will
+        lose the data from the unused part.
+      </ConfirmationDialog>
     </Grid>
   )
 }

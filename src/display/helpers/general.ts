@@ -1,12 +1,13 @@
-import { Card, CardPart } from "../../models/card";
-import { DisplayData } from "../display-data";
+import { CardPart } from "../../models/card";
+import { CardKey, DisplayData } from "../display-data";
 
 export function clickHandler(
   e: React.MouseEvent<HTMLDivElement | HTMLSpanElement, MouseEvent>,
   displayData: DisplayData,
-  part: keyof Card | keyof CardPart,
+  cardKey: CardKey,
+  cardPart: CardPart | undefined
 ) {
   if (!displayData.onClick) return;
-  displayData.onClick(part);
+  displayData.onClick({ cardKey, cardPart });
   e.stopPropagation();
 }

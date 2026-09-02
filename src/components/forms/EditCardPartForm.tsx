@@ -4,17 +4,19 @@ import { readAndCompressImageFile } from "../../storage/image";
 import { ManaCostControl } from "../controls/ManaCostControl";
 import { OracleTextControl } from "../controls/OracleTextControl";
 import { TypelineControl } from "../controls/TypelineControl";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Layout } from "../../models/layout";
 import { ColorControl } from "../controls/ColorControl";
+import { CardKey } from "../../display/display-data";
 
 type Props = {
   layout: Layout;
+  focusKey?: CardKey;
   cardPart: CardPart;
   onChange: (cardPart: CardPart) => void;
 }
 
-export function EditCardPartForm({ layout, cardPart, onChange }: Props) {
+export function EditCardPartForm({ layout, focusKey, cardPart, onChange }: Props) {
   const nameRef = useRef<HTMLInputElement>(undefined);
   const manaCostRef = useRef<HTMLInputElement>(undefined);
   const typelineRef = useRef<HTMLInputElement>(undefined);
@@ -26,6 +28,20 @@ export function EditCardPartForm({ layout, cardPart, onChange }: Props) {
   const toughnessRef = useRef<HTMLInputElement>(undefined);
   const imageRef = useRef<HTMLLabelElement>(null);
   const artistRef = useRef<HTMLInputElement>(undefined);
+
+  useEffect(() => {
+    if (focusKey === "name") nameRef.current?.focus();
+    if (focusKey === "manaCost") manaCostRef.current?.focus();
+    if (focusKey === "typeline") typelineRef.current?.focus();
+    if (focusKey === "text") textRef.current?.focus();
+    if (focusKey === "flavorText") flavorRef.current?.focus();
+    if (focusKey === "loyalty") loyaltyRef.current?.focus();
+    if (focusKey === "defense") defenseRef.current?.focus();
+    if (focusKey === "power") powerRef.current?.focus();
+    if (focusKey === "toughness") toughnessRef.current?.focus();
+    if (focusKey === "artUri") imageRef.current?.click();
+    if (focusKey === "artist") artistRef.current?.focus();
+  }, [focusKey]);
   
   return (
     <Grid container spacing={2} sx={{ alignItems: "center" }}>
@@ -50,7 +66,6 @@ export function EditCardPartForm({ layout, cardPart, onChange }: Props) {
 
       <Grid size={12}>
         <ColorControl
-          inputRef={manaCostRef}
           value={cardPart.colors}
           onChange={(x) => onChange({ ...cardPart, colors: x, })}
         />
@@ -78,7 +93,7 @@ export function EditCardPartForm({ layout, cardPart, onChange }: Props) {
           label="Flavour Text"
           fullWidth
           multiline
-          value={cardPart.flavorText}
+          value={cardPart.flavorText || ""}
           onChange={(e) => onChange({  ...cardPart, flavorText: e.target.value || undefined })}
         />
       </Grid>
@@ -162,7 +177,7 @@ export function EditCardPartForm({ layout, cardPart, onChange }: Props) {
           inputRef={artistRef}
           label="Artist"
           fullWidth
-          value={cardPart.artist}
+          value={cardPart.artist || ""}
           onChange={(e) => onChange({  ...cardPart, artist: e.target.value || undefined })}
         />
       </Grid>

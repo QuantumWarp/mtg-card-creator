@@ -53,9 +53,6 @@ export const defaultCard = (): Card => {
 export const defaultFace = (): CardFace => {
   return {
     layout: Layout.Regular,
-    parts: [{
-      name: "",
-      colors: [],
-    }],
+    parts: [{ name: "" }],
   };
 }

@@ -5,15 +5,16 @@ import { useEffect, useState } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { deleteCard, saveCard } from "../storage/card.storage";
 import { CardDisplay } from "../display/CardDisplay";
-import { Card, CardPart } from "../models/card";
+import { Card } from "../models/card";
 import { ConfirmationDialog } from "../components/ConfirmationDialog";
+import { CardClick } from "../display/display-data";
 
 export function EditCardPage() {
   const navigate = useNavigate();
   const { card: initialCard } = useLoaderData() as { card: Card };
   const [card, setCard] = useState(initialCard);
   const [frontEdit, setFrontEdit] = useState(true);
-  const [focusKey, setFocusKey] = useState<keyof Card | keyof CardPart>();
+  const [focusData, setFocusData] = useState<CardClick>();
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [cancelOpen, setCancelOpen] = useState(false);
 
@@ -26,9 +27,9 @@ export function EditCardPage() {
   };
 
   useEffect(() => {
-    if (!focusKey) return;
-    setFocusKey(undefined);
-  }, [focusKey])
+    if (!focusData) return;
+    setFocusData(undefined);
+  }, [focusData])
 
   return (
     <PageContainer>
@@ -95,13 +96,14 @@ export function EditCardPage() {
           <EditCardForm
             card={card}
             frontEdit={frontEdit}
+            focusData={focusData}
             onFrontEditChange={setFrontEdit}
             onChange={setCard}
           /> 
         </Grid>
 
         <Grid size={{ xs: 12, lg: 6 }} sx={{ display: "flex", justifyContent: { xs: "center", lg: "flex-end" }}}>
-          <CardDisplay card={card} displayData={{ isFront: frontEdit, onClick: setFocusKey }} />
+          <CardDisplay card={card} displayData={{ isFront: frontEdit, onClick: setFocusData }} />
         </Grid>
       </Grid>
     </PageContainer>

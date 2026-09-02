@@ -33,7 +33,7 @@ export function Typeplate({ card, cardPart, displayData, hideRarity, sx }: Props
     <BannerBackground
       dark={dark}
       cardPart={cardPart}
-      onClick={(e) => clickHandler(e, displayData, "name")}
+      onClick={(e) => clickHandler(e, displayData, "typeline", cardPart)}
       sx={{
         fontSize: "56%",
         ...(isPlaneswalker && { borderEndStartRadius: 5, borderEndEndRadius: 5 }),
@@ -52,7 +52,7 @@ export function Typeplate({ card, cardPart, displayData, hideRarity, sx }: Props
           justifyContent: "center",
           position: "relative",
         }}
-        onClick={(e) => clickHandler(e, displayData, "rarity")}
+        onClick={(e) => clickHandler(e, displayData, "rarity", cardPart)}
       >
         <img
           src={iconUri || "./custom-set.svg"}

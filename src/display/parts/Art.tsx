@@ -24,7 +24,7 @@ export function Art({ cardPart, displayData, objectPosition, sx }: Props) {
         ...sizing(100, 100),
         ...sx,
       }}
-      onClick={(e) => clickHandler(e, displayData, "artUri")}
+      onClick={(e) => clickHandler(e, displayData, "artUri", cardPart)}
     >
       {cardPart.artUri && (
         <img

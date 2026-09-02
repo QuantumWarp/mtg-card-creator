@@ -1,14 +1,14 @@
 import { Box, Button, Typography, useTheme } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
 import { RegularLayout } from './layouts/Regular';
-import { Card, CardPart } from '../models/card';
+import { Card } from '../models/card';
 import { SagaLayout } from './layouts/Saga';
 import { AdventureLayout } from './layouts/Adventure';
 import { CaseLayout } from './layouts/Case';
 import { BattleLayout } from './layouts/Battle';
 import { SplitLayout } from './layouts/Split';
 import { Layout } from '../models/layout';
-import { DisplayData } from './display-data';
+import { CardClick, DisplayData } from './display-data';
 import { PlaneswalkerLayout } from './layouts/Planeswalker';
 import { PrepareLayout } from './layouts/Prepare';
 import { ErrorBoundary } from 'react-error-boundary';
@@ -28,6 +28,7 @@ export function CardDisplay({ card, displayData }: Props) {
       sx={{
         boxShadow: theme.palette.mode === "dark" ? "none" : 5,
         width: displayData?.width || "min(100%, 500px)",
+        borderRadius: "4%",
       }}
     >
       <ErrorBoundary
@@ -56,13 +57,12 @@ function CardDisplayInner({ card, displayData: initialDisplayData = {} }: Props)
   const [fontSize, setFontSize] = useState(24);
   const [frontFace, setFrontFace] = useState(true);
 
-  const clickHandler = (part: keyof Card | keyof CardPart | undefined) => {
-    if (part === "doubleFaceType") {
+  const clickHandler = (cardClick?: CardClick) => {
+    if (cardClick?.cardKey === "doubleFaceType") {
       setFrontFace(!frontFace);
-      return;
     }
 
-    initialDisplayData.onClick?.(part)
+    initialDisplayData.onClick?.(cardClick)
   };
 
   useEffect(() => { if (initialDisplayData.isFront) setFrontFace(true); }, [card, initialDisplayData.isFront]);

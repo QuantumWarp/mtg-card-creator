@@ -3,10 +3,11 @@ import Case from "case";
 import { useEffect, useRef } from "react";
 import { Rarity } from "../../models/rarity";
 import { Card } from "../../models/card";
+import { CardKey } from "../../display/display-data";
 
 type Props = {
   card: Card;
-  focusKey?: keyof Card;
+  focusKey?: CardKey;
   onChange: (card: Card) => void;
 }
 
@@ -14,11 +15,13 @@ export function EditCardSpecificsForm({ card, focusKey, onChange }: Props) {
   const rarityRef = useRef<HTMLSelectElement>(undefined);
   const collectorNumberRef = useRef<HTMLInputElement>(undefined);
   const setCodeRef = useRef<HTMLInputElement>(undefined);
+  const totalRef = useRef<HTMLInputElement>(undefined);
 
   useEffect(() => {
     if (focusKey === "rarity") rarityRef.current?.focus();
     if (focusKey === "collectorNumber") collectorNumberRef.current?.select();
-    if (focusKey === "set") setCodeRef.current?.select();
+    if (focusKey === "code") setCodeRef.current?.select();
+    if (focusKey === "total") totalRef.current?.select();
   }, [focusKey]);
   
   return (
@@ -53,6 +56,7 @@ export function EditCardSpecificsForm({ card, focusKey, onChange }: Props) {
 
       <Grid size={4}>
         <TextField
+          inputRef={totalRef}
           label="Set Card Count"
           type="number"
           fullWidth
