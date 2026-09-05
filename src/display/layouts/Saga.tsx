@@ -4,7 +4,7 @@ import { Textbox } from '../parts/Textbox';
 import { Typeplate } from '../parts/Typeplate';
 import { BottomInfo } from '../parts/BottomInfo';
 import { TexturedBackground } from '../parts/backgrounds/TexturedBackground';
-import { Card, CardFace, CardPart } from '../../models/card';
+import { Card, CardFace } from '../../models/card';
 import { BaseBackground } from '../parts/backgrounds/BaseBackground';
 import { Box } from '@mui/material';
 import { sizing } from '../helpers/styles';
@@ -20,8 +20,6 @@ type Props = {
 
 export function SagaLayout({ card, cardFace, displayData }: Props) {
   const cardPart = cardFace.parts[0];
-  const sagaPart: CardPart = { ...cardPart, flavorText: "" };
-  const creaturePart: CardPart = { ...cardPart, text: "" };
 
   const isCreature = cardPart.typeline?.includes("Creature");
 
@@ -37,7 +35,7 @@ export function SagaLayout({ card, cardFace, displayData }: Props) {
       
       <GradientBackground cardPart={cardPart} sx={{ flex: 1, ...sizing(87.5, 0)}}>
         <Box sx={{ flex: 1 }}>
-          <Textbox cardPart={sagaPart} displayData={displayData} />
+          <Textbox cardPart={cardPart} displayData={displayData} noFlavor={isCreature} />
         </Box>
 
         <Box sx={{ flex: 1 }}>
@@ -55,7 +53,7 @@ export function SagaLayout({ card, cardFace, displayData }: Props) {
       {isCreature && (
         <>
           <GradientBackground showBottom cardPart={cardPart} sx={{ ...sizing(87.5, 13)}}>
-            <Textbox cardPart={creaturePart} displayData={displayData} />
+            <Textbox cardPart={cardPart} displayData={displayData} noText />
           </GradientBackground>
 
           <PowerToughness cardPart={cardPart} displayData={displayData} />

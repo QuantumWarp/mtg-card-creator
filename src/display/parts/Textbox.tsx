@@ -10,9 +10,11 @@ type TextboxProps = {
   cardPart: CardPart;
   displayData: DisplayData;
   sx?: SxProps;
+  noFlavor?: boolean;
+  noText?: boolean;
 }
 
-export function Textbox({ cardPart, displayData, sx }: TextboxProps) {
+export function Textbox({ cardPart, displayData, sx, noFlavor, noText }: TextboxProps) {
   const { text, flavorText } = cardPart;
   const [color1, color2] = getPalettes(cardPart);
   const background = getGradient(color1.light, color2?.light);
@@ -38,11 +40,11 @@ export function Textbox({ cardPart, displayData, sx }: TextboxProps) {
       }}
       onClick={(e) => clickHandler(e, displayData, "text", cardPart)}
     >
-      {text && <Box sx={{ flex: 1, display: "flex", alignItems: "center" }}>
+      {text && !noText && <Box sx={{ flex: 1, display: "flex", alignItems: "center" }}>
         <TextParser text={text} />
       </Box>}
 
-      {flavorText && !displayData.hideFlavorText && (
+      {flavorText && !noFlavor && !displayData.hideFlavorText && (
         <Box>
           {text && (<Box
             sx={{
