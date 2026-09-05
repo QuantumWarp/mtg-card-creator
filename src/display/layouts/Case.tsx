@@ -22,7 +22,11 @@ export function CaseLayout({ card, cardFace, displayData }: Props) {
 
   return (
     <BaseBackground
-      texture={<TexturedBackground cardPart={cardPart} />}
+      texture={<TexturedBackground cardPart={cardPart} sx={{
+        height: "89%",
+        borderEndEndRadius: "2.2em 1.5em",
+        borderEndStartRadius: "2.2em 1.5em",
+      }} />}
     >
       <Nameplate showFlip={!!card.doubleFaceType} card={card} cardPart={cardPart} displayData={displayData} />
       
@@ -36,7 +40,7 @@ export function CaseLayout({ card, cardFace, displayData }: Props) {
         </Box>
       </GradientBackground>
 
-      <Typeplate card={card} cardPart={cardPart} displayData={displayData} />
+      <Typeplate card={card} cardPart={cardPart} displayData={displayData} sx={{ mb: "2.8%" }} />
 
       <BottomInfo card={card} cardPart={cardPart} displayData={displayData} />
     </BaseBackground>

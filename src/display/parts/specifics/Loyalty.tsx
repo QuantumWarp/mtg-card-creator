@@ -9,6 +9,11 @@ type Props = {
   displayData: DisplayData
 }
 
+const loyaltyShape = "polygon(\
+65% 0%, 100% 20%, 93% 50%, 90% 80%, 50% 100%,\
+10% 80%, 7% 50%, 0% 20%, 35% 0%,\
+40% 10%, 50% 15%, 60% 10%)";
+
 export function Loyalty({ cardPart, displayData }: Props) {
   if (!cardPart.loyalty) return;
 
@@ -16,36 +21,37 @@ export function Loyalty({ cardPart, displayData }: Props) {
     <Box
       sx={{
         position: "absolute",
-        height: "6.5%",
-        display: "flex",
-        width: "18%",
-        fontSize: "64%",
-        fontWeight: "bold",
-        bottom: "5%",
-        right: "3.5%"
+        height: "1.2em",
+        width: "2em",
+        bottom: "5.5%",
+        right: "3%",
+        filter: "drop-shadow(2px 2px 4px rgba(0, 0, 0, 1))",
       }}
-      onClick={(e) => clickHandler(e, displayData, "loyalty", cardPart)}
     >
       <Box
         sx={{
-          position: "absolute",
+          position: "relative",
+          width: "100%",
+          height: "100%",
+          fontSize: "0.7em",
+          fontWeight: "bold",
+          clipPath: loyaltyShape,
           backgroundColor: "white",
           boxSizing: "border-box",
           ...center(),
-          ...sizing(100, 100, -5),
-          boxShadow: "inset 0.12em -0.12em 0.12em rgba(0, 0, 0, 0.6), inset -0.12em 0.12em 0.12em rgba(255, 255, 255, 0.5)"
         }}
+        onClick={(e) => clickHandler(e, displayData, "defense", cardPart)}
       >
         <Box
           sx={{
             backgroundColor: "black",
             color: "white",
             p: 0.5,
-            px: 1.2,
+            pt: 1,
             boxSizing: "border-box",
             ...center(),
-            ...sizing(90, 85, -5),
-            boxShadow: "inset 0.12em -0.12em 0.12em rgba(255, 255, 255, 0.3), inset -0.12em 0.12em 0.12em rgba(0, 0, 0, 0.5)"
+            ...sizing(85, 85),
+            clipPath: loyaltyShape,
           }}
         >
           {cardPart.loyalty}

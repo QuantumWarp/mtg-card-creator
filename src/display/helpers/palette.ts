@@ -9,7 +9,7 @@ export interface Palette {
 }
 
 export const palettes = {
-  Multicolor: { dark: "#e5d387", mid: "#d6c494", light: "#f6f2de" },
+  Multicolor: { dark: "#c3b473", mid: "#d6c494", light: "#f6f2de" },
   Colorless: { dark: "#dfe0e1", mid: "#dae0e4", light: "#d6dde0" },
   [Color.White]: { dark: "#eaeae7", mid: "#f4f4f0", light: "#f1efe7" },
   [Color.Blue]: { dark: "#016aa1", mid: "#bed4e4", light: "#e1e8ef" },
@@ -18,9 +18,9 @@ export const palettes = {
   [Color.Green]: { dark: "#1e905c", mid: "#c6fff0", light: "#edffff" },
 };
 
-export function getGradient(color1: string, color2: string) {
+export function getGradient(color1: string, color2: string, toBottom?: boolean) {
   if (!color2) return color1;
-  return `linear-gradient(to right, ${color1} 0%, ${color1} 25%, ${color2} 75%, ${color2} 100%)`;
+  return `linear-gradient(to ${toBottom ? "bottom" : "right"}, ${color1} 0%, ${color1} 25%, ${color2} 75%, ${color2} 100%)`;
 }
 
 export function getPalettes(cardPart: CardPart) {
@@ -67,6 +67,15 @@ export function colorsFromManaCost(manaCost: string | undefined) {
 export function isColoredManaCost(cardPart: CardPart) {
   const { manaCost } = cardPart;
   return colorsFromManaCost(manaCost).length > 0;
+}
+
+export function getColorlessTint(cardPart: CardPart) {
+  const colorsFromCost = colorsFromManaCost(cardPart.manaCost);
+  const hasColorsFromCost = colorsFromCost.length > 0;
+  const applyColorlessTint = hasColorsFromCost && cardPart.colors?.length === 0;
+  if (!applyColorlessTint) return;
+  const [color1, , multicolor] = getPalettes({ ...cardPart, colors: colorsFromCost });
+  return multicolor || color1;
 }
 
 export function sortColors(colors: Color[]) {

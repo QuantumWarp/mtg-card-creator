@@ -27,7 +27,11 @@ export function SagaLayout({ card, cardFace, displayData }: Props) {
 
   return (
     <BaseBackground
-      texture={<TexturedBackground cardPart={cardPart} />}
+      texture={<TexturedBackground cardPart={cardPart} sx={isCreature ? undefined : {
+        height: "89%", 
+        borderEndEndRadius: "2.2em 1.5em",
+        borderEndStartRadius: "2.2em 1.5em",
+      }} />}
     >
       <Nameplate showFlip={!!card.doubleFaceType} card={card} cardPart={cardPart} displayData={displayData} />
       
@@ -41,7 +45,7 @@ export function SagaLayout({ card, cardFace, displayData }: Props) {
         </Box>
       </GradientBackground>
 
-      <Typeplate card={card} cardPart={cardPart} displayData={displayData} />
+      <Typeplate card={card} cardPart={cardPart} displayData={displayData} sx={isCreature ? undefined : { mb: "2.8%" } } />
 
       {isCreature && (
         <>

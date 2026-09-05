@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, SxProps } from "@mui/material";
 import { CardPart } from "../../models/card";
 import { getGradient, getPalettes } from "../helpers/palette";
 import { TextParser } from "../helpers/symbols/TextParser";
@@ -9,9 +9,10 @@ import { DisplayData } from "../display-data";
 type TextboxProps = {
   cardPart: CardPart;
   displayData: DisplayData;
+  sx?: SxProps;
 }
 
-export function Textbox({ cardPart, displayData }: TextboxProps) {
+export function Textbox({ cardPart, displayData, sx }: TextboxProps) {
   const { text, flavorText } = cardPart;
   const [color1, color2] = getPalettes(cardPart);
   const background = getGradient(color1.light, color2?.light);
@@ -33,6 +34,7 @@ export function Textbox({ cardPart, displayData }: TextboxProps) {
         overflow: "auto",
         whiteSpace: "pre-line",
         ...sizing(100, 100),
+        ...sx
       }}
       onClick={(e) => clickHandler(e, displayData, "text", cardPart)}
     >

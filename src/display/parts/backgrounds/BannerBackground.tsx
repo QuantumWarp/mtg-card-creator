@@ -2,23 +2,26 @@ import { ReactNode } from "react";
 import { Box, CSSObject, SxProps } from "@mui/material";
 import { center, roundedBorder, sizing } from "../../helpers/styles";
 import { CardPart } from "../../../models/card";
-import { getGradient, getPalettes } from "../../helpers/palette";
+import { getColorlessTint, getGradient, getPalettes } from "../../helpers/palette";
 
 
 type Props = {
   cardPart: CardPart;
   children: ReactNode;
+  allowTint?: boolean;
   dark?: boolean;
   removeOuterBorder?: boolean;
   sx?: SxProps;
   onClick?: React.MouseEventHandler<HTMLDivElement>;
 }
 
-export function BannerBackground({ cardPart, children, dark, removeOuterBorder, sx, onClick }: Props) {
+export function BannerBackground({ cardPart, children, allowTint, dark, removeOuterBorder, sx, onClick }: Props) {
   const [color1, color2, multicolor] = getPalettes(cardPart);
   const background = getGradient(color1.dark, color2?.dark);
   const color = color2 ? multicolor : color1;
-  
+
+  const colorlessTint = allowTint && getColorlessTint(cardPart);
+
   const cssSx = sx as CSSObject;
   const blunting = {
     ...(cssSx.borderEndStartRadius !== undefined && { borderEndStartRadius: cssSx.borderEndStartRadius }),
@@ -40,7 +43,7 @@ export function BannerBackground({ cardPart, children, dark, removeOuterBorder, 
     >
       <Box
         sx={{
-          p: "1%",
+          p: "0.16em",
           position: "relative",
           height: "100%",
           background: removeOuterBorder ? undefined : background,
@@ -51,7 +54,7 @@ export function BannerBackground({ cardPart, children, dark, removeOuterBorder, 
       >
         <Box
           sx={{
-            backgroundColor: dark ? color.dark : color.mid,
+            backgroundColor: colorlessTint ? colorlessTint.mid : (dark ? color.dark : color.mid),
             p: "0.4% 2.4% 1% 2.4%",
             boxSizing: "border-box",
             border: "0.05em solid black",

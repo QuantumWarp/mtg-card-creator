@@ -35,12 +35,13 @@ export function Typeplate({ card, cardPart, displayData, hideRarity, sx }: Props
       cardPart={cardPart}
       onClick={(e) => clickHandler(e, displayData, "typeline", cardPart)}
       sx={{
-        fontSize: "56%",
+        fontSize: "55%",
+        ...(card.doubleFaceType && !displayData.isFront && { color: "white" }),
         ...(isPlaneswalker && { borderEndStartRadius: 5, borderEndEndRadius: 5 }),
         ...sx
       }}
     >
-      <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+      <Box sx={{ display: "flex", gap: 1, alignItems: "center", whiteSpace: "nowrap" }}>
         <ColorIndicator cardPart={cardPart} />
         <Box>{typeline}</Box>
       </Box>

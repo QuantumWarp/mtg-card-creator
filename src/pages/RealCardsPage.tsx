@@ -72,7 +72,6 @@ export function RealCardsPage() {
 
           {renderButton("Basics", "Charging Badger", "BNG")}
           {renderButton("Basics", "Lightning Bolt", "M10")}
-          {renderButton("Basics", "Mana Drain", "IMA")}
           {renderButton("2 Color", "Lazav, Dimir Mastermind", "GTC")}
           {renderButton("3 Color", "Narset, Enlightened Exile", "MAT")}
           {renderButton("Artifact", "Solemn Simulacrum", "M21")}
@@ -83,7 +82,6 @@ export function RealCardsPage() {
           {renderButton("Planeswalker", "Jace, Memory Adept", "M14")}
           {renderButton("Planeswalker Transform", "Arlinn, the Pack's Hope", "MID")}
           {renderButton("Saga", "Phyrexian Scriptures", "DOM")}
-          {renderButton("Saga Transform", "Azusa's Many Journeys", "NEO")}
           {renderButton("Saga Creature", "Summon: Fenrir", "FIN")}
           {renderButton("Adventure", "Lovestruck Beast", "ELD")}
           {renderButton("Omen", "Disruptive Stormbrood", "TDM")}
@@ -91,14 +89,10 @@ export function RealCardsPage() {
           {renderButton("Case", "Case of the Shattered Pact", "MKM")}
           {renderButton("Class", "Stormchaser's Talent", "BLB")}
           {renderButton("Battle", "Invasion of Ixalan", "MOM")}
-          {renderButton("Aftermath", "Destined // Lead", "AKH")}
-          {renderButton("Fuse", "Give // Take", "DGM")}
           {renderButton("Split", "Flotsam // Jetsam", "MKM")}
-          {renderButton("Room", "Smoky Lounge // Misty Salon", "DSK")}
           {renderButton("Vehicle", "Smuggler's Copter", "KLD")}
-          {renderButton("Spacecraft", "Exploration Broodship", "EOC")}
-          {renderButton("Devoid", "Thought Harvester", "OGW")}
-          {renderButton("Color Indicator", "Asmoranomardicadaistinaculdacar", "MM2")}
+          {renderButton("Devoid", "Brood Butcher", "BFZ")}
+          {renderButton("Color Indicator", "Asmoranomardicadaistinaculdacar", "MH2")}
         </Grid>
 
         <RealCardDisplay name={name} setCode={setCode} />

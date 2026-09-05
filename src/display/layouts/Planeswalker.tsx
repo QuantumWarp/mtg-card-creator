@@ -35,8 +35,8 @@ export function PlaneswalkerLayout({ card, cardFace, displayData }: Props) {
       
       <Typeplate card={card} cardPart={cardPart} displayData={displayData} />
 
-      <GradientBackground showBottom cardPart={cardPart} sx={{ flex: 1, ...sizing(87.5, 0) }}>
-        <Textbox cardPart={cardPart} displayData={displayData} />
+      <GradientBackground showBottom cardPart={cardPart} sx={{ flex: 1, ...sizing(87.5, 0), borderBottomLeftRadius: "15%", pl: "2%" }}>
+        <Textbox sx={{ borderRadius: "0.2em", borderBottomLeftRadius: "12%", pb: "4%" }} cardPart={cardPart} displayData={displayData} />
       </GradientBackground>
 
       <Loyalty cardPart={cardPart} displayData={displayData} />

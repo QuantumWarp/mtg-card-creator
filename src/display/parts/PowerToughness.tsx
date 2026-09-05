@@ -18,6 +18,9 @@ export function PowerToughness({ cardPart, displayData }: PowerToughnessProps) {
 
   const [color1, color2, multicolor] = getPalettes(cardPart);
   const color = color2 ? multicolor : color1;
+  const isVehicle = cardPart.typeline?.toLowerCase().includes("vehicle")
+  const isSpacecraft = cardPart.typeline?.toLowerCase().includes("spacecraft");
+  const isFront = displayData.isFront;
 
   return (
     <Box
@@ -26,17 +29,18 @@ export function PowerToughness({ cardPart, displayData }: PowerToughnessProps) {
         height: "6.5%",
         display: "flex",
         width: "18%",
-        fontSize: "64%",
+        fontSize: "75%",
         fontWeight: "bold",
         bottom: "5%",
-        right: "3.5%"
+        right: "3.5%",
+        ...((isVehicle || isSpacecraft || !isFront) && { color: "white" })
       }}
       onClick={(e) => clickHandler(e, displayData, "power", cardPart)}
     >
       <Box
         sx={{
           position: "absolute",
-          backgroundColor: color.mid,
+          backgroundColor: isVehicle ? "#6e3d18" : (isSpacecraft || !isFront) ? color.dark : color.mid,
           boxSizing: "border-box",
           ...center(),
           ...sizing(100, 100, -5),
@@ -46,7 +50,7 @@ export function PowerToughness({ cardPart, displayData }: PowerToughnessProps) {
       >
         <Box
           sx={{
-            backgroundColor: color.mid,
+            backgroundColor: isVehicle ? "#6e3d18" : isSpacecraft ? "#383838" : !isFront ? color.dark : color.mid,
             p: 0.5,
             px: 1.2,
             boxSizing: "border-box",
