@@ -41,7 +41,12 @@ export function SagaLayout({ card, cardFace, displayData }: Props) {
         </Box>
 
         <Box sx={{ flex: 1 }}>
-          <Art cardPart={cardPart} displayData={displayData} />
+          <Art
+            sx={isCreature && card.real ? { height: "90%" } : {}}
+            cardPart={cardPart}
+            displayData={displayData}
+            objectPosition={isCreature ? "left" : undefined}
+          />
         </Box>
       </GradientBackground>
 
@@ -49,7 +54,7 @@ export function SagaLayout({ card, cardFace, displayData }: Props) {
 
       {isCreature && (
         <>
-          <GradientBackground showBottom cardPart={cardPart} sx={{ ...sizing(87.5, 12)}}>
+          <GradientBackground showBottom cardPart={cardPart} sx={{ ...sizing(87.5, 13)}}>
             <Textbox cardPart={creaturePart} displayData={displayData} />
           </GradientBackground>
 

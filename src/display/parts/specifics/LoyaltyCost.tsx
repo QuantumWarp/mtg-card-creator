@@ -28,7 +28,7 @@ export function LoyaltyCost({ cost }: Props) {
         display: "inline-block",
         height: "1.2em",
         width: "2em",
-        filter: "drop-shadow(2px 3px 4px rgba(0, 0, 0, 1))",
+        filter: "drop-shadow(2px 2px 4px rgba(0, 0, 0, 1))",
       }}
     >
       <Box

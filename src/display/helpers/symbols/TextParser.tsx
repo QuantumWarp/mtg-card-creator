@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import { CardSymbol } from "./CardSymbol";
 import { LoyaltyCost } from "../../parts/specifics/LoyaltyCost";
+import { SagaNumber } from "../../parts/specifics/SagaNumber";
 
 type Props = {
   text?: string;
@@ -39,10 +40,25 @@ export function TextParser({ text: fullText }: Props) {
     );
 
     if (/^[+−]?\d+:$/.test(text)) return (
-      <Box key={index + text} sx={{ display: "inline-block", marginTop: -1 }}>
+      <Box key={index + text} sx={{ display: "inline-block", mb: -0.8 }}>
         <LoyaltyCost cost={text.replace(":", "")} />:
       </Box>
     );
+    
+    const sagaRegex = /^([I|II|III|IV|V|VI|VII|VIII|IX|X|\s|,]+)[—](.*)$/i;
+    if (sagaRegex.test(text)) {
+      const match = text.match(sagaRegex);
+      const numerals = match ? match[1].split(',').map(n => n.trim()) : [];
+      const rest = match ? match[2].trim() : text;
+      return (
+        <Box key={index + text} sx={{ display: "inline-block", mb: -1 }}>
+          {numerals.map((x, index) => <>
+            <SagaNumber text={x} />
+            {index !== numerals.length - 1 && <Box sx={{ display: "inline-block", ml: ".1em", mr: ".2em" }}>,</Box>}
+          </>)} — {rest}
+        </Box>
+      );
+    } 
 
     return (
       <span key={index + text} style={{ marginTop: index === 0 ? 0 : "0.5em" }}>

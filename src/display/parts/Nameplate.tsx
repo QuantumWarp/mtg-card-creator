@@ -6,6 +6,7 @@ import { clickHandler } from "../helpers/general";
 import { FlipIcon } from "./specifics/FlipIcon";
 import { BannerBackground } from "./backgrounds/BannerBackground";
 import { DisplayData } from "../display-data";
+import { roundedBorder } from "../helpers/styles";
 
 
 type NameplateProps = {
@@ -34,15 +35,15 @@ export function Nameplate({ card, cardPart, displayData, showFlip, sx }: Namepla
       sx={{
         mt: isPlaneswalker ? "3.4%" : "5.5%",
         ...(card.doubleFaceType && !displayData.isFront && { color: "white" }),
-        ...(isPlaneswalker && { borderEndEndRadius: 5 }),
-        ...(isPlaneswalker && !showFlip && { borderEndStartRadius: 5 }),
+        ...(isPlaneswalker && { ...roundedBorder(12, 30), borderEndEndRadius: "5em 5em" }),
+        ...(isPlaneswalker && !showFlip && { borderEndStartRadius: "5em 5em" }),
         ...sx
       }}
     >
       {legendaryHeader && <LegendaryHeader cardPart={cardPart} />}
 
       <Box sx={{ display: "flex", gap: 1, whiteSpace: "nowrap", fontSize: smallHeight ? "0.9em" : undefined }}>
-        {showFlip && <FlipIcon card={card} displayData={displayData} />}
+        {showFlip && <FlipIcon card={card} cardPart={cardPart} displayData={displayData} />}
 
         <Box>{name}</Box>
       </Box>

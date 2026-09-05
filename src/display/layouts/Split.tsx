@@ -47,7 +47,7 @@ function MiniCard({ card, cardPart, displayData, left }: MiniProps) {
       <TexturedBackground cardPart={cardPart} />
 
       <Box sx={{ flex: 1, position: "relative", display: "flex", flexDirection: "column", alignItems: "center", height: "100%" }}>
-        <Nameplate card={card} cardPart={cardPart} displayData={displayData} sx={{ height: "10%" }} />
+        <Nameplate card={card} cardPart={cardPart} displayData={displayData} sx={{ height: "10%", fontSize: "0.68em" }} />
 
         <GradientBackground cardPart={cardPart} sx={{ ...sizing(87.5, 43) }}>
           <Art cardPart={cardPart} displayData={displayData} objectPosition={left ? "left" : "right"} />

@@ -38,9 +38,9 @@ export function Textbox({ cardPart, displayData, sx }: TextboxProps) {
       }}
       onClick={(e) => clickHandler(e, displayData, "text", cardPart)}
     >
-      <Box sx={{ flex: 1, display: "flex", alignItems: "center" }}>
+      {text && <Box sx={{ flex: 1, display: "flex", alignItems: "center" }}>
         <TextParser text={text} />
-      </Box>
+      </Box>}
 
       {flavorText && !displayData.hideFlavorText && (
         <Box>

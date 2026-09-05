@@ -24,7 +24,7 @@ export function BattleLayout({ card, cardFace, displayData }: Props) {
   return (
     <BaseBackground>
       <RotatedContent sx={{ ml: "-2%" }}>
-        <Nameplate showFlip card={card} cardPart={cardPart} displayData={displayData} sx={{ mt: 0, height:"12%" }} />
+        <Nameplate showFlip card={card} cardPart={cardPart} displayData={displayData} sx={{ mt: 0, height: "12%", fontSize: "0.76em" }} />
 
         <Box sx={{ ...sizing(96, 41), position: "relative" }}>
           <Art
@@ -39,7 +39,7 @@ export function BattleLayout({ card, cardFace, displayData }: Props) {
           />
         </Box>
         
-        <Typeplate card={card} cardPart={cardPart} displayData={displayData} sx={{ height:"12%" }}  />
+        <Typeplate card={card} cardPart={cardPart} displayData={displayData} sx={{ height: "12%" }}  />
 
         <GradientBackground showBottom cardPart={cardPart} sx={{ flex: 1, ...sizing(87.5, 0) }}>
           <Textbox cardPart={cardPart} displayData={displayData} />

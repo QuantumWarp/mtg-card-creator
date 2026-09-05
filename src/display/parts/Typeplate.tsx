@@ -5,6 +5,7 @@ import { clickHandler } from "../helpers/general";
 import { BannerBackground } from "./backgrounds/BannerBackground";
 import { ColorIndicator } from "./specifics/ColorIndicator";
 import { DisplayData } from "../display-data";
+import { roundedBorder } from "../helpers/styles";
 
 type Props = {
   card: Card;
@@ -37,7 +38,10 @@ export function Typeplate({ card, cardPart, displayData, hideRarity, sx }: Props
       sx={{
         fontSize: "55%",
         ...(card.doubleFaceType && !displayData.isFront && { color: "white" }),
-        ...(isPlaneswalker && { borderEndStartRadius: 5, borderEndEndRadius: 5 }),
+        ...(isPlaneswalker && {
+          ...roundedBorder(12, 30),
+          borderEndEndRadius: "5em 5em", borderEndStartRadius: "5em 5em"
+        }),
         ...sx
       }}
     >

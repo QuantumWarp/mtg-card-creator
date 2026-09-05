@@ -1,5 +1,5 @@
 export function roundedBorder(x: number, y: number) {
-  const value = `${x}px ${y}px`;
+  const value = `${x}em ${y}em`;
   return {
     borderEndEndRadius: value,
     borderStartEndRadius: value,
