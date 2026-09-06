@@ -6,6 +6,7 @@ import { BannerBackground } from "./backgrounds/BannerBackground";
 import { ColorIndicator } from "./specifics/ColorIndicator";
 import { DisplayData } from "../display-data";
 import { roundedBorder } from "../helpers/styles";
+import { getPalettes, palettes } from "../helpers/palette";
 
 type Props = {
   card: Card;
@@ -29,6 +30,9 @@ export function Typeplate({ card, cardPart, displayData, hideRarity, sx }: Props
 
   const isPlaneswalker = typeline?.includes("Planeswalker");
   const dark = !displayData.isFront;
+  
+  const [color1] = getPalettes(cardPart);
+  const isColorless = color1 === palettes.Colorless;
 
   return (
     <BannerBackground
@@ -37,7 +41,7 @@ export function Typeplate({ card, cardPart, displayData, hideRarity, sx }: Props
       onClick={(e) => clickHandler(e, displayData, "typeline", cardPart)}
       sx={{
         fontSize: "55%",
-        ...(card.doubleFaceType && !displayData.isFront && { color: "white" }),
+        ...(card.doubleFaceType && !displayData.isFront && !isColorless && { color: "white" }),
         ...(isPlaneswalker && {
           ...roundedBorder(12, 30),
           borderEndEndRadius: "5em 5em", borderEndStartRadius: "5em 5em"

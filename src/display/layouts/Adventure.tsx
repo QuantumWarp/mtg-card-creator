@@ -28,7 +28,7 @@ export function AdventureLayout({ card, cardFace, displayData }: Props) {
     >
       <Nameplate showFlip={!!card.doubleFaceType} card={card} cardPart={mainPart} displayData={displayData} />
       
-      <GradientBackground cardPart={mainPart} sx={sizing(87.5, 41)}>
+      <GradientBackground cardPart={mainPart} sx={sizing(87.5, 43)}>
         <Art cardPart={mainPart} displayData={displayData} />
       </GradientBackground>
       

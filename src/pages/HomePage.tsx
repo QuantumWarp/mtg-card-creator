@@ -95,7 +95,12 @@ export function HomePage() {
                 }
               }}
             >
-              <CardDisplay card={x} displayData={{ onClick: () => navigate({ pathname: `edit/${x.id}` }) }} />
+              <CardDisplay
+                card={x}
+                displayData={{
+                  onClick: (cardClick) => cardClick?.cardKey !== "doubleFaceType" && navigate({ pathname: `edit/${x.id}` })
+                }}
+              />
             </ButtonBase>
           </Grid>
         ))}

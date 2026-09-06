@@ -53,7 +53,7 @@ export function BottomInfo({ card, cardPart, displayData }: BottomInfoProps) {
 
         <Box>
           <span onClick={(e) => clickHandler(e, displayData, "code", undefined)}>{setCode}</span>
-          <span style={{ visibility: (setCode || artist) ? "visible" : "hidden"}}> - </span>
+          <span style={{ visibility: (setCode && artist) ? "visible" : "hidden"}}> - </span>
           <span onClick={(e) => clickHandler(e, displayData, "artist", cardPart)}>{artist}</span>
         </Box>
       </Box>

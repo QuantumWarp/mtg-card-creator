@@ -7,6 +7,7 @@ import { FlipIcon } from "./specifics/FlipIcon";
 import { BannerBackground } from "./backgrounds/BannerBackground";
 import { DisplayData } from "../display-data";
 import { roundedBorder } from "../helpers/styles";
+import { getPalettes, palettes } from "../helpers/palette";
 
 
 type NameplateProps = {
@@ -24,6 +25,9 @@ export function Nameplate({ card, cardPart, displayData, showFlip, sx }: Namepla
   const dark = !displayData.isFront;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const smallHeight = Boolean((sx as any)?.height);
+  
+  const [color1] = getPalettes(cardPart);
+  const isColorless = color1 === palettes.Colorless;
 
   return (
     <BannerBackground
@@ -34,7 +38,7 @@ export function Nameplate({ card, cardPart, displayData, showFlip, sx }: Namepla
       onClick={(e) => clickHandler(e, displayData, "name", cardPart)}
       sx={{
         mt: isPlaneswalker ? "3.4%" : "5.5%",
-        ...(card.doubleFaceType && !displayData.isFront && { color: "white" }),
+        ...(card.doubleFaceType && !displayData.isFront && !isColorless && { color: "white" }),
         ...(isPlaneswalker && { ...roundedBorder(12, 30), borderEndEndRadius: "5em 5em" }),
         ...(isPlaneswalker && !showFlip && { borderEndStartRadius: "5em 5em" }),
         ...sx
