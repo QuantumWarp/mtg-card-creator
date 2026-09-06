@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Tooltip, Typography } from "@mui/material";
+import { Box, Button, Grid, Menu, MenuItem, Tooltip, Typography } from "@mui/material";
 import { PageContainer } from "../components/PageContainer";
 import { EditCardForm } from "../components/EditCardForm";
 import { useEffect, useState } from "react";
@@ -8,11 +8,14 @@ import { CardDisplay } from "../display/CardDisplay";
 import { Card } from "../models/card";
 import { ConfirmationDialog } from "../components/ConfirmationDialog";
 import { CardClick } from "../display/display-data";
+import { Delete, Download, MoreVert, Print } from "@mui/icons-material";
+import { backupCard } from "../storage/backup-restore";
 
 export function EditCardPage() {
   const navigate = useNavigate();
   const { card: initialCard } = useLoaderData() as { card: Card };
   const [card, setCard] = useState(initialCard);
+  const [menuOpen, setMenuOpen] = useState<HTMLElement>();
   const [frontEdit, setFrontEdit] = useState(true);
   const [focusData, setFocusData] = useState<CardClick>();
   const [deleteOpen, setDeleteOpen] = useState(false);
@@ -56,6 +59,46 @@ export function EditCardPage() {
             }}
             variant="outlined"
           >Cancel</Button>
+          
+          {!isExample && (
+            <Button
+              onClick={(e) => setMenuOpen(e.currentTarget)}
+              variant="outlined"
+              sx={{ minWidth: 0, px: 1 }}
+            ><MoreVert /></Button>
+          )}
+
+          <Menu
+            open={!!menuOpen}
+            anchorEl={menuOpen}
+            sx={{ mt: 1 }}
+            anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+            transformOrigin={{ horizontal: "right", vertical: "top" }}
+            onClose={() => setMenuOpen(undefined)}
+          >
+            <MenuItem
+              onClick={() => {
+                const originalTitle = document.title;
+                const name = card.frontFace.parts[0].name || "Custom";
+                document.title = name.replace(/[^a-zA-Z0-9\s-_]/g, "");
+                window.print();
+                document.title = originalTitle;
+              }}
+            >
+              <Print sx={{ mr: 1 }} />
+              Print
+            </MenuItem>
+            
+            <MenuItem onClick={() => backupCard(card)}>
+              <Download sx={{ mr: 1 }} />
+              Backup
+            </MenuItem>
+            
+            <MenuItem onClick={() => setDeleteOpen(true)}>
+              <Delete sx={{ mr: 1 }} />
+              Delete
+            </MenuItem>
+          </Menu>
 
           <ConfirmationDialog
             title="Discard Changes"
@@ -66,18 +109,6 @@ export function EditCardPage() {
           >
             Are you sure you want to discard your changes?
           </ConfirmationDialog>
-
-
-          <Tooltip title={isExample && "Examples cannot be deleted here. Please hide examples using the bottom toolbar button."}>
-            <span>
-              <Button
-                disabled={isExample}
-                color="error"
-                variant="outlined"
-                onClick={() => setDeleteOpen(true)}
-              >Delete</Button>
-            </span>
-          </Tooltip>
 
           <ConfirmationDialog
             title="Delete Card"
@@ -102,7 +133,7 @@ export function EditCardPage() {
           /> 
         </Grid>
 
-        <Grid size={{ xs: 12, lg: 6 }} sx={{ display: "flex", justifyContent: { xs: "center", lg: "flex-end" }}}>
+        <Grid size={{ xs: 12, lg: 6 }} sx={{ display: "flex", alignItems: "flex-start", justifyContent: { xs: "center", lg: "flex-end" }}}>
           <CardDisplay card={card} displayData={{ isFront: frontEdit, onClick: setFocusData }} />
         </Grid>
       </Grid>

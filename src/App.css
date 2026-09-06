@@ -1,0 +1,16 @@
+@media print {
+  body * {
+    visibility: hidden !important;
+    max-height: 0;
+  }
+
+  .printable {
+    max-height: unset;
+    visibility: visible !important;
+  }
+
+  .printable * {
+    max-height: unset;
+    visibility: visible !important;
+  }
+}

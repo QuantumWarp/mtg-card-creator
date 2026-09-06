@@ -1,16 +1,10 @@
 import { NavigateFunction } from "react-router-dom";
 import { Card } from "../models/card";
-import { deleteCard, getCards, saveCard } from "./card.storage";
-
-export function canBackup() {
-  const cards = getCards();
-  return cards.length > 0;
-}
+import { getCards, saveCard } from "./card.storage";
 
 export function backup() {
   const cards = getCards();
-  const filteredCards = cards.filter((x) => !x.id.startsWith("example"));
-  const backupStr = JSON.stringify(filteredCards, null, 2);
+  const backupStr = JSON.stringify(cards, null, 2);
   const blob = new Blob([backupStr], { type: "application/json" });
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
@@ -21,20 +15,41 @@ export function backup() {
   document.body.removeChild(link);
 }
 
-export function restore(file: File, navigate: NavigateFunction) {
+export function backupCard(card: Card) {
+  const backupStr = JSON.stringify(card, null, 2);
+  const blob = new Blob([backupStr], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  const cardName = card.frontFace.parts[0].name
+    .replace(/[^a-zA-Z0-9\s-_]/g, "")
+    .replace(" ", "-").toLowerCase()
+    || "custom";
+  link.href = url;
+  link.download = `mtg-card-creator-${cardName}.json`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+export async function restore(file: File, navigate: NavigateFunction) {
   if (!file || file.type !== "application/json") return;
   const reader = new FileReader();
-  reader.onload = (e) => {
-    const json: Card[] = JSON.parse(e.target?.result as string);
-    for (const card of getCards()) {
-      deleteCard(card);
-    }
-    for (const card of json) {
-      saveCard(card);
-    }
-    navigate("/", { replace: true });
-  };
-  reader.readAsText(file);
+
+  const cards = await new Promise<Card[]>((resolve) => {
+    reader.onload = (e) => {
+      const result = e.target?.result as string;
+      const data = JSON.parse(result);
+      const isArray = Array.isArray(data);
+      const cards: Card[] = isArray ? data : [data];
+      resolve(cards);
+    };
+    reader.readAsText(file);
+  });
+  
+  for (const card of cards) {
+    saveCard(card);
+  }
+  navigate("/", { replace: true });
 }
 
 export function deleteAllData() {

@@ -45,17 +45,18 @@ export function TextParser({ text: fullText }: Props) {
       </Box>
     );
     
-    const sagaRegex = /^([I|II|III|IV|V|VI|VII|VIII|IX|X|\s|,]+)[—](.*)$/i;
+    const sagaRegex = /^([I|II|III|IV|V|VI|VII|VIII|IX|X|\s|,]+)([—-])(.*)$/i;
     if (sagaRegex.test(text)) {
       const match = text.match(sagaRegex);
       const numerals = match ? match[1].split(',').map(n => n.trim()) : [];
-      const rest = match ? match[2].trim() : text;
+      const dash = match ? match[2].trim() : "";
+      const rest = match ? match[3].trim() : text;
       return (
         <Box key={index + text} sx={{ display: "inline-block", mb: -1 }}>
           {numerals.map((x, index) => <>
             <SagaNumber text={x} />
             {index !== numerals.length - 1 && <Box sx={{ display: "inline-block", ml: ".1em", mr: ".2em" }}>,</Box>}
-          </>)} — {rest}
+          </>)} {dash} {rest}
         </Box>
       );
     } 

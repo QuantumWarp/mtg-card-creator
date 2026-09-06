@@ -4,7 +4,7 @@ import { clickHandler } from "../../helpers/general";
 import { DisplayData } from "../../display-data";
 import { getPalettes } from "../../helpers/palette";
 import { DoubleFaceType } from "../../../models/layout";
-import { sizing } from "../../helpers/styles";
+import { center, sizing } from "../../helpers/styles";
 import { ReactNode } from "react";
 
 type Props = {
@@ -21,12 +21,12 @@ export function FlipIcon({ card, cardPart, displayData }: Props) {
     <Box onClick={(e) => clickHandler(e, displayData, "doubleFaceType", undefined)}>
       {card.doubleFaceType === DoubleFaceType.Modal && (
         <ShadedCircle cardPart={cardPart} displayData={displayData}>
-          {displayData.isFront && <Box sx={{ ...sizing(65, 65), ml: "auto", mr: "auto", mt: !displayData.isFront ? "-0.1em" : "-0.03em" }}>
-            <Triangle color="black" />
-          </Box>}
-          {!displayData.isFront && <Box sx={{ ...sizing(90, 90), ml: "auto", mr: "auto", position: "relative" }}>
-            <Box sx={{ position: "absolute", ...sizing(50, 50, 5, -10) }}><Triangle /></Box>
-            <Box sx={{ position: "absolute", ...sizing(50, 50, 40, -7) }}><Triangle flip /></Box>
+          {displayData.isFront && <Box sx={{ ...sizing(65, 65), ...center() }}><Triangle color="black" /></Box>}
+          {!displayData.isFront && <Box sx={{ ...sizing(100, 100), ...center() }}>
+            <Box sx={{ ...sizing(95, 100), position: "relative", ...center() }}>
+              <Box sx={{ position: "relative", left: "7%" }}><Triangle /></Box>
+              <Box sx={{ position: "relative", right: "7%" }}><Triangle flip /></Box>
+            </Box>
           </Box>}
         </ShadedCircle>
       )}
@@ -56,20 +56,18 @@ function ShadedCircle({ children, cardPart, displayData }: { children: ReactNode
         width: "1.6em",
         borderRadius: "50%",
         ml: "-0.35em",
-        position: "relative",
+        ...center(),
       }}
     >
       <Box
         sx={{
           background: displayData.isFront ? color.mid : color.dark,
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
+          boxSizing: "border-box",
           height: "90%",
           width: "90%",
           borderRadius: "50%",
-          boxShadow: "inset 0em 0em 0.2em rgba(0, 0, 0, 0.6)"
+          boxShadow: "inset 0em 0em 0.2em rgba(0, 0, 0, 0.6)",
+          ...center(),
         }}
       >
         {children}
@@ -102,6 +100,7 @@ function BlackAndWhiteCircle({ children }: { children: ReactNode }) {
           height: "92%",
           width: "92%",
           borderRadius: "50%",
+          ...center(),
         }}
       >
         {children}
@@ -112,16 +111,19 @@ function BlackAndWhiteCircle({ children }: { children: ReactNode }) {
 
 function Triangle({ color = "white", flip = false }: { color?: string, flip?: boolean }) {
   return (
-    <Box sx={{ transform: flip ? "rotate(180deg)" : undefined }}>
-      <svg width="100%" height="100%" viewBox="0 0 100 100">
-        <polygon
-          points="50,15 90,85 10,85" 
-          fill={color}
-          stroke={color}
-          strokeWidth="12"
-          strokeLinejoin="round"
-        />
-      </svg>
-    </Box>
+    <svg
+      width="100%"
+      height="100%"
+      viewBox="0 0 100 100"
+      style={{ transform: flip ? "rotate(180deg)" : undefined }}
+    >
+      <polygon
+        points="50,15 90,85 10,85" 
+        fill={color}
+        stroke={color}
+        strokeWidth="12"
+        strokeLinejoin="round"
+      />
+    </svg>
   );
 }

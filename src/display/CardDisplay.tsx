@@ -25,6 +25,7 @@ export function CardDisplay({ card, displayData }: Props) {
 
   return (
     <Box
+      className="printable"
       sx={{
         boxShadow: theme.palette.mode === "dark" ? "none" : 5,
         width: displayData?.width || "min(100%, 500px)",

@@ -1,7 +1,7 @@
-import { DarkMode, HelpOutlined, LightMode, CancelPresentation, Download, Upload, ToggleOff, ToggleOn, Delete } from "@mui/icons-material";
-import { Box, IconButton, Tooltip, Typography, useColorScheme, useMediaQuery } from "@mui/material";
-import { useMemo, useState } from "react";
-import { backup, canBackup, deleteAllData, restore } from "../storage/backup-restore";
+import { DarkMode, HelpOutlined, LightMode, CancelPresentation, Download, Upload, ToggleOff, ToggleOn, Delete, Settings } from "@mui/icons-material";
+import { Box, IconButton, Menu, MenuItem, Tooltip, Typography, useColorScheme, useMediaQuery } from "@mui/material";
+import { useRef, useState } from "react";
+import { backup, deleteAllData, restore } from "../storage/backup-restore";
 import { useNavigate } from "react-router-dom";
 import { ConfirmationDialog } from "./ConfirmationDialog";
 import { examplesEnabled, toggleExamples } from "../examples/load-examples";
@@ -17,12 +17,12 @@ export function PageFooter({ reload }: Props) {
   const { mode, setMode, systemMode } = useColorScheme();
   const color = mode === "system" ? systemMode : mode;
   const year = new Date().getFullYear();
+  const restoreInputRef = useRef<HTMLInputElement>(null);
+  const [menuOpen, setMenuOpen] = useState<HTMLElement>();
   const [openAbout, setOpenAbout] = useState(false);
   const [openClearCache, setOpenClearCache] = useState(false);
   const [openDeleteAll, setOpenDeleteAll] = useState(false);
   const [examplesToggle, setExamplesToggle] = useState(examplesEnabled());
-
-  const isRestore = useMemo(() => !canBackup(), []);
 
   const updateMode = () => {
     const nextColor = color !== 'dark' ? 'dark' : 'light';
@@ -40,87 +40,104 @@ export function PageFooter({ reload }: Props) {
 
   return (
     <Box sx={{ p: 2, display: "flex", alignItems: "center", flexDirection: "column" }}>
-      <Box sx={{ mb: 1 }}>
-        <Tooltip title="About this app" placement="top">
-          <IconButton onClick={() => setOpenAbout(true)}>
-            <HelpOutlined />
+      <Menu
+        open={!!menuOpen}
+        anchorEl={menuOpen}
+        sx={{ mb: 1 }}
+        anchorOrigin={{ horizontal: "center", vertical: "top" }}
+        transformOrigin={{ horizontal: "center", vertical: "bottom" }}
+        onClose={() => setMenuOpen(undefined)}
+      >
+        
+        <MenuItem onClick={() => setOpenAbout(true)}>
+          <HelpOutlined sx={{ mr: 1 }} />
+          About this app
+        </MenuItem>
+        
+        <MenuItem onClick={() => {
+          backup();
+          setMenuOpen(undefined);
+        }}>
+          <Download sx={{ mr: 1 }} />
+          Backup all data
+        </MenuItem>
+
+        <MenuItem onClick={() => restoreInputRef.current?.click()}>
+          <Upload sx={{ mr: 1 }} />
+          <input
+            ref={restoreInputRef}
+            style={{ display: "none" }}
+            accept="application/json"
+            type="file"
+            onChange={async (event) => {
+              const selectedFile = event.target.files?.[0];
+              if (!selectedFile) return;
+              await restore(selectedFile, navigate);
+              reload?.();
+              setMenuOpen(undefined);
+            }}
+          />
+          Restore from backup
+        </MenuItem>
+        
+        <MenuItem onClick={() => {
+          toggleExamples();
+          setExamplesToggle(!examplesToggle);
+          reload?.()
+        }}>
+          {examplesToggle && <ToggleOn sx={{ mr: 1 }} />}
+          {!examplesToggle && <ToggleOff sx={{ mr: 1 }} />}
+          Examples {examplesToggle ? "on" : "off"}
+        </MenuItem>
+
+        <MenuItem onClick={updateMode}>
+          {color !== 'dark' && <LightMode sx={{ mr: 1 }} />}
+          {color === 'dark' && <DarkMode sx={{ mr: 1 }} />}
+          {color === 'dark' ? "Dark mode" : "Light mode"}
+        </MenuItem>
+        
+        <MenuItem onClick={() => setOpenClearCache(true)}>
+          <CancelPresentation sx={{ mr: 1 }} />
+          Clear Scryfall cache
+        </MenuItem>
+        
+        <MenuItem onClick={() => setOpenDeleteAll(true)}>
+          <Delete sx={{ mr: 1 }} />
+          Delete all data
+        </MenuItem>
+      </Menu>
+
+      <Box>
+        <Tooltip title="Settings" placement="top">
+          <IconButton onClick={(e) => setMenuOpen(e.currentTarget)}>
+            <Settings />
           </IconButton>
         </Tooltip>
-
-        <Tooltip title={examplesToggle ? "Hide Examples" : "Show Examples"} placement="top">
-          <IconButton onClick={() => {
-            toggleExamples();
-            setExamplesToggle(!examplesToggle);
-            reload?.()
-          }}>
-            {examplesToggle && <ToggleOn />}
-            {!examplesToggle && <ToggleOff />}
-          </IconButton>
-        </Tooltip>
-
-        <Tooltip title={color !== 'dark' ? "Dark mode" : "Light mode"} placement="top">
-          <IconButton onClick={updateMode}>
-            {color === 'dark' && <LightMode />}
-            {color !== 'dark' && <DarkMode />}
-          </IconButton>
-        </Tooltip>
-
-        <Tooltip title="Clear Scryfall cache" placement="top">
-          <IconButton onClick={() => setOpenClearCache(true)}>
-            <CancelPresentation />
-          </IconButton>
-        </Tooltip>
-
-        <Tooltip title="Delete all data" placement="top">
-          <IconButton component="label" onClick={() => setOpenDeleteAll(true)}>
-            <Delete />
-          </IconButton>
-        </Tooltip>
-      
-        {!isRestore && (
-          <Tooltip title="Backup" placement="top">
-            <IconButton onClick={() => backup()}>
-              <Download />
-            </IconButton>
-          </Tooltip>
-        )}
-
-        {isRestore && (
-          <Tooltip title="Restore from backup" placement="top">
-            <IconButton component="label">
-              <Upload />
-              <input
-                style={{ display: "none" }}
-                accept="application/json"
-                type="file"
-                onChange={async (event) => {
-                  const selectedFile = event.target.files?.[0];
-                  if (!selectedFile) return;
-                  restore(selectedFile, navigate);
-                }}
-              />
-            </IconButton>
-          </Tooltip>
-        )}
       </Box>
 
       <ConfirmationDialog
         title="Delete all data"
         action="Delete"
         open={openDeleteAll}
-        onConfirm={() => deleteAllData()}
+        onConfirm={() => {
+          deleteAllData();
+          reload?.();
+          setMenuOpen(undefined);
+        }}
         onClose={() => setOpenDeleteAll(false)}
       >
         Are you sure you want to delete <b>ALL</b> data?
         Please consider backing up first.
       </ConfirmationDialog>
 
-
       <ConfirmationDialog
         title="Clear Scryfall cache"
         action="Clear"
         open={openClearCache}
-        onConfirm={() => clearScryfallCache()}
+        onConfirm={() => {
+          clearScryfallCache();
+          setMenuOpen(undefined);
+        }}
         onClose={() => setOpenClearCache(false)}
       >
         Are you sure you want to clear the Scryfall cache?
@@ -128,7 +145,10 @@ export function PageFooter({ reload }: Props) {
         and errata from Scryfall.
       </ConfirmationDialog>
 
-      <AboutDialog open={openAbout} onClose={() => setOpenAbout(false)} />
+      <AboutDialog open={openAbout} onClose={() => { 
+        setMenuOpen(undefined);
+        setOpenAbout(false);
+      }} />
 
       <Typography variant="body2">
         Copyright © {year}

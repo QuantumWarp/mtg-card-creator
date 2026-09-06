@@ -1,6 +1,7 @@
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import { RouterProvider } from 'react-router-dom';
 import { router } from './router';
+import "./App.css";
 
 export function App() {
   const theme = createTheme({

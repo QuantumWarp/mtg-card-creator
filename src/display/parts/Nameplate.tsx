@@ -46,7 +46,7 @@ export function Nameplate({ card, cardPart, displayData, showFlip, sx }: Namepla
     >
       {legendaryHeader && <LegendaryHeader cardPart={cardPart} />}
 
-      <Box sx={{ display: "flex", gap: 1, whiteSpace: "nowrap", fontSize: smallHeight ? "0.9em" : undefined }}>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 1, whiteSpace: "nowrap", fontSize: smallHeight ? "0.9em" : undefined }}>
         {showFlip && <FlipIcon card={card} cardPart={cardPart} displayData={displayData} />}
 
         <Box>{name}</Box>
