@@ -22,18 +22,18 @@ export function FlipIcon({ card, cardPart, displayData }: Props) {
       {card.doubleFaceType === DoubleFaceType.Modal && (
         <ShadedCircle cardPart={cardPart} displayData={displayData}>
           {displayData.isFront && <Box sx={{ ...sizing(65, 65), ...center() }}><Triangle color="black" /></Box>}
-          {!displayData.isFront && <Box sx={{ ...sizing(100, 100), ...center() }}>
+          {!displayData.isFront && 
             <Box sx={{ ...sizing(95, 100), position: "relative", ...center() }}>
-              <Box sx={{ position: "relative", left: "7%" }}><Triangle /></Box>
-              <Box sx={{ position: "relative", right: "7%" }}><Triangle flip /></Box>
+              <Box sx={{ position: "relative", left: "6%" }}><Triangle /></Box>
+              <Box sx={{ position: "relative", right: "8%" }}><Triangle flip /></Box>
             </Box>
-          </Box>}
+          }
         </ShadedCircle>
       )}
       
       {card.doubleFaceType !== DoubleFaceType.Modal && (
         <BlackAndWhiteCircle>
-          <Box sx={{ ...sizing(65, 65), ml: "auto", mr: "auto", mt: !displayData.isFront ? "-0.1em" : "-0.03em" }}>
+          <Box sx={{ ...sizing(60, 60), ...center(), mt: !displayData.isFront ? "0.1em" : "-0.1em" }}>
             <Triangle flip={!displayData.isFront} />
           </Box>
         </BlackAndWhiteCircle>
@@ -87,16 +87,12 @@ function BlackAndWhiteCircle({ children }: { children: ReactNode }) {
         width: "1.5em",
         borderRadius: "50%",
         ml: "-0.35em",
-        position: "relative",
+        ...center(),
       }}
     >
       <Box
         sx={{
           background: "black",
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
           height: "92%",
           width: "92%",
           borderRadius: "50%",

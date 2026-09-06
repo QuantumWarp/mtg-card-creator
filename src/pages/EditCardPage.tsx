@@ -134,7 +134,7 @@ export function EditCardPage() {
         </Grid>
 
         <Grid size={{ xs: 12, lg: 6 }} sx={{ display: "flex", alignItems: "flex-start", justifyContent: { xs: "center", lg: "flex-end" }}}>
-          <CardDisplay card={card} displayData={{ isFront: frontEdit, onClick: setFocusData }} />
+          <CardDisplay card={card} displayData={{ isFront: frontEdit, autoRotate: true, onClick: setFocusData }} />
         </Grid>
       </Grid>
     </PageContainer>

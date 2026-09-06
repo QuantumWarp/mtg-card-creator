@@ -32,7 +32,7 @@ export function RealCardDisplay({ name, setCode }: Props) {
         View in Editor
       </Button>
 
-      {card && <CardDisplay card={card} />}
+      {card && <CardDisplay card={card} displayData={{ autoRotate: true }} />}
       {loading && (
         <Box sx={{ width: "100%", height: 500, display: "flex", alignItems: "center", justifyContent: "center" }}>
           <CircularProgress />

@@ -12,5 +12,6 @@ export class DisplayData {
   width?: string;
   hideFlavorText?: boolean;
   isFront?: boolean;
+  autoRotate?: boolean;
   onClick?: (cardClick?: CardClick) => void;
 }

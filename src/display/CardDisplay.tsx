@@ -97,7 +97,7 @@ function CardDisplayInner({ card, displayData: initialDisplayData = {} }: Props)
       onClick={() => displayData?.onClick?.()}
       sx={{
         fontSize: `${fontSize}px`,
-        transform: rotate ? "rotate(90deg)" : "",
+        transform: rotate && displayData.autoRotate ? "rotate(90deg)" : "",
         transformOrigin: "center",
         cursor: displayData?.onClick ? "pointer" : "default",
         userSelect: displayData?.onClick ? "none" : "auto",
