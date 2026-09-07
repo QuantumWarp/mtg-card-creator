@@ -12,4 +12,5 @@ export interface Puzzle {
 export interface PuzzleCard {
   name: string,
   setCode: string,
+  afterReveal?: boolean;
 }

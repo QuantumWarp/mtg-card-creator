@@ -28,7 +28,7 @@ export function HomePage() {
     <PageContainer maxWidth={1800} reload={reloadData}>
       <Grid container sx={{ display: "flex", flexDirection: "column", alignItems: "center", spacing: 8 }}>
         <Typography variant="h2">
-          MTG Puzzles & Card Creator 
+          MTG Card Creator
         </Typography>
         <Typography sx={{ display: "flex", alignItems: "center", textAlign: "center", maxWidth: 800 }}>
           Don't forget to back up your cards as they are only stored in your browser!
@@ -45,23 +45,23 @@ export function HomePage() {
       <Grid container spacing={1} sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
         <Button
           variant="contained"
-          sx={{ width: 135 }}
-          onClick={() => navigate({ pathname: "puzzle-list" })}
-        >
-          Puzzles
-        </Button>
-
-        <Button
-          variant="contained"
-          sx={{ width: 135 }}
+          sx={{ width: 150 }}
           onClick={() => navigate({ pathname: "create" })}
         >
           Create Card
         </Button>
+        
+        <Button
+          variant="contained"
+          sx={{ width: 150 }}
+          onClick={() => navigate({ pathname: "puzzle-list" })}
+        >
+          Rules Puzzles
+        </Button>
 
         <Button
           variant="contained"
-          sx={{ width: 135 }}
+          sx={{ width: 150 }}
           onClick={() => navigate({ pathname: "real-cards" })}
         >
           Real Cards

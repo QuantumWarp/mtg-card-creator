@@ -23,7 +23,7 @@ export function TextParser({ text: fullText }: Props) {
   }
 
   function renderSegment(text: string) {
-    const parts = text.split(/([+−]?\d+:)|(\{.*?\})/g).filter(x => !!x);
+    const parts = text.split(/([+−-]?[X\d]+:)|(\{.*?\})/g).filter(x => !!x);
     const italic = text.startsWith("(") || text.endsWith("—");
     return (
       <Box key={text} component="span" sx={{ fontStyle: italic ? "italic" : "inherit" }}>
@@ -39,7 +39,7 @@ export function TextParser({ text: fullText }: Props) {
       </Box>
     );
 
-    if (/^[+−]?\d+:$/.test(text)) return (
+    if (/^[+−-]?[X\d]+:$/.test(text)) return (
       <Box key={index + text} sx={{ display: "inline-block", mb: -0.8 }}>
         <LoyaltyCost cost={text.replace(":", "")} />:
       </Box>

@@ -5,7 +5,7 @@ import { useState } from "react";
 import { puzzleList } from "../puzzles/core/puzzle-list";
 import { CardDisplay } from "../display/CardDisplay";
 import { useRealCard } from "../scryfall/use-real-card";
-import { renderPuzzleLine } from "../puzzles/core/puzzle.helper";
+import { complexityColorMap, renderPuzzleLine } from "../puzzles/core/puzzle.helper";
 import { getCompletedPuzzles, markPuzzleCompleted } from "../storage/puzzle.storage";
 import { Check } from "@mui/icons-material";
 
@@ -27,7 +27,7 @@ function PuzzlePage() {
   const completedPuzzles = getCompletedPuzzles();
   const [completed, setCompleted] = useState(completedPuzzles.includes(puzzle.id));
 
-  const cards = puzzle.cards;
+  const cards = puzzle.cards.filter((x) => !x.afterReveal || showAnswer);
   const [selectedCard, setSelectedCard] = useState(cards[0]);
   const { card, loading, error } = useRealCard(selectedCard.name, selectedCard.setCode);
 
@@ -54,7 +54,10 @@ function PuzzlePage() {
         </Grid>
       </Box>
       
-      <Typography sx={{ mb: 4, fontWeight: "bold" }}>
+      <Typography sx={{ mb: 4, fontWeight: "bold", display: "flex", gap: 1 }}>
+        <Typography sx={{ color: complexityColorMap[puzzle.complexity] }}>
+          {Array.from({ length: puzzle.complexity }, () => "★").join("")}
+        </Typography>
         {puzzle.categories.join(", ")}
       </Typography>
 

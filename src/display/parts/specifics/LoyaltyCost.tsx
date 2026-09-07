@@ -18,9 +18,9 @@ const upShape = "polygon(\
 2% 30%, 6% 45%, 8% 60%, 6% 80%, 0% 95%, 45% 100%)";
 
 export function LoyaltyCost({ cost }: Props) {
-  const costNum = Number(cost.replace("+", "").replace("-", ""));
-  const costShape = costNum === 0 ? zeroShape : (costNum > 0 ? upShape : downShape);
-  const textOffset = costNum === 0 ? 0.5 : (costNum > 0 ? 1 : -1);
+  const costNum = cost.startsWith("+") ? 1 : (cost.startsWith("−") || cost.startsWith("-")) ? -1 : 0;
+  const costShape = costNum === 0 ? zeroShape : (costNum === 1 ? upShape : downShape);
+  const textOffset = costNum === 0 ? 0.5 : (costNum === 1 ? 1 : -1);
 
   return (
     <Box
