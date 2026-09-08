@@ -14,9 +14,13 @@ export function TextParser({ text: fullText }: Props) {
 
   function renderBlock(text: string, index: number) {
     const segments = text.split(/(\(.*?\)|^.*—)/g).filter(x => !!x);
+    const isOption = text.startsWith("•");
 
     return (
-      <Box key={index} sx={{ mt: index === 0 ? 0 : "0.6em" }}>
+      <Box key={index} sx={{
+        mt: index === 0 ? 0 : (isOption ? "0.2em" : "0.6em"),
+        ml: isOption ? "0.4em" : 0,
+      }}>
         {segments.map((segment) => renderSegment(segment))}
       </Box>
     );
@@ -24,7 +28,7 @@ export function TextParser({ text: fullText }: Props) {
 
   function renderSegment(text: string) {
     const parts = text.split(/([+−-]?[X\d]+:)|(\{.*?\})/g).filter(x => !!x);
-    const italic = text.startsWith("(") || text.endsWith("—");
+    const italic = text.startsWith("(") || (text.endsWith("—") && !text.includes("choose"));
     return (
       <Box key={text} component="span" sx={{ fontStyle: italic ? "italic" : "inherit" }}>
         {parts.map((part, partIndex) => renderPart(part, partIndex))}
@@ -44,8 +48,8 @@ export function TextParser({ text: fullText }: Props) {
         <LoyaltyCost cost={text.replace(":", "")} />:
       </Box>
     );
-    
-    const sagaRegex = /^([I|II|III|IV|V|VI|VII|VIII|IX|X|\s|,]+)([—-])(.*)$/i;
+  
+    const sagaRegex = /^((?:(?:I|II|III|IV|V|VI|VII|VIII|IX|X)+,?\s)+)([—-])(.*)$/i;
     if (sagaRegex.test(text)) {
       const match = text.match(sagaRegex);
       const numerals = match ? match[1].split(',').map(n => n.trim()) : [];

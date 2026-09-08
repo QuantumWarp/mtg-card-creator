@@ -45,8 +45,8 @@ export function Textbox({ cardPart, displayData, sx, noFlavor, noText }: Textbox
       </Box>}
 
       {flavorText && !noFlavor && !displayData.hideFlavorText && (
-        <Box>
-          {text && (<Box
+        <Box sx={{ width: "100%" }}>
+          {text && !noText && (<Box
             sx={{
               height: '0.1em',
               background: 'linear-gradient(to right, transparent, #A9A9A9 50%, transparent)',
