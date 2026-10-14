@@ -3,10 +3,12 @@ import { Card, CardFace } from "../models/card";
 import { Rarity } from "../models/rarity";
 import { Layout } from "../models/layout";
 import { indexedDbStore } from "./indexed-db";
+import { migrateLocalStorage } from "./migrate-local-storage";
 
 const withStore = indexedDbStore("mtg-card-creator", "cards", { keyPath: "id" });
 
 export const getCards = async (): Promise<Card[]> => {
+  await migrateLocalStorage();
   const cards = await withStore<Card[]>("readonly", (store) => store.getAll());
 
   return cards.sort((a, b) => {
