@@ -33,8 +33,8 @@ export const router = createHashRouter([
     children: [
       {
         path: "/",
-        loader: () => {
-          let cards = getCards();
+        loader: async () => {
+          let cards = await getCards();
           cards = appendExamples(cards);
           return { cards };
         },
@@ -63,7 +63,7 @@ export const router = createHashRouter([
           const { cardId } = params;
           const example = getExample(cardId!);
           if (example) return { card: example };
-          const card = getCard(cardId!);
+          const card = await getCard(cardId!);
           return { card };
         },
         element: <EditCardPage />,

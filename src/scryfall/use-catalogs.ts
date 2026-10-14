@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { catalogRequest, CatalogType } from "./requests/catalog.request";
-import { localStorageCache } from "./caching/local-storage.cache";
+import { scryfallCache } from "./caching/scryfall.cache";
 
 const allCatalogs = Object.values(CatalogType);
 
@@ -14,7 +14,7 @@ export function useCatalogs(catalogs: CatalogType[] = allCatalogs) {
   useEffect(() => {
     setData({});
     for (const catalog of catalogs) {
-      localStorageCache(`scryfall-catalog-${catalog}`, async () => {
+      scryfallCache(`scryfall-catalog-${catalog}`, async () => {
         return await catalogRequest(catalog);
       }).then((x) => setData((prev) => ({ ...prev, [catalog]: x })));
     }

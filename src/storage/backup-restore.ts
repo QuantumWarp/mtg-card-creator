@@ -1,9 +1,10 @@
 import { NavigateFunction } from "react-router-dom";
 import { Card } from "../models/card";
-import { getCards, saveCard } from "./card.storage";
+import { deleteAllCards, getCards, saveCard } from "./card.storage";
+import { clearScryfallCache } from "../scryfall/caching/scryfall.cache";
 
-export function backup() {
-  const cards = getCards();
+export async function backup() {
+  const cards = await getCards();
   const backupStr = JSON.stringify(cards, null, 2);
   const blob = new Blob([backupStr], { type: "application/json" });
   const url = URL.createObjectURL(blob);
@@ -47,11 +48,13 @@ export async function restore(file: File, navigate: NavigateFunction) {
   });
   
   for (const card of cards) {
-    saveCard(card);
+    await saveCard(card);
   }
   navigate("/", { replace: true });
 }
 
-export function deleteAllData() {
+export async function deleteAllData() {
   localStorage.clear()
+  await deleteAllCards();
+  await clearScryfallCache();
 }

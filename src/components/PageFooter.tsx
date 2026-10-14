@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { ConfirmationDialog } from "./ConfirmationDialog";
 import { examplesEnabled, toggleExamples } from "../examples/load-examples";
 import { AboutDialog } from "./AboutDialog";
+import { clearScryfallCache } from "../scryfall/caching/scryfall.cache";
 
 type Props = {
   reload?: () => void;
@@ -28,14 +29,6 @@ export function PageFooter({ reload }: Props) {
     const nextColor = color !== 'dark' ? 'dark' : 'light';
     const nextMode = (prefersDarkMode && nextColor === "dark") ? "system" : nextColor;
     setMode(nextMode);
-  };
-
-  const clearScryfallCache = () => {
-    const keys = Object.keys(localStorage);
-    const scryfallKeys = keys.filter((x) => x.startsWith("scryfall-"));
-    for (const key of scryfallKeys) {
-      localStorage.removeItem(key);
-    }
   };
 
   return (
@@ -119,8 +112,8 @@ export function PageFooter({ reload }: Props) {
         title="Delete all data"
         action="Delete"
         open={openDeleteAll}
-        onConfirm={() => {
-          deleteAllData();
+        onConfirm={async () => {
+          await deleteAllData();
           reload?.();
           setMenuOpen(undefined);
         }}
@@ -134,8 +127,8 @@ export function PageFooter({ reload }: Props) {
         title="Clear Scryfall cache"
         action="Clear"
         open={openClearCache}
-        onConfirm={() => {
-          clearScryfallCache();
+        onConfirm={async () => {
+          await clearScryfallCache();
           setMenuOpen(undefined);
         }}
         onClose={() => setOpenClearCache(false)}

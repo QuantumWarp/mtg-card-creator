@@ -2,13 +2,12 @@ import { v4 as uuid } from "uuid";
 import { Card, CardFace } from "../models/card";
 import { Rarity } from "../models/rarity";
 import { Layout } from "../models/layout";
+import { indexedDbStore } from "./indexed-db";
 
-const cardPrefix = "mtg-card-creator-card-";
+const withStore = indexedDbStore("mtg-card-creator", "cards", { keyPath: "id" });
 
-export const getCards = (): Card[] => {
-  const keys = Object.keys(localStorage);
-  const cardIds = keys.filter((x) => x.startsWith(cardPrefix)).map((x) => x.replace(cardPrefix, ""));
-  const cards = cardIds.map((x) => getCard(x));
+export const getCards = async (): Promise<Card[]> => {
+  const cards = await withStore<Card[]>("readonly", (store) => store.getAll());
 
   return cards.sort((a, b) => {
     const compareCode = (a.set?.code || "").localeCompare(b.set?.code || "");
@@ -21,28 +20,32 @@ export const getCards = (): Card[] => {
 
     return a.frontFace?.parts[0]?.name.localeCompare(b.frontFace?.parts[0]?.name) || 0;
   });
-    
+
 }
 
-export const getCard = (id: string): Card => {
-  const result = localStorage.getItem(`${cardPrefix}${id}`);
+export const getCard = async (id: string): Promise<Card> => {
+  const result = await withStore<Card | undefined>("readonly", (store) => store.get(id));
   if (!result) throw new Error("Card not found");
-  return JSON.parse(result!);
+  return result;
 }
 
-export const saveCard = (card: Card): void => {
-  localStorage.setItem(`${cardPrefix}${card.id}`, JSON.stringify(card));
+export const saveCard = async (card: Card): Promise<void> => {
+  await withStore("readwrite", (store) => store.put(card));
 }
 
-export const deleteCard = (card: Card): void => {
-  localStorage.removeItem(`${cardPrefix}${card.id}`);
+export const deleteCard = async (card: Card): Promise<void> => {
+  await withStore("readwrite", (store) => store.delete(card.id));
+}
+
+export const deleteAllCards = async (): Promise<void> => {
+  await withStore("readwrite", (store) => store.clear());
 }
 
 export const defaultCard = (): Card => {
   return {
     real: false,
     id: uuid(),
-  
+
     rarity: Rarity.Common,
     set: {},
 

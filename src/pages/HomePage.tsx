@@ -16,8 +16,8 @@ export function HomePage() {
   const [cards, setCards] = useState(loaderCards);
   const [filter, setFilter] = useState<string>();
 
-  const reloadData = () => {
-    setCards(appendExamples(getCards()));
+  const reloadData = async () => {
+    setCards(appendExamples(await getCards()));
   };
 
   const allSetCodes = [...new Set(cards.map((x) => x.set?.code).filter((x) => !!x))] as string[];

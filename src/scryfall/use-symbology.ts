@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { Symbology, symbologyRequest } from "./requests/symbology.request";
-import { localStorageCache } from "./caching/local-storage.cache";
+import { scryfallCache } from "./caching/scryfall.cache";
 
 export function useSymbology() {
   const [data, setData] = useState<Symbology[]>();
 
   useEffect(() => {
-    localStorageCache("scryfall-symbology", async () => {
+    scryfallCache("scryfall-symbology", async () => {
       return await symbologyRequest();
     }).then((x) => setData(x));
   }, []);

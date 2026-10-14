@@ -1,7 +1,7 @@
 import { cardRequest, ScryfallCard, ScryfallCardFace, ScryfallLayout } from "./requests/card.request";
 import { Card, CardFace, CardPart } from "../models/card";
 import { ScryfallSet, setRequest } from "./requests/set.request";
-import { localStorageCache } from "./caching/local-storage.cache";
+import { scryfallCache } from "./caching/scryfall.cache";
 import { useEffect, useState } from "react";
 import { Color } from "../models/color";
 import { DoubleFaceType, Layout } from "../models/layout";
@@ -33,9 +33,9 @@ export function useRealCard(name: string, setCode?: string) {
 
 export async function fetchRealCard(name: string, setCode?: string): Promise<Card> {
   const key = `scryfall-card-${name}` + (setCode ? `-${setCode}` : "");
-  const scryfallCard = await localStorageCache(key, () => cardRequest(name, setCode));
+  const scryfallCard = await scryfallCache(key, () => cardRequest(name, setCode));
   const setId = scryfallCard.setId;
-  const scryfallSet = await localStorageCache(`scryfall-set-${setId}`, () => setRequest(setId));
+  const scryfallSet = await scryfallCache(`scryfall-set-${setId}`, () => setRequest(setId));
   return parseCard(scryfallCard, scryfallSet);
 }
 

@@ -24,8 +24,8 @@ export function EditCardPage() {
   const dirty = card !== initialCard;
   const isExample = card.id.includes("example");
 
-  const save = () => {
-    saveCard(card);
+  const save = async () => {
+    await saveCard(card);
     navigate("/");
   };
 
@@ -114,7 +114,7 @@ export function EditCardPage() {
             title="Delete Card"
             action="Delete"
             open={deleteOpen}
-            onConfirm={() => { deleteCard(card); navigate("/"); }}
+            onConfirm={async () => { await deleteCard(card); navigate("/"); }}
             onClose={() => setDeleteOpen(false)}
           >
             Are you sure you want to delete <b>{card.frontFace.parts[0].name}?</b>
